@@ -10,7 +10,8 @@ use App\Services\Login\LoginServiceInterface;
 class LoginController extends BaseController
 {
   public function __construct(public LoginServiceInterface $loginServiceInterface)
-  {}
+  {
+  }
   /**
    * Display a listing of the resource.
    *
@@ -22,5 +23,15 @@ class LoginController extends BaseController
     $data['role_id'] = UserRole::USER;
 
     return $this->loginServiceInterface->actionLogin($data);
+  }
+
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function logout()
+  {
+    return $this->loginServiceInterface->actionLogout();
   }
 }
