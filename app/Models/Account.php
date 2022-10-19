@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 
 class Account extends Authenticatable
 {
@@ -31,4 +32,9 @@ class Account extends Authenticatable
   {
     return $this->belongsTo(Role::class, 'role_id');
   }
+
+  public function setPasswordAttribute($value)
+    {
+        return $this->attributes['password'] = Hash::make($value);
+    }
 }
