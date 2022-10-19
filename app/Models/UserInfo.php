@@ -21,11 +21,19 @@ class UserInfo extends Model
     'rating',
     'avatar_url',
     'class_id',
-    'faculty_id'
+    'faculty_id',
+    'cv_link',
+    'smart_banking',
+    'mentor_rating'
   ];
 
   public function account()
   {
     return $this->belongsTo(Account::class, 'account_id');
+  }
+
+  public function faculty()
+  {
+    return $this->belongsTo(Faculty::class, 'faculty_id');
   }
 }

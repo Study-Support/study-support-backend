@@ -19,16 +19,17 @@ return new class extends Migration
             $table->string('full_name', 255)->nullable();
             $table->string('address', 100)->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('birthday')->nullable();
-            $table->tinyInteger('rating');
-            $table->unsignedInteger('class_id')->nullable()->comment('class id');
+            $table->date('birthday')->nullable();
+            $table->tinyInteger('rating')->nullable();
             $table->unsignedInteger('faculty_id')->nullable()->comment('faculty id');
             $table->boolean('gender')->nullable()->comment('0:female | 1:male');
             $table->string('avatar_url')->nullable();
+            $table->string('cv_link')->nullable();
+            $table->string('smart_banking')->nullable();
+            $table->tinyInteger('mentor_rating')->nullable();
             $table->timestamps();
 
             $table->foreign('account_id')->references('id')->on('accounts');
-            $table->foreign('class_id')->references('id')->on('classes');
             $table->foreign('faculty_id')->references('id')->on('faculties');
         });
     }
