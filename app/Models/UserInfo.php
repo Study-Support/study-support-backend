@@ -20,7 +20,6 @@ class UserInfo extends Model
     'birthday',
     'rating',
     'avatar_url',
-    'class_id',
     'faculty_id',
     'cv_link',
     'smart_banking',
