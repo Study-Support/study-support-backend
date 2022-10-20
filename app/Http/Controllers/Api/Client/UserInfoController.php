@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Client;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\UpdateMentorRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserInfoRequest;
 use App\Http\Resources\UserInfoResource;
@@ -71,5 +72,24 @@ class UserInfoController extends BaseController
     $this->accountRepository->update(auth()->id(), $request->only('password'));
 
     return $this->sendResponse(__('messages.success.update'));
+  }
+
+  /**
+   * update mentor
+   * @param UpdateMentorRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function updateMentor(UpdateMentorRequest $request)
+  {
+    try {
+      $data = $request->validated();
+
+      $this->userInfoRepository->update(auth()->user()->userInfo->id, $data);
+
+      return $this->sendResponse(['message' => __('messages.success.update')]);
+    } catch (\Exception $e) {
+      Log::error($e);
+      return $this->sendError(__('messages .error.update'));
+    }
   }
 }
