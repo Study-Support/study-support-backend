@@ -6,5 +6,8 @@ use App\Repositories\Base\Contracts\BaseRepository;
 
 interface UserInfoRepository extends BaseRepository
 {
-  
+    /**
+   * get current user
+   */
+  public function getCurrentUser();
 }

@@ -20,4 +20,15 @@ class EloquentUserInfoRepository extends EloquentBaseRepository implements UserI
     return \App\Models\UserInfo::class;
   }
 
+  /**
+   * get current user
+   *
+   * @return \App\Models\UserInfo
+   */
+  public function getCurrentUser()
+  {
+    return $this->_model
+      ->where('account_id', auth()->id())
+      ->first();
+  }
 }

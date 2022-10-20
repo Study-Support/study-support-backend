@@ -10,5 +10,7 @@ Route::post('logout', [LoginController::class, 'logout']);
 Route::post('register', [RegisterController::class, 'register']);
 
 Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
+    Route::resource('user', UserInfoController::class)->only(['index']);
+    Route::put('user/edit', [UserInfoController::class, 'update']);
     Route::put('user/password', [UserInfoController::class, 'updatePassword']);
 });
