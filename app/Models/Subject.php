@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Faculty extends Model
+class Subject extends Model
 {
     use HasFactory;
 
@@ -13,8 +13,8 @@ class Faculty extends Model
         'name',
     ];
 
-    public function subjects()
+    public function faculties()
     {
-        return $this->belongsToMany(Subject::class, 'faculty_subject', 'subject_id', 'faculty_id');
+        return $this->belongsToMany(Faculty::class);
     }
 }
