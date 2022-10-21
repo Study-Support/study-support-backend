@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Subject;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Role;
 
-class RoleTableSeeder extends Seeder
+class SubjectSeeder extends Seeder
 {
   /**
    * Run the database seeds.
@@ -17,28 +18,28 @@ class RoleTableSeeder extends Seeder
     $params = [
       [
         'id' => 1,
-        'name' => 'Admin',
+        'name' => 'Lập trình hướng đối tượng',
       ],
       [
         'id' => 2,
-        'name' => 'User',
+        'name' => 'Vật lý 1',
       ],
       [
         'id' => 3,
-        'name' => 'Mentor',
+        'name' => 'Đại số tuyến tính',
       ]
     ];
     $this->create($params);
   }
 
   /**
-   * Insert table roles
+   * Insert table subjects
    * @param array $data
    */
   public function create($data)
   {
     foreach ($data as $row) {
-      Role::updateOrCreate($row);
+      Subject::updateOrCreate($row);
     }
   }
 }

@@ -22,7 +22,7 @@ class EloquentNotificationRepository extends EloquentBaseRepository implements N
     /**
    * Get list notification
    *
-   * @return \App\Models\Contact
+   * @return \App\Models\Notification
    */
   public function getListNotification(array $params)
   {

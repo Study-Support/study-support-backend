@@ -33,7 +33,7 @@ class FacultyTableSeeder extends Seeder
     }
 
     /**
-    * Insert table roles
+    * Insert table faculties
     * @param array $data
     */
     public function create($data)

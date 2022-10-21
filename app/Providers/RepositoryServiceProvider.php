@@ -15,7 +15,9 @@ class RepositoryServiceProvider extends ServiceProvider
     public $models = [
         'Account',
         'UserInfo',
-        'Notification'
+        'Notification',
+        'Question',
+        'Answer'
     ];
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\NotificationRequest;
 use App\Http\Resources\NotificationResource;
 use App\Repositories\Contracts\NotificationRepository;
@@ -29,16 +28,6 @@ class NotificationController extends BaseController
     return $this->sendResponse([
       'data' => NotificationResource::collection($notifications)
     ]);
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function create()
-  {
-    //
   }
 
   /**
@@ -77,16 +66,6 @@ class NotificationController extends BaseController
     return $this->sendError(__('messages.error.notification'));
   }
 
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function edit($id)
-  {
-    //
-  }
 
   /**
    * Update the specified resource in storage.
