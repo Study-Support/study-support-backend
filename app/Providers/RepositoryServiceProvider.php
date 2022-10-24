@@ -17,7 +17,9 @@ class RepositoryServiceProvider extends ServiceProvider
         'UserInfo',
         'Notification',
         'Question',
-        'Answer'
+        'Answer',
+        'Group',
+        'Faculty'
     ];
 
     /**

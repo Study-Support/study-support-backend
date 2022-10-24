@@ -17,4 +17,9 @@ class Subject extends Model
     {
         return $this->belongsToMany(Faculty::class);
     }
+
+    public function mentors()
+    {
+        return $this->belongsToMany(MentorInfo::class, 'mentor_subject', 'mentor_id', 'subject_id');
+    }
 }

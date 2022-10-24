@@ -42,13 +42,15 @@ class RegisterRequest extends BaseRequest
                 'numeric'
             ],
             'birthday' => [
-                'required',
-                'date'
+                'required'
             ],
             'gender' => [
                 'required'
             ],
             'faculty_id' => [
+                'required'
+            ],
+            'address' => [
                 'required'
             ]
         ];

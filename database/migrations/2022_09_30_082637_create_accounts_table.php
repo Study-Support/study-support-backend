@@ -18,11 +18,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->boolean('is_active')->default(true)->comment('0:block | 1:active');
-            $table->unsignedTinyInteger('role_id');
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

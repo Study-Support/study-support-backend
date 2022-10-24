@@ -13,12 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('mentor_information', function (Blueprint $table) {
             $table->integerIncrements('id');
-            $table->string('title');
-            $table->string('content');
-            $table->boolean('status')->comment('0: waiting | 1: accepted');
+            $table->unsignedBigInteger('account_id');
+            $table->string('cv_link');
+            $table->string('smart_banking');
+            $table->string('rating')->nullable();
+            $table->boolean('active')->comment('0: no | 1: active');
             $table->timestamps();
+
+            $table->foreign('account_id')->references('id')->on('accounts');
         });
     }
 
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('mentor_information');
     }
 };

@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('faculty_subject', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('faculty_id');
-            $table->unsignedInteger('subject_id');
+        Schema::create('account_role', function (Blueprint $table) {
+            $table->unsignedBigInteger('account_id');
+            $table->unsignedTinyInteger('role_id');
             $table->timestamps();
 
-            $table->foreign('faculty_id')->references('id')->on('faculties');
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('account_id')->references('id')->on('accounts');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faculty_subject');
+        Schema::dropIfExists('account_role');
     }
 };
