@@ -24,10 +24,7 @@ class UserInfoResource extends JsonResource
             'rating'        => $this->rating,
             'faculty_id'    => $this->faculty_id,
             'gender'        => $this->gender,
-            'avatar_url'    => $this->avatar_url,
-            'cv_link'       => $this->cv_link,
-            'smart_banking' => $this->smart_banking,
-            'mentor_rating' => $this->mentor_rating,
+            'avatar_url'    => $this->avatar_url
         ];
     }
 }

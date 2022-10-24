@@ -22,7 +22,9 @@ class GroupResource extends JsonResource
             'location_study'=> $this->location_study,
             'subject_id'    => $this->subject_id,
             'status'        => $this->status,
-            'student_amount'=> $this->student_amount
+            'student_amount'=> $this->student_amount,
+            'subject'       => $this->subject->name,
+            'faculty'       => $this->faculty->name
         ];
     }
 }

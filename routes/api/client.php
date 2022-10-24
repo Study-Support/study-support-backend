@@ -15,11 +15,11 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::get('notification', [NotificationController::class, 'index']);
 Route::get('faculties', [FacultyController::class, 'index']);
 
+Route::resource('groups', GroupController::class)->only(['index']);
+
 Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
     Route::resource('user', UserInfoController::class)->only(['index']);
     Route::put('user/edit', [UserInfoController::class, 'update']);
     Route::put('user/password', [UserInfoController::class, 'updatePassword']);
     Route::put('mentor/edit', [UserInfoController::class, 'updateMentor']);
-
-    Route::resource('groups', GroupController::class)->only(['index']);
 });

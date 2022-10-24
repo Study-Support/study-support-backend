@@ -21,10 +21,12 @@ return new class extends Migration
             $table->string('location_study');
             $table->unsignedInteger('subject_id');
             $table->integer('student_amount');
+            $table->unsignedInteger('faculty_id');
             $table->tinyInteger('status')->comment('0: waiting | 1: accept | 2: studying | 3: closed');
             $table->timestamps();
 
             $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('faculty_id')->references('id')->on('faculties');
         });
     }
 
