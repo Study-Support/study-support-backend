@@ -21,10 +21,14 @@ class RoleTableSeeder extends Seeder
       ],
       [
         'id' => 2,
-        'name' => 'User',
+        'name' => 'Mod',
       ],
       [
         'id' => 3,
+        'name' => 'User',
+      ],
+      [
+        'id' => 4,
         'name' => 'Mentor',
       ]
     ];

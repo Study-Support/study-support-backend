@@ -12,6 +12,7 @@ use Illuminate\Validation\Rules\Enum as RulesEnum;
 final class UserRole extends RulesEnum
 {
     const ADMIN = 1;
-    const USER  = 2;
-    const MENTOR = 3;
+    const MOD  = 2;
+    const USER = 3;
+    const MENTOR = 4;
 }

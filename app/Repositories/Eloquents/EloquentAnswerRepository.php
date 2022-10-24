@@ -18,9 +18,9 @@ class EloquentAnswerRepository extends EloquentBaseRepository implements AnswerR
     }
 
     /**
-   * Get list question
+   * Get list answer
    *
-   * @return \App\Models\Question
+   * @return \App\Models\Answer
    */
   public function getListAnswer(array $params)
   {

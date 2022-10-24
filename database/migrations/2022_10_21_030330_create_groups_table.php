@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('time_study');
             $table->string('location_study');
             $table->unsignedInteger('subject_id');
-            $table->boolean('is_active');
+            $table->integer('student_amount');
+            $table->tinyInteger('status')->comment('0: waiting | 1: accept | 2: studying | 3: closed');
             $table->timestamps();
 
             $table->foreign('subject_id')->references('id')->on('subjects');
