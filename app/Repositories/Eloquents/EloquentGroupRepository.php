@@ -25,8 +25,14 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
   public function getListGroup(array $params)
   {
     return $this->_model
+      ->with('members')
       ->when(isset($params['status']) &&  $params['status'] != 'all', function ($q) use ($params) {
         $q->where('status', $params['status']);
+      })
+      ->when(isset($params['subject']), function ($q1) use ($params) {
+        $q1->whereHas('subject', function ($q2) use ($params) {
+          return $q2->where('name', 'LIKE', '%' . $params['subject'] . '%');
+        });
       })
       ->orderBy('id', 'asc')
       ->get();

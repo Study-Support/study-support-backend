@@ -14,6 +14,7 @@ class Group extends Model
     'information',
     'time_study',
     'subject_id',
+    'faculty_id',
     'location_study',
     'status',
     'student_amount'
@@ -21,13 +22,13 @@ class Group extends Model
 
   public function accounts()
   {
-    return $this->belongsToMany(Account::class, 'members', 'account_id', 'group_id')
+    return $this->belongsToMany(Account::class, 'members', 'group_id', 'account_id')
       ->withPivot('rating', 'is_creator', 'review', 'is_mentor', 'status');
   }
 
   public function mentor()
   {
-    return $this->accounts()->wherePivot('is_mentor','=','1');
+    return $this->accounts()->wherePivot('is_mentor', '=', '1');
   }
 
   public function members()
@@ -38,5 +39,15 @@ class Group extends Model
   public function creator()
   {
     return $this->accounts()->wherePivot('is_creator', '=', '1');
+  }
+
+  public function subject()
+  {
+    return $this->hasOne(Subject::class, 'id', 'subject_id');
+  }
+
+  public function faculty()
+  {
+    return $this->hasOne(Faculty::class, 'id', 'faculty_id');
   }
 }

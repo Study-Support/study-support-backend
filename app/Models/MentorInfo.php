@@ -9,6 +9,8 @@ class MentorInfo extends Model
 {
   use HasFactory;
 
+  protected $table = 'mentor_information';
+
   public $fillable = [
     'account_id',
     'cv_link',

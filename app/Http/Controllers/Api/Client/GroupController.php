@@ -22,8 +22,19 @@ class GroupController extends BaseController
   {
     $groups = $this->groupRepository->getListGroup($request->all());
 
+    if ($request->type == '1') {
+      $groups =  $groups->filter(function ($group, $key) {
+        $count = $group->members->count();
+        return $group->student_amount > $count;
+      });
+    } else if ($request->type == '0') {
+      $groups =  $groups->filter(function ($group, $key) {
+        return count($group->mentor) == 0;
+      });
+    }
+
     return $this->sendResponse([
-        'data' => GroupResource::collection($groups)
+      'data' => GroupResource::collection($groups)
     ]);
   }
 
