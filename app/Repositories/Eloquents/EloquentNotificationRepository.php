@@ -31,7 +31,7 @@ class EloquentNotificationRepository extends EloquentBaseRepository implements N
         $q->where('content', 'LIKE', '%' . $params['search'] . '%');
       })
       ->orderBy('id', 'asc')
-      ->get();
+      ->paginate($this->MAX_PER_PAGE);
   }
 
 }

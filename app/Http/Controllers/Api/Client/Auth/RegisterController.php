@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Client\Auth;
 use App\Enums\UserRole;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\RegisterRequest;
+use App\Models\UserInfo;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\UserInfoRepository;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,6 @@ class RegisterController extends BaseController
   public function register(RegisterRequest $request)
   {
     $data_account = $request->only(['email', 'password']);
-    $data_account['role_id'] = UserRole::USER;
     $data_info = $request->only(['full_name', 'phone_number', 'birthday', 'gender', 'faculty_id']);
 
     DB::beginTransaction();
@@ -36,6 +36,8 @@ class RegisterController extends BaseController
       $account = $this->accountRepository->create($data_account);
 
       if ($account) {
+        $account->roles()->attach(UserRole::USER);
+        
         $data_info['account_id'] = $account->id;
         $this->userInfoRepository->create($data_info);
       }
