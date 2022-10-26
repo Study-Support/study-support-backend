@@ -15,5 +15,5 @@ Route::group(['middleware' => ['auth:api', 'auth.admin']], function () {
   Route::resource('questions', QuestionController::class)->only('index');
   Route::resource('answers', AnswerController::class)->only('index');
 
-  Route::resource('users', UserController::class)->only('index','show');
+  Route::resource('users', UserController::class)->only('index', 'show', 'update');
 });
