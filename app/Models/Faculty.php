@@ -17,4 +17,14 @@ class Faculty extends Model
     {
         return $this->belongsToMany(Subject::class, 'faculty_subject', 'subject_id', 'faculty_id');
     }
+
+    public function users()
+    {
+        return $this->hasMany(UserInfo::class, 'faculty_id');
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class, 'faculty_id');
+    }
 }

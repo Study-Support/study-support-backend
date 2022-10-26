@@ -35,7 +35,7 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
       })
       ->withCount(['members', 'mentor'])
       ->orderBy('id', 'asc')
-      ->get();
+      ->paginate($this->MAX_PER_PAGE);
   }
 
   /**

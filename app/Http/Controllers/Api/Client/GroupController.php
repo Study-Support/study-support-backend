@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\Client;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\GroupRequest;
 use App\Http\Resources\GroupResource;
 use App\Repositories\Contracts\GroupRepository;
+use App\Services\UtilService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class GroupController extends BaseController
 {
@@ -31,7 +34,8 @@ class GroupController extends BaseController
     });
 
     return $this->sendResponse([
-      'data' => GroupResource::collection($groups)
+      'data' => GroupResource::collection($groups),
+      'pagination'  => UtilService::paginate($groups)
     ]);
   }
 
@@ -48,12 +52,30 @@ class GroupController extends BaseController
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \Illuminate\Http\GroupRequest  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(GroupRequest $request)
   {
-    //
+    $data = $request->validated();
+    $data['status'] = config('group.status.waiting');
+
+    try {
+      $group = $this->groupRepository->create($data);
+
+      if ($group) {
+        $group->members()->attach(auth()->id(), [
+          'is_creator' => config('member.creator.is_creator'),
+          'is_mentor'  => $data['is_mentor'],
+          'status'     => config('member.status.accepted')
+        ]);
+      }
+
+      return $this->sendResponse(['message' => __('messages.success.create')]);
+    } catch (\Exception $e) {
+      Log::error($e);
+      return $this->sendError(__('messages.error.create'));
+    }
   }
 
   /**

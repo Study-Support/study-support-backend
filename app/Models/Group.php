@@ -17,13 +17,14 @@ class Group extends Model
     'faculty_id',
     'location_study',
     'status',
-    'student_amount'
+    'student_amount',
+    'self_study'
   ];
 
   public function accounts()
   {
     return $this->belongsToMany(Account::class, 'members', 'group_id', 'account_id')
-      ->withPivot('is_creator', 'review', 'is_mentor', 'status');
+      ->withPivot('is_creator', 'is_mentor', 'status');
   }
 
   public function mentor()
@@ -48,7 +49,7 @@ class Group extends Model
 
   public function faculty()
   {
-    return $this->hasOne(Faculty::class, 'id', 'faculty_id');
+    return $this->belongsTo(Faculty::class, 'id', 'faculty_id');
   }
 
   public function mentorAccepted()
