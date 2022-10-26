@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'gender'        => $this->gender,
             'avatar_url'    => $this->avatar_url,
             'group'         => $this->account->account_in_group_count,
+            'rating'        => $this->averageRating,
             'is_active'     => $this->account->is_active
         ];
     }

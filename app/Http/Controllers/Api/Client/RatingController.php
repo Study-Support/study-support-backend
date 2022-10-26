@@ -54,10 +54,10 @@ class RatingController extends BaseController
     foreach ($group->membersAccepted as $member) {
       if ($member->id == auth()->id() && $mentor_id == $data['user_id']) {
         $mentor = $this->mentorInfoRepository->getMentor($data['user_id']);
-        $mentor->rate($data['rate'], $data['comment'], $data['group_id']);
+        $mentor->rateOnce($data['rate'], $data['comment'], $data['group_id']);
       } elseif ($member->id == $data['user_id']  && $mentor_id == auth()->id()) {
         $user = $this->userInfoRepository->getUser($data['user_id']);
-        $user->rate($data['rate'], $data['comment'], $data['group_id']);
+        $user->rateOnce($data['rate'], $data['comment'], $data['group_id']);
       }
     }
 
