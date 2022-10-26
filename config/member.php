@@ -2,12 +2,12 @@
 
 return [
     'creator' => [
-        'is_creator'   => 1,
-        'no_creator'   => 0
+        'true'   => 1,
+        'false'   => 0
     ],
     'mentor' => [
-        'is_mentor'    => 1,
-        'member'       => 0
+        'true'    => 1,
+        'false'       => 0
     ],
     'status' => [
         'waiting'    => 0,
