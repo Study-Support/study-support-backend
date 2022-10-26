@@ -46,10 +46,10 @@ class EloquentUserInfoRepository extends EloquentBaseRepository implements UserI
       })
       ->withCount('account')
       ->with(['account' => function ($q) {
-        return $q->withCount('accountInGroup');
+        return $q->with('accountInGroup')->withCount('accountInGroup');
       }])
       ->orderBy('id', 'asc')
-      ->get();
+      ->paginate($this->MAX_PER_PAGE);
   }
 
   /**

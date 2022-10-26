@@ -2,15 +2,15 @@
 
 return [
     'creator' => [
-        'true'   => 1,
-        'false'   => 0
+        'true'    => true,
+        'false'   => false
     ],
     'mentor' => [
-        'true'    => 1,
-        'false'       => 0
+        'true'    => true,
+        'false'   => false
     ],
     'status' => [
-        'waiting'    => 0,
-        'accepted'   => 1
+        'waiting'    => false,
+        'accepted'   => true
     ]
 ];
