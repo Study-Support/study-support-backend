@@ -23,7 +23,7 @@ class Group extends Model
   public function accounts()
   {
     return $this->belongsToMany(Account::class, 'members', 'group_id', 'account_id')
-      ->withPivot('rating', 'is_creator', 'review', 'is_mentor', 'status');
+      ->withPivot('is_creator', 'review', 'is_mentor', 'status');
   }
 
   public function mentor()
@@ -49,5 +49,25 @@ class Group extends Model
   public function faculty()
   {
     return $this->hasOne(Faculty::class, 'id', 'faculty_id');
+  }
+
+  public function mentorAccepted()
+  {
+    return $this->mentor()->wherePivot('status', '=', '1');
+  }
+
+  public function membersAccepted()
+  {
+    return $this->members()->wherePivot('status', '=', '1');
+  }
+
+  public function mentorWaiting()
+  {
+    return $this->mentor()->wherePivot('status', '=', '0');
+  }
+
+  public function membersWaiting()
+  {
+    return $this->members()->wherePivot('status', '=', '0');
   }
 }

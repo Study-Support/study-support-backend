@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use willvincent\Rateable\Rateable;
 
 class UserInfo extends Model
 {
-  use HasFactory;
+  use HasFactory, Rateable;
 
   protected $table = 'user_information';
 
@@ -18,12 +19,8 @@ class UserInfo extends Model
     'gender',
     'phone_number',
     'birthday',
-    'rating',
     'avatar_url',
     'faculty_id',
-    'cv_link',
-    'smart_banking',
-    'mentor_rating'
   ];
 
   public function account()

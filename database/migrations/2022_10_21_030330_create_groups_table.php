@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedInteger('subject_id');
             $table->integer('student_amount');
             $table->unsignedInteger('faculty_id');
+            $table->boolean('self_study')->comment('0: control | 1: self_study');
             $table->tinyInteger('status')->comment('0: waiting | 1: accept | 2: studying | 3: closed');
             $table->timestamps();
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Client\Auth\RegisterController;
 use App\Http\Controllers\Api\Client\FacultyController;
 use App\Http\Controllers\Api\Client\GroupController;
 use App\Http\Controllers\Api\Client\NotificationController;
+use App\Http\Controllers\Api\Client\RatingController;
 use App\Http\Controllers\Api\Client\UserInfoController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,6 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
     Route::put('user/edit', [UserInfoController::class, 'update']);
     Route::put('user/password', [UserInfoController::class, 'updatePassword']);
     Route::put('mentor/edit', [UserInfoController::class, 'updateMentor']);
+
+    Route::resource('rate', RatingController::class)->only(['store']);
 });
