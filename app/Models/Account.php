@@ -45,7 +45,7 @@ class Account extends Authenticatable
   public function accountInGroup()
   {
     return $this->belongsToMany(Group::class, 'members', 'account_id', 'group_id')
-      ->withPivot('rating', 'is_creator', 'review', 'is_mentor', 'status');
+      ->withPivot('is_creator', 'review', 'is_mentor', 'status');
   }
 
   public function memberInGroup()
@@ -63,4 +63,23 @@ class Account extends Authenticatable
     return $this->accountInGroup()->wherePivot('is_creator', '=', '1');
   }
 
+  public function memberInGroupAccepted()
+  {
+    return $this->memberInGroup()->wherePivot('status', '=', '1');
+  }
+
+  public function mentorInGroupAccepted()
+  {
+    return $this->mentorInGroup()->wherePivot('status', '=', '1');
+  }
+
+  public function memberInGroupWaiting()
+  {
+    return $this->memberInGroup()->wherePivot('status', '=', '0');
+  }
+
+  public function mentorInGroupWaiting()
+  {
+    return $this->mentorInGroup()->wherePivot('status', '=', '0');
+  }
 }

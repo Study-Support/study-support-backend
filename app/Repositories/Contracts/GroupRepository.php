@@ -11,4 +11,10 @@ interface GroupRepository extends BaseRepository
    * @return array
    */
   public function getListGroup(array $params);
+
+  /**
+   * get one group
+   * @param $id
+   */
+  public function getGroup($id);
 }

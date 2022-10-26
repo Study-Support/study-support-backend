@@ -12,7 +12,6 @@ class Member extends Model
     protected $fillable = [
         'account_id',
         'group_id',
-        'rating',
         'review',
         'is_creator',
         'is_mentor',

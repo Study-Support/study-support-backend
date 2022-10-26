@@ -4,24 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateRatingsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('members', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('account_id');
-            $table->unsignedInteger('group_id');
-            $table->boolean('is_creator')->comment('0: member | 1: creator');
-            $table->string('review')->nullable();
-            $table->boolean('is_mentor')->comment('0: member | 1: mentor');
-            $table->boolean('status')->comment('0: not_accepted | 1: accepted');
+        Schema::create('ratings', function (Blueprint $table) {
+            $table->increments('id');
             $table->timestamps();
+            $table->integer('rating');
+            $table->text('comment')->nullable();
+            $table->morphs('rateable');
+            $table->unsignedBigInteger('account_id');
+            $table->index('rateable_id');
+            $table->index('rateable_type');
+            $table->unsignedInteger('group_id');
 
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->foreign('group_id')->references('id')->on('groups');
@@ -30,11 +29,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('members');
+        Schema::drop('ratings');
     }
-};
+}

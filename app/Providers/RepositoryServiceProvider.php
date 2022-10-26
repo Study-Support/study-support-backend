@@ -19,7 +19,8 @@ class RepositoryServiceProvider extends ServiceProvider
         'Question',
         'Answer',
         'Group',
-        'Faculty'
+        'Faculty',
+        'MentorInfo'
     ];
 
     /**

@@ -37,4 +37,17 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
       ->orderBy('id', 'asc')
       ->get();
   }
+
+  /**
+   * get one group
+   * @param $id
+   *
+   * @return \App\Models\Group
+   */
+  public function getGroup($id)
+  {
+    return $this->_model
+      ->with('membersAccepted', 'mentorAccepted')
+      ->Where('id', $id)->first();
+  }
 }

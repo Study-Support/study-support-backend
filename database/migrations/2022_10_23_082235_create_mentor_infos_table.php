@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('account_id');
             $table->string('cv_link');
             $table->string('smart_banking');
-            $table->string('rating')->nullable();
             $table->boolean('active')->comment('0: no | 1: active');
             $table->timestamps();
 

@@ -23,7 +23,9 @@ class GroupSeeder extends Seeder
         'subject_id' => '2',
         'student_amount' => '5',
         'location_study' => 'A123',
-        'status' => '1'
+        'status' => '1',
+        'faculty_id' => '1',
+        'self_study' => '1'
       ],
       [
         'id' => 2,
@@ -33,7 +35,9 @@ class GroupSeeder extends Seeder
         'subject_id' => '3',
         'student_amount' => '10',
         'location_study' => 'B102',
-        'status' => '1'
+        'status' => '1',
+        'faculty_id' => '2',
+        'self_study' => '0'
       ],
       [
         'id' => 3,
@@ -43,7 +47,9 @@ class GroupSeeder extends Seeder
         'subject_id' => '2',
         'student_amount' => '12',
         'location_study' => 'C112',
-        'status' => '0'
+        'status' => '0',
+        'faculty_id' => '3',
+        'self_study' => '0'
       ]
     ];
     $this->create($params);

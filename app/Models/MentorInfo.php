@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use willvincent\Rateable\Rateable;
 
 class MentorInfo extends Model
 {
-  use HasFactory;
+  use HasFactory, Rateable;
 
   protected $table = 'mentor_information';
 
@@ -15,7 +16,6 @@ class MentorInfo extends Model
     'account_id',
     'cv_link',
     'smart_banking',
-    'rating',
     'status'
   ];
 

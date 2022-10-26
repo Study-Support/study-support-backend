@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('address', 100)->nullable();
             $table->string('phone_number')->nullable();
             $table->string('birthday', 255)->nullable();
-            $table->tinyInteger('rating')->nullable();
             $table->unsignedInteger('faculty_id')->nullable()->comment('faculty id');
             $table->boolean('gender')->nullable()->comment('0:female | 1:male');
             $table->string('avatar_url')->nullable();
