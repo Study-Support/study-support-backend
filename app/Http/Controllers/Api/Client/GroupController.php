@@ -9,6 +9,8 @@ use App\Repositories\Contracts\GroupRepository;
 use App\Services\UtilService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Enums\UserRole;
+use Illuminate\Support\Facades\DB;
 
 class GroupController extends BaseController
 {
@@ -60,19 +62,32 @@ class GroupController extends BaseController
     $data = $request->validated();
     $data['status'] = config('group.status.waiting');
 
+    $roles = auth()->user()->roles;
+
+    foreach ($roles as $role) {
+      if ($role->id === UserRole::MENTOR) {
+        $mentor = $data['is_mentor'];
+        break;
+      } else $mentor = config('member.mentor.false');
+    }
+
+    DB::beginTransaction();
+
     try {
       $group = $this->groupRepository->create($data);
 
       if ($group) {
         $group->members()->attach(auth()->id(), [
-          'is_creator' => config('member.creator.is_creator'),
-          'is_mentor'  => $data['is_mentor'],
+          'is_creator' => config('member.creator.true'),
+          'is_mentor'  => $mentor,
           'status'     => config('member.status.accepted')
         ]);
       }
 
+      DB::commit();
       return $this->sendResponse(['message' => __('messages.success.create')]);
     } catch (\Exception $e) {
+      DB::rollBack();
       Log::error($e);
       return $this->sendError(__('messages.error.create'));
     }
