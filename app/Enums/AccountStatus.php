@@ -13,4 +13,15 @@ final class AccountStatus extends RulesEnum
 {
     const BLOCK = 0;
     const ACTIVE = 1;
+
+    /**
+   * Get all constants
+   */
+  public static function all()
+  {
+    return [
+      self::BLOCK,
+      self::ACTIVE,
+    ];
+  }
 }

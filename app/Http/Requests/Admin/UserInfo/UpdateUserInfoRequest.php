@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\UserInfo;
 
+use App\Enums\AccountStatus;
+use App\Http\Requests\BaseRequest;
 use App\Enums\UserGender;
 use Illuminate\Validation\Rule;
 
@@ -40,13 +42,16 @@ class UpdateUserInfoRequest extends BaseRequest
                 'required'
             ],
             'birthday' => [
-                'required',
-                'date'
+                'required'
             ],
             'faculty_id' => [
                 'required',
                 Rule::exists('faculties', 'id')
             ],
+            'is_active' => [
+                'required',
+                Rule::in(AccountStatus::all())
+            ]
         ];
     }
 }

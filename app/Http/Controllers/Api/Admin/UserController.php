@@ -3,17 +3,22 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\Admin\UserInfo\UpdateUserInfoRequest;
 use App\Http\Resources\Admin\User\UserResource;
 use App\Http\Resources\RatingResource;
+use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\UserInfoRepository;
 use App\Services\UtilService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseController
 {
 
   public function __construct(
-    public UserInfoRepository $userInfoRepository
+    public UserInfoRepository $userInfoRepository,
+    public AccountRepository $accountRepository
   ) {
   }
   /**
@@ -64,8 +69,8 @@ class UserController extends BaseController
     $ratings = $user->ratings;
 
     return $this->sendResponse([
-        'user'      => new UserResource($user),
-        'ratings'   => RatingResource::collection($ratings)
+      'user'      => new UserResource($user),
+      'ratings'   => RatingResource::collection($ratings)
     ]);
   }
 
@@ -83,13 +88,30 @@ class UserController extends BaseController
   /**
    * Update the specified resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \Illuminate\Http\UpdateUserInfoRequest  $request
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(UpdateUserInfoRequest $request, $id)
   {
-    //
+
+    $user = $this->userInfoRepository->where('account_id', $id)->first();
+
+    DB::beginTransaction();
+
+    try {
+      $this->userInfoRepository->update($user->id, $request->validated());
+      $this->accountRepository->update($id, $request->only('is_active'));
+
+      DB::commit();
+      return $this->sendResponse([
+        'message' => __('messages.success.update')
+      ]);
+    } catch (\Exception $e) {
+      DB::rollBack();
+      Log::error($e);
+      return $this->sendError(__('messages.error.update'));
+    }
   }
 
   /**
