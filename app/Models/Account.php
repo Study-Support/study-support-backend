@@ -45,7 +45,7 @@ class Account extends Authenticatable
   public function accountInGroup()
   {
     return $this->belongsToMany(Group::class, 'members', 'account_id', 'group_id')
-      ->withPivot('is_creator', 'review', 'is_mentor', 'status');
+      ->withPivot('is_creator', 'is_mentor', 'status');
   }
 
   public function memberInGroup()

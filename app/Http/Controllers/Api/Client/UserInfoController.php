@@ -51,7 +51,7 @@ class UserInfoController extends BaseController
       return $this->sendResponse(['message' => __('messages.success.update')]);
     } catch (\Exception $e) {
       Log::error($e);
-      return $this->sendError(__('messages .error.update'));
+      return $this->sendError(__('messages.error.update'));
     }
   }
 

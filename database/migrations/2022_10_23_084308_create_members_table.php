@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('account_id');
             $table->unsignedInteger('group_id');
             $table->boolean('is_creator')->comment('0: member | 1: creator');
-            $table->string('review')->nullable();
             $table->boolean('is_mentor')->comment('0: member | 1: mentor');
             $table->boolean('status')->comment('0: not_accepted | 1: accepted');
             $table->timestamps();
