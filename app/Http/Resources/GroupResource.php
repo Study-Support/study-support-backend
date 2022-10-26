@@ -24,7 +24,8 @@ class GroupResource extends JsonResource
             'status'        => $this->status,
             'student_amount'=> $this->student_amount,
             'subject'       => $this->subject->name,
-            'faculty'       => $this->faculty->name
+            'faculty'       => $this->faculty->name,
+            'members_count' => $this->members_count
         ];
     }
 }

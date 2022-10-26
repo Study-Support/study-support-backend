@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Client;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Resources\NotificationResource;
 use App\Repositories\Contracts\NotificationRepository;
+use App\Services\UtilService;
 use Illuminate\Http\Request;
 
 class NotificationController extends BaseController
@@ -24,7 +25,8 @@ class NotificationController extends BaseController
     $notifications = $this->notificationRepository->getListNotification($request->all());
 
     return $this->sendResponse([
-      'data' => NotificationResource::collection($notifications)
+      'data'        => NotificationResource::collection($notifications),
+      'pagination'  => UtilService::paginate($notifications)
     ]);
   }
 

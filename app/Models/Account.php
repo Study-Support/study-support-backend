@@ -29,7 +29,7 @@ class Account extends Authenticatable
 
   public function roles()
   {
-    return $this->belongsToMany(Role::class, 'account_role', 'role_id', 'account_id');
+    return $this->belongsToMany(Role::class, 'account_role', 'account_id', 'role_id');
   }
 
   public function setPasswordAttribute($value)
@@ -44,7 +44,7 @@ class Account extends Authenticatable
 
   public function accountInGroup()
   {
-    return $this->belongsToMany(Group::class, 'members', 'group_id', 'account_id')
+    return $this->belongsToMany(Group::class, 'members', 'account_id', 'group_id')
       ->withPivot('rating', 'is_creator', 'review', 'is_mentor', 'status');
   }
 
@@ -62,4 +62,5 @@ class Account extends Authenticatable
   {
     return $this->accountInGroup()->wherePivot('is_creator', '=', '1');
   }
+
 }
