@@ -20,6 +20,7 @@ class Subject extends Model
 
     public function mentors()
     {
-        return $this->belongsToMany(MentorInfo::class, 'mentor_subject', 'mentor_id', 'subject_id');
+        return $this->belongsToMany(MentorInfo::class, 'mentor_subject', 'mentor_id', 'subject_id')
+        ->withPivot('cv_link', 'active');
     }
 }

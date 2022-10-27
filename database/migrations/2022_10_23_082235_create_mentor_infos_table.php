@@ -16,9 +16,7 @@ return new class extends Migration
         Schema::create('mentor_information', function (Blueprint $table) {
             $table->integerIncrements('id');
             $table->unsignedBigInteger('account_id');
-            $table->string('cv_link');
             $table->string('smart_banking');
-            $table->boolean('active')->comment('0: no | 1: active');
             $table->timestamps();
 
             $table->foreign('account_id')->references('id')->on('accounts');

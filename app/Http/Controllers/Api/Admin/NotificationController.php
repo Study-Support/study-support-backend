@@ -43,10 +43,10 @@ class NotificationController extends BaseController
     $notification = $this->notificationRepository->create($data);
 
     if ($notification) {
-      return $this->sendResponse(['messages' => __('messages.success.create_notification')]);
+      return $this->sendResponse(['messages' => __('messages.success.create')]);
     }
 
-    return $this->sendResponse(['messages' => __('messages.error.create_notification')]);
+    return $this->sendResponse(['messages' => __('messages.error.create')]);
   }
 
   /**
