@@ -27,5 +27,6 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
     Route::resource('rate', RatingController::class)->only(['store']);
     Route::resource('groups', GroupController::class)->only(['store']);
 
-    Route::resource('mentor', MentorInfoController::class)->only(['store', 'index', 'update']);
+    Route::put('mentor', [MentorInfoController::class, 'update']);
+    Route::resource('mentor', MentorInfoController::class)->only(['store', 'index']);
 });

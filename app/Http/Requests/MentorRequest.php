@@ -24,6 +24,9 @@ class MentorRequest extends BaseRequest
   public function rules()
   {
     return [
+      'id' => [
+        'required'
+      ],
       'cv_link'  => [
         'required'
       ],
@@ -33,7 +36,7 @@ class MentorRequest extends BaseRequest
       'subject_id' => [
         'required',
         Rule::exists('subjects', 'id')
-    ],
+      ],
     ];
   }
 }

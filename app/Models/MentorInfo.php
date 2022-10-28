@@ -27,6 +27,6 @@ class MentorInfo extends Model
   public function subjects()
   {
     return $this->belongsToMany(Subject::class, 'mentor_subject', 'mentor_id', 'subject_id')
-    ->withPivot('cv_link', 'active');
+    ->withPivot('id', 'cv_link', 'active');
   }
 }
