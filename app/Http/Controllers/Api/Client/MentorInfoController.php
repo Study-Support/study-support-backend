@@ -108,15 +108,17 @@ class MentorInfoController extends BaseController
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(MentorRequest $request, $id)
+  public function update(MentorRequest $request)
   {
     try {
-      $mentor = $this->mentorInfoRepository->find($id);
-      $this->mentorInfoRepository->update($id, $request->only('smart_banking'));
+      $mentor = $this->mentorInfoRepository->where('account_id', auth()->id())->first();
+      $this->mentorInfoRepository->update($mentor->id, $request->only('smart_banking'));
 
       $data = $request->validated();
+
       foreach ($mentor->subjects as $subject) {
-        if ($subject->id == $data['subject_id']) {
+        if ($subject->pivot->id == $data['id'] && $subject->pivot->active == config('mentor.active.false')) {
+          $subject->pivot->subject_id = $data['subject_id'];
           $subject->pivot->cv_link = $data['cv_link'];
           $subject->pivot->save();
         }
