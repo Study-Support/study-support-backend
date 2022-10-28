@@ -31,7 +31,7 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
   public function getMentor($id)
   {
     return $this->_model
-      ->with('account')
+      ->with('account','subjects')
       ->firstWhere('account_id', $id);
   }
 }

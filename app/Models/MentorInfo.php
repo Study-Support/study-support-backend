@@ -16,7 +16,7 @@ class MentorInfo extends Model
     'account_id',
     'cv_link',
     'smart_banking',
-    'status'
+    'active'
   ];
 
   public function account()
@@ -26,6 +26,7 @@ class MentorInfo extends Model
 
   public function subjects()
   {
-    return $this->belongsToMany(Subject::class, 'mentor_subject', 'subject_id', 'mentor_id');
+    return $this->belongsToMany(Subject::class, 'mentor_subject', 'mentor_id', 'subject_id')
+    ->withPivot('cv_link', 'active');
   }
 }

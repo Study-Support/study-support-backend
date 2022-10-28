@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('mentor_subject', function (Blueprint $table) {
             $table->unsignedInteger('mentor_id');
             $table->unsignedInteger('subject_id');
+            $table->text('cv_link');
+            $table->boolean('active')->comment('0: no | 1: active');
             $table->timestamps();
 
             $table->foreign('mentor_id')->references('id')->on('mentor_information');
