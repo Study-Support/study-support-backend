@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+use Illuminate\Validation\Rule;
 
 class RegisterRequest extends BaseRequest
 {
@@ -48,7 +49,8 @@ class RegisterRequest extends BaseRequest
                 'required'
             ],
             'faculty_id' => [
-                'required'
+                'required',
+                Rule::exists('faculties', 'id')
             ],
             'address' => [
                 'required'
