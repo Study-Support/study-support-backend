@@ -5,7 +5,7 @@ namespace App\Services\RegisterMentorService;
 use App\Http\Controllers\Api\BaseController;
 use Illuminate\Support\Facades\Log;
 
-class LoginService extends BaseController implements RegisterMentorServiceInterface
+class RegisterMentorService extends BaseController implements RegisterMentorServiceInterface
 {
   /**
    * Form action register mentor

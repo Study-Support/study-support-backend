@@ -21,11 +21,9 @@ class GroupResource extends JsonResource
             'time_study'    => $this->time_study,
             'location_study'=> $this->location_study,
             'subject_id'    => $this->subject_id,
-            'status'        => $this->status,
-            'student_amount'=> $this->student_amount,
-            'subject'       => $this->subject->name,
-            'faculty'       => $this->faculty->name,
-            'members_count' => $this->members_count
+            'faculty_id'    => $this->faculty_id,
+            'quality'       => $this->members_accepted_count,
+            'type'          => $this->self_study ? 0 : $this->status
         ];
     }
 }

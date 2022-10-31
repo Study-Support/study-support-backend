@@ -27,14 +27,6 @@ class GroupController extends BaseController
   {
     $groups = $this->groupRepository->getListGroup($request->all());
 
-    $groups =  $groups->filter(function ($group) use ($request) {
-      if ($request->type === config('group.type.not_enough_members'))
-        return $group->student_amount > $group->members_count;
-      elseif ($request->type === config('group.type.no_mentor'))
-        return $group->mentor_count === 0;
-      else return $group;
-    });
-
     return $this->sendResponse([
       'data' => GroupResource::collection($groups),
       'pagination'  => UtilService::paginate($groups)

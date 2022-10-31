@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Client;
 use App\Http\Controllers\Api\BaseController;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\MentorRequest;
-use App\Http\Resources\MentorDetailResource;
 use App\Http\Resources\MentorResource;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\MentorInfoRepository;
