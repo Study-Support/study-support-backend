@@ -17,6 +17,7 @@ class MentorResource extends JsonResource
         return [
             'id'                => $this->id,
             'smart_banking'     => $this->smart_banking,
+            'subject_list'      => MentorDetailResource::collection($this->subjects)
         ];
     }
 }

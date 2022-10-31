@@ -31,7 +31,21 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
   public function getMentor($id)
   {
     return $this->_model
-      ->with('account','subjects')
+      ->with('account', 'subjects')
       ->firstWhere('account_id', $id);
+  }
+
+  /**
+   * Get list mentor
+   *
+   * @return \App\Models\MentorInfo
+   */
+  public function getListMentor(array $params)
+  {
+    return $this->_model
+      ->with('account', 'subjects')
+      ->withCount('subjects')
+      ->orderBy('id', 'asc')
+      ->paginate($this->MAX_PER_PAGE);
   }
 }
