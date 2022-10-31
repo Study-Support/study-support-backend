@@ -9,13 +9,14 @@ use App\Http\Resources\MentorDetailResource;
 use App\Http\Resources\MentorResource;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\MentorInfoRepository;
-use Illuminate\Http\Request;
+use App\Services\RegisterMentorService\RegisterMentorServiceInterface;
 
 class MentorInfoController extends BaseController
 {
   public function __construct(
     private MentorInfoRepository $mentorInfoRepository,
-    private AccountRepository $accountRepository
+    private AccountRepository $accountRepository,
+    public RegisterMentorServiceInterface $registerMentorServiceInterface
   ) {
   }
   /**
@@ -29,8 +30,7 @@ class MentorInfoController extends BaseController
     $subjects = $mentor->subjects;
 
     return $this->sendResponse([
-      'mentorInfo'    => new MentorResource($mentor),
-      'subjects'      => MentorDetailResource::collection($subjects)
+      'data'    => new MentorResource($mentor)
     ]);
   }
 
@@ -52,32 +52,9 @@ class MentorInfoController extends BaseController
    */
   public function store(MentorRequest $request)
   {
-    try {
+    $data = $request->validated();
 
-      $data = $request->validated();
-
-      $mentorInfo = $this->mentorInfoRepository->getMentor(auth()->id())
-        ? $this->mentorInfoRepository->getMentor(auth()->id())
-        : $this->mentorInfoRepository->create($data);
-
-      foreach ($mentorInfo->subjects as $subject) {
-        if ($subject->id == $data['subject_id']) {
-          return $this->sendResponse(['messages' => __('messages.error.mentor_exist')]);
-        }
-      }
-
-      $mentorInfo->subjects()->attach($data['subject_id'], [
-        'cv_link'   => $data['cv_link'],
-        'active'    => config('mentor.active.false')
-      ]);
-
-      return $this->sendResponse([
-        'message' => __('messages.success.create')
-      ]);
-    } catch (\Exception $e) {
-      Log::error($e);
-      return $this->sendError(__('messages.error.create'));
-    }
+    return $this->registerMentorServiceInterface->registerMentor($data);
   }
 
   /**

@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Resources\AnswerResource;
-use App\Repositories\Contracts\AnswerRepository;
+use App\Http\Resources\MentorResource;
+use App\Repositories\Contracts\AccountRepository;
+use App\Repositories\Contracts\MentorInfoRepository;
+use App\Services\UtilService;
 use Illuminate\Http\Request;
 
-class AnswerController extends BaseController
+class MentorInfoController extends BaseController
 {
   public function __construct(
-    public AnswerRepository $answerRepository
+    private MentorInfoRepository $mentorInfoRepository,
+    private AccountRepository $accountRepository
   ) {
   }
   /**
@@ -20,10 +23,11 @@ class AnswerController extends BaseController
    */
   public function index(Request $request)
   {
-    $answers = $this->answerRepository->getListAnswer($request->all());
+    $mentors = $this->mentorInfoRepository->getListMentor($request->all());
 
     return $this->sendResponse([
-      'data' => AnswerResource::collection($answers)
+        'data'          => MentorResource::collection($mentors),
+        'pagination'    => UtilService::paginate($mentors)
     ]);
   }
 
