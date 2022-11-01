@@ -20,6 +20,7 @@ class AccountTableSeeder extends Seeder
     $data = [
       'email' =>  'admin@test.com',
       'password' => 'Admin123',
+      'role_id' => UserRole::USER,
       'remember_token' => Str::random(10)
     ];
     $isExist = Account::where('email', $data['email'])->exists();

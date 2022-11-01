@@ -28,6 +28,7 @@ class RegisterController extends BaseController
   public function register(RegisterRequest $request)
   {
     $data_account = $request->only(['email', 'password']);
+    $data_account['role_id'] = UserRole::USER;
     $data_info = $request->only(['full_name', 'phone_number', 'birthday', 'gender', 'faculty_id']);
 
     DB::beginTransaction();
@@ -36,8 +37,6 @@ class RegisterController extends BaseController
       $account = $this->accountRepository->create($data_account);
 
       if ($account) {
-        $account->roles()->attach(UserRole::USER);
-        
         $data_info['account_id'] = $account->id;
         $this->userInfoRepository->create($data_info);
       }

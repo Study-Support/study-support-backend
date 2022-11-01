@@ -41,10 +41,9 @@ class EloquentUserInfoRepository extends EloquentBaseRepository implements UserI
   public function getListUser(array $params)
   {
     return $this->_model
-      ->whereHas('account.roles', function ($q) {
-        return $q->where('id', UserRole::USER);
+      ->whereHas('account', function ($q) {
+        return $q->where('role_id', UserRole::USER);
       })
-      ->withCount('account')
       ->with(['account' => function ($q) {
         return $q->with('accountInGroup')->withCount('accountInGroup');
       }])

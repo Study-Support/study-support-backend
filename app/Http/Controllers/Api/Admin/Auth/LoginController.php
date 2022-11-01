@@ -21,6 +21,7 @@ class LoginController extends BaseController
   public function login(LoginRequest $request)
   {
     $data = $request->validated();
+    $data['role_id'] = UserRole::ADMIN;
 
     return $this->loginServiceInterface->actionLogin($data);
   }
