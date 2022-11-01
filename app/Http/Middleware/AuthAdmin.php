@@ -18,14 +18,11 @@ class AuthAdmin
    */
   public function handle(Request $request, Closure $next)
   {
-    $roles = auth()->user()->roles;
-    foreach ($roles as $role) {
-      if (
-        ($role->id === UserRole::ADMIN) &&
-        (auth()->user()->is_active === AccountStatus::ACTIVE)
-      ) {
-        return $next($request);
-      }
+    if (
+      (auth()->user()->role_id === UserRole::ADMIN) &&
+      (auth()->user()->is_active === AccountStatus::ACTIVE)
+    ) {
+      return $next($request);
     }
     return ResponseInvalidToken::send();
   }

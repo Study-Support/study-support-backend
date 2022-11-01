@@ -14,6 +14,7 @@ class Account extends Authenticatable
   protected $fillable = [
     'email',
     'password',
+    'role_id',
     'is_active'
   ];
 
@@ -25,11 +26,6 @@ class Account extends Authenticatable
   public function userInfo()
   {
     return $this->hasOne(UserInfo::class, 'account_id');
-  }
-
-  public function roles()
-  {
-    return $this->belongsToMany(Role::class, 'account_role', 'account_id', 'role_id');
   }
 
   public function setPasswordAttribute($value)
@@ -81,5 +77,10 @@ class Account extends Authenticatable
   public function mentorInGroupWaiting()
   {
     return $this->mentorInGroup()->wherePivot('status', '=', '0');
+  }
+
+  public function role()
+  {
+    return $this->belongsTo(Role::class, 'role_id');
   }
 }
