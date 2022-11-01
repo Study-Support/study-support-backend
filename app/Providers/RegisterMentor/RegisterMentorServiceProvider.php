@@ -2,8 +2,8 @@
 
 namespace App\Providers\RegisterMentor;
 
-use App\Services\RegisterMentorService\RegisterMentorService;
-use App\Services\RegisterMentorService\RegisterMentorServiceInterface;
+use App\Services\RegisterMentor\RegisterMentorServiceInterface;
+use App\Services\RegisterMentor\RegisterMentorService;
 use Illuminate\Support\ServiceProvider;
 
 class RegisterMentorServiceProvider extends ServiceProvider

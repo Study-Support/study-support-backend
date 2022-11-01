@@ -35,11 +35,6 @@ class GroupRequest extends BaseRequest
             'time_study' => [
                 'required'
             ],
-            'student_amount' => [
-                'required',
-                'numeric',
-                'between:0,10'
-            ],
             'location_study' => [
                 'required'
             ],

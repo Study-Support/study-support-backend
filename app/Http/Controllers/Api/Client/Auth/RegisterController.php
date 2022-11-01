@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Client\Auth;
 use App\Enums\UserRole;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\RegisterRequest;
-use App\Models\UserInfo;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\UserInfoRepository;
 use Illuminate\Support\Facades\DB;

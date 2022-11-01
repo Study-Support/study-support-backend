@@ -6,16 +6,19 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\GroupRequest;
 use App\Http\Resources\GroupResource;
 use App\Repositories\Contracts\GroupRepository;
+use App\Services\CreateGroup\CreateGroupService;
+use App\Services\CreateGroup\CreateGroupServiceInterface;
 use App\Services\UtilService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Enums\UserRole;
-use Illuminate\Support\Facades\DB;
+use App\Services\JoinGroup\JoinGroupServiceInterface;
 
 class GroupController extends BaseController
 {
   public function __construct(
-    public GroupRepository $groupRepository
+    public GroupRepository $groupRepository,
+    public JoinGroupServiceInterface $joinGroupServiceInterface,
+    public CreateGroupServiceInterface $createGroupServiceInterface
   ) {
   }
   /**
@@ -51,35 +54,25 @@ class GroupController extends BaseController
    */
   public function store(GroupRequest $request)
   {
-    $data = $request->validated();
-    $data['status'] = config('group.status.waiting');
-
-    $roles = auth()->user()->roles;
-
-    foreach ($roles as $role) {
-      if ($role->id === UserRole::MENTOR) {
-        $mentor = $data['is_mentor'];
-        break;
-      } else $mentor = config('member.mentor.false');
-    }
-
-    DB::beginTransaction();
+    $group = $request->validated();
+    $group['status'] = config('group.status.waiting');
 
     try {
-      $group = $this->groupRepository->create($data);
+      if ($group['is_mentor'] && !$group['self_study']) {
+        $subjects = auth()->user()->mentorInfo->subjectsAccepted;
+        foreach ($subjects as $subject) {
+          if ($subject->pivot->subject_id === $group['subject_id']) {
+            return $this->createGroupServiceInterface->createGroup($group);
+          }
+        }
 
-      if ($group) {
-        $group->members()->attach(auth()->id(), [
-          'is_creator' => config('member.creator.true'),
-          'is_mentor'  => $mentor,
-          'status'     => config('member.status.accepted')
-        ]);
+        return $this->sendError(__('messages.error.not_is_mentor'));
+      } elseif (!$group['is_mentor']) {
+        return $this->createGroupServiceInterface->createGroup($group);
       }
 
-      DB::commit();
-      return $this->sendResponse(['message' => __('messages.success.create')]);
+      return $this->sendError(__('messages.error.create'));
     } catch (\Exception $e) {
-      DB::rollBack();
       Log::error($e);
       return $this->sendError(__('messages.error.create'));
     }
@@ -128,5 +121,29 @@ class GroupController extends BaseController
   public function destroy($id)
   {
     //
+  }
+
+  public function joinGroup($id)
+  {
+    $group = $this->groupRepository->getGroup($id);
+
+    try {
+      foreach ($group->accounts as $account) {
+        if ($account->pivot->account_id === auth()->id()) {
+          return $this->sendError(__('messages.error.account_exist'));
+        }
+      }
+
+      if ($group->status === config('group.status.find_member')) {
+        return $this->joinGroupServiceInterface->joinGroupAsMember($group);
+      } elseif ($group->status === config('group.status.find_mentor') && !$group->self_study) {
+        return $this->joinGroupServiceInterface->joinGroupAsMentor($group);
+      }
+
+      return $this->sendError(__('messages.error.can_not_join'));
+    } catch (\Exception $e) {
+      Log::error($e);
+      return $this->sendError(__('messages.error.can_not_join'));
+    }
   }
 }

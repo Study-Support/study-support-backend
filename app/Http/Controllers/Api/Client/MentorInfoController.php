@@ -8,7 +8,7 @@ use App\Http\Requests\MentorRequest;
 use App\Http\Resources\MentorResource;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\MentorInfoRepository;
-use App\Services\RegisterMentorService\RegisterMentorServiceInterface;
+use App\Services\RegisterMentor\RegisterMentorServiceInterface;
 
 class MentorInfoController extends BaseController
 {
