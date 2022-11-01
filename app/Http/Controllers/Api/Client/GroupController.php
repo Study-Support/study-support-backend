@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Client;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\GroupRequest;
 use App\Http\Resources\GroupResource;
+use App\Http\Resources\MemberResource;
 use App\Repositories\Contracts\GroupRepository;
 use App\Services\CreateGroup\CreateGroupService;
 use App\Services\CreateGroup\CreateGroupServiceInterface;
@@ -86,7 +87,9 @@ class GroupController extends BaseController
    */
   public function show($id)
   {
-    //
+    $group = $this->groupRepository->getGroup($id);
+
+    return $this->sendResponse(new GroupResource($group));
   }
 
   /**
