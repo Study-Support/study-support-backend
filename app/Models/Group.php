@@ -17,7 +17,6 @@ class Group extends Model
     'faculty_id',
     'location_study',
     'status',
-    'student_amount',
     'self_study'
   ];
 
@@ -71,4 +70,5 @@ class Group extends Model
   {
     return $this->members()->wherePivot('status', '=', '0');
   }
+
 }

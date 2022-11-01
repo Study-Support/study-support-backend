@@ -17,7 +17,10 @@ return [
         'update'        => 'Cập nhật không thành công',
         'delete'        => 'Xóa không thành công',
         'notification'  => 'Thông báo không tồn tại',
-        'mentor_exist'  => 'Bạn đã đăng ký làm mentor môn học này'
+        'mentor_exist'  => 'Bạn đã đăng ký làm mentor môn học này',
+        'can_not_join'  => 'Không thể tham gia nhóm này',
+        'not_is_mentor' => 'Bạn chưa làm mentor của môn học này',
+        'account_exist' => 'Tài khoản đã tồn tại trong nhóm'
     ]
 
 ];

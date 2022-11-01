@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\RegisterMentorService;
+namespace App\Services\RegisterMentor;
 
 interface RegisterMentorServiceInterface
 {

@@ -25,6 +25,6 @@ class LoginServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+
     }
 }

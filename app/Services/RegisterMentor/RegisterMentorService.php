@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\RegisterMentorService;
+namespace App\Services\RegisterMentor;
 
 use App\Http\Controllers\Api\BaseController;
 use Illuminate\Support\Facades\Log;
