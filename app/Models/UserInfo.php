@@ -30,6 +30,6 @@ class UserInfo extends Model
 
   public function faculty()
   {
-    return $this->belongsTo(Faculty::class, 'id', 'faculty_id');
+    return $this->belongsTo(Faculty::class, 'faculty_id');
   }
 }

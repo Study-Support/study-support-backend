@@ -55,6 +55,7 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
   {
     return $this->_model
       ->with('membersAccepted', 'mentorAccepted')
+      ->withCount('membersAccepted')
       ->Where('id', $id)->first();
   }
 }

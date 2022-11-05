@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Client;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\RatingRequest;
 use App\Repositories\Contracts\GroupRepository;
 use App\Repositories\Contracts\MentorInfoRepository;

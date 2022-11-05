@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api\Client;
 use App\Http\Controllers\Api\BaseController;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\MentorRequest;
+use App\Http\Resources\MentorInfoResource;
 use App\Http\Resources\MentorResource;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\MentorInfoRepository;
 use App\Services\RegisterMentor\RegisterMentorServiceInterface;
+use Illuminate\Http\Request;
 
 class MentorInfoController extends BaseController
 {
@@ -26,7 +28,6 @@ class MentorInfoController extends BaseController
   public function index()
   {
     $mentor = $this->mentorInfoRepository->getMentor(auth()->id());
-    $subjects = $mentor->subjects;
 
     return $this->sendResponse([
       'data'    => new MentorResource($mentor)
@@ -118,5 +119,14 @@ class MentorInfoController extends BaseController
   public function destroy($id)
   {
     //
+  }
+
+  public function getListMentor(Request $request)
+  {
+    $mentors = $this->mentorInfoRepository->getListMentor($request->all());
+
+    return $this->sendResponse([
+      'data'    => MentorInfoResource::collection($mentors)
+    ]);
   }
 }

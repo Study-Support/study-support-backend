@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\GroupRequest;
 use App\Http\Resources\GroupResource;
 use App\Repositories\Contracts\GroupRepository;
-use App\Services\CreateGroup\CreateGroupService;
 use App\Services\CreateGroup\CreateGroupServiceInterface;
 use App\Services\UtilService;
 use Illuminate\Http\Request;
@@ -86,7 +85,9 @@ class GroupController extends BaseController
    */
   public function show($id)
   {
-    //
+    $group = $this->groupRepository->getGroup($id);
+
+    return $this->sendResponse(new GroupResource($group));
   }
 
   /**

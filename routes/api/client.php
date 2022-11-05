@@ -18,17 +18,18 @@ Route::get('notification', [NotificationController::class, 'index']);
 Route::get('faculties', [FacultyController::class, 'index']);
 
 Route::get('groups', [GroupController::class, 'index']);
+Route::get('mentors', [MentorInfoController::class, 'getListMentor']);
 
 Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
-    Route::resource('user', UserInfoController::class)->only(['index']);
-    Route::put('user/edit', [UserInfoController::class, 'update']);
-    Route::put('user/password', [UserInfoController::class, 'updatePassword']);
+  Route::resource('user', UserInfoController::class)->only(['index']);
+  Route::put('user/edit', [UserInfoController::class, 'update']);
+  Route::put('user/password', [UserInfoController::class, 'updatePassword']);
 
-    Route::resource('rate', RatingController::class)->only(['store']);
+  Route::resource('rate', RatingController::class)->only(['store']);
 
-    Route::post('group/{id}/join', [GroupController::class, 'joinGroup']);
-    Route::resource('groups', GroupController::class)->only(['store']);
+  Route::post('group/{id}/join', [GroupController::class, 'joinGroup']);
+  Route::resource('groups', GroupController::class)->only(['store', 'show']);
 
-    Route::put('mentor', [MentorInfoController::class, 'update']);
-    Route::resource('mentor', MentorInfoController::class)->only(['store', 'index']);
+  Route::put('mentor', [MentorInfoController::class, 'update']);
+  Route::resource('mentor', MentorInfoController::class)->only(['store', 'index']);
 });

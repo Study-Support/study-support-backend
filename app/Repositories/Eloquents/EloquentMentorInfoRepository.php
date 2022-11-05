@@ -5,7 +5,6 @@ namespace App\Repositories\Eloquents;
 use App\Enums\UserRole;
 use App\Repositories\Base\Eloquents\EloquentBaseRepository;
 use App\Repositories\Contracts\MentorInfoRepository;
-use App\Repositories\Contracts\UserInfoRepository;
 
 /**
  * Class EloquentMentorInfoRepository
@@ -43,7 +42,7 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
   public function getListMentor(array $params)
   {
     return $this->_model
-      ->with('account', 'subjects')
+      ->with('account.userInfo', 'subjects')
       ->withCount('subjects')
       ->orderBy('id', 'asc')
       ->paginate($this->MAX_PER_PAGE);
