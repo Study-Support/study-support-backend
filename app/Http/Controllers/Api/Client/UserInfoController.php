@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\MentorRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserInfoRequest;
+use App\Http\Resources\GroupInProfileResource;
 use App\Http\Resources\UserInfoResource;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\UserInfoRepository;
@@ -74,22 +75,12 @@ class UserInfoController extends BaseController
     return $this->sendResponse(__('messages.success.update'));
   }
 
-  /**
-   * update mentor
-   * @param MentorRequest $request
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function updateMentor(MentorRequest $request)
+  public function getListGroup()
   {
-    try {
-      $data = $request->validated();
+    $groups = auth()->user()->accountInGroup;
 
-      $this->userInfoRepository->update(auth()->user()->userInfo->id, $data);
-
-      return $this->sendResponse(['message' => __('messages.success.update')]);
-    } catch (\Exception $e) {
-      Log::error($e);
-      return $this->sendError(__('messages.error.update'));
-    }
+    return $this->sendResponse([
+      'data'        => GroupInProfileResource::collection($groups)
+    ]);
   }
 }
