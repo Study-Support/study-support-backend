@@ -62,7 +62,6 @@ class GroupController extends BaseController
     {
         $group = $this->groupRepository->getGroup($id);
 
-        // dd($group);
         return $this->sendResponse([
             'data' => new GroupResource($group),
         ]);

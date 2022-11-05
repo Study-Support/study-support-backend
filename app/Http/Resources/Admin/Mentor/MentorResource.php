@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Admin\Mentor;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,6 +16,9 @@ class MentorResource extends JsonResource
   {
     return [
       'id'                => $this->id,
+      'full_name'         => $this->account->userInfo->full_name,
+      'faculty'           => $this->account->userInfo->faculty->name,
+      'rating'            => $this->averageRating,
       'smart_banking'     => $this->smart_banking,
       'subject_list'      => MentorDetailResource::collection($this->subjects)
     ];

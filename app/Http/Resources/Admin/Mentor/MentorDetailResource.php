@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Admin\Mentor;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,6 +17,7 @@ class MentorDetailResource extends JsonResource
     return [
       'id'            => $this->pivot->id,
       'subject_id'    => $this->pivot->subject_id,
+      'subject'       => $this->name,
       'cv_link'       => $this->pivot->cv_link,
       'status'        => $this->pivot->active
     ];
