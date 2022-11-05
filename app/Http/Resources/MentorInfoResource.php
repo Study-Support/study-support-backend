@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MentorResource extends JsonResource
+class MentorInfoResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -15,9 +15,10 @@ class MentorResource extends JsonResource
   public function toArray($request)
   {
     return [
-      'id'                => $this->id,
-      'smart_banking'     => $this->smart_banking,
-      'subject_list'      => MentorDetailResource::collection($this->subjects)
+      'full_name'     => $this->account->userInfo->full_name,
+      'faculty'       => $this->account->userInfo->faculty->name,
+      'rating'        => $this->averageRating,
+      'subjects'      => SubjectResource::collection($this->subjectsAccepted)
     ];
   }
 }

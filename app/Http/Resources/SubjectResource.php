@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MentorResource extends JsonResource
+class SubjectResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -15,9 +15,8 @@ class MentorResource extends JsonResource
   public function toArray($request)
   {
     return [
-      'id'                => $this->id,
-      'smart_banking'     => $this->smart_banking,
-      'subject_list'      => MentorDetailResource::collection($this->subjects)
+      'id'        => $this->id,
+      'name'      => $this->name
     ];
   }
 }
