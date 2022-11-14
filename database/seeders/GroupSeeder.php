@@ -24,7 +24,7 @@ class GroupSeeder extends Seeder
         'location_study' => 'A123',
         'status' => '1',
         'faculty_id' => '1',
-        'self_study' => '1'
+        'self_study' => '0'
       ],
       [
         'id' => 2,
@@ -42,11 +42,33 @@ class GroupSeeder extends Seeder
         'topic' => 'Ôn tập thi Cuối Kỳ',
         'information' => 'Nhóm mục đích giành cho các bạn muốn qua môn',
         'time_study' => 'Học thứ 7, CN mỗi tuần từ 14h đến 16h',
-        'subject_id' => '2',
+        'subject_id' => '1',
         'location_study' => 'C112',
         'status' => '0',
         'faculty_id' => '3',
         'self_study' => '0'
+      ],
+      [
+        'id' => 4,
+        'topic' => 'Lấy gốc chương 2',
+        'information' => 'Nhóm mục đích giành cho các bạn muốn qua môn',
+        'time_study' => 'Học thứ 7, CN mỗi tuần từ 14h đến 16h',
+        'subject_id' => '1',
+        'location_study' => 'A234',
+        'status' => '0',
+        'faculty_id' => '3',
+        'self_study' => '1'
+      ],
+      [
+        'id' => 5,
+        'topic' => 'Lấy gốc chương 3',
+        'information' => 'Nhóm mục đích giành cho các bạn muốn qua môn',
+        'time_study' => 'Học thứ 7, CN mỗi tuần từ 14h đến 16h',
+        'subject_id' => '2',
+        'location_study' => 'B765',
+        'status' => '3',
+        'faculty_id' => '3',
+        'self_study' => '1'
       ]
     ];
     $this->create($params);

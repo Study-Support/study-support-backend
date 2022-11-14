@@ -28,7 +28,7 @@ class RegisterController extends BaseController
   {
     $data_account = $request->only(['email', 'password']);
     $data_account['role_id'] = UserRole::USER;
-    $data_info = $request->only(['full_name', 'phone_number', 'birthday', 'gender', 'faculty_id']);
+    $data_info = $request->only(['full_name', 'phone_number', 'birthday', 'gender', 'faculty_id', 'address']);
 
     DB::beginTransaction();
 

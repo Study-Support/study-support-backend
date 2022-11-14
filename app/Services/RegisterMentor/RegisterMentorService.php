@@ -3,6 +3,7 @@
 namespace App\Services\RegisterMentor;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Resources\SubjectResource;
 use Illuminate\Support\Facades\Log;
 
 class RegisterMentorService extends BaseController implements RegisterMentorServiceInterface
@@ -22,7 +23,10 @@ class RegisterMentorService extends BaseController implements RegisterMentorServ
 
       foreach ($mentorInfo->subjects as $subject) {
         if ($subject->id == $data['subject_id']) {
-          return $this->sendResponse(['messages' => __('messages.error.mentor_exist')]);
+          return $this->sendResponse([
+            'messages'  => __('messages.error.mentor_exist'),
+            'data'      => new SubjectResource($subject)
+        ]);
         }
       }
 

@@ -26,10 +26,6 @@ class RoleTableSeeder extends Seeder
       [
         'id' => 3,
         'name' => 'User',
-      ],
-      [
-        'id' => 4,
-        'name' => 'Mentor',
       ]
     ];
     $this->create($params);

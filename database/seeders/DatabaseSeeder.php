@@ -19,7 +19,11 @@ class DatabaseSeeder extends Seeder
       RoleTableSeeder::class,
       AccountTableSeeder::class,
       SubjectSeeder::class,
-      GroupSeeder::class
+      GroupSeeder::class,
+      MentorInfoSeeder::class,
+      UserInfoSeeder::class,
+      MemberSeeder::class,
+      MentorSubjectSeeder::class
     ]);
   }
 }

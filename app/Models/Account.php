@@ -69,11 +69,6 @@ class Account extends Authenticatable
     return $this->mentorInGroup()->wherePivot('status', '=', '1');
   }
 
-  public function memberInGroupWaiting()
-  {
-    return $this->memberInGroup()->wherePivot('status', '=', '0');
-  }
-
   public function mentorInGroupWaiting()
   {
     return $this->mentorInGroup()->wherePivot('status', '=', '0');
