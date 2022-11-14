@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Client;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Requests\MentorRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserInfoRequest;
 use App\Http\Resources\GroupInProfileResource;
@@ -11,6 +10,7 @@ use App\Http\Resources\UserInfoResource;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\UserInfoRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -75,9 +75,19 @@ class UserInfoController extends BaseController
     return $this->sendResponse(__('messages.success.update'));
   }
 
-  public function getListGroup()
+  public function getListGroup(Request $request)
   {
-    $groups = auth()->user()->accountInGroup;
+    $data = $request->only(['is_mentor', 'status', 'is_active']);
+
+    if ($data['is_mentor'] && $data['status']) {
+        $groups = auth()->user()->mentorInGroupAccepted;
+    }elseif (!$data['is_mentor'] && $data['status']) {
+        $groups = auth()->user()->memberInGroupAccepted;
+    }elseif (!$data['status']) {
+        $groups = auth()->user()->creatorInGroup->where('status', '0');
+    }elseif ($data['is_mentor'] && !$data['is_active']) {
+        $groups = auth()->user()->mentorInGroupWaiting;
+    }
 
     return $this->sendResponse([
       'data'        => GroupInProfileResource::collection($groups)

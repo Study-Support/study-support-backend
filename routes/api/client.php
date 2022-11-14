@@ -21,16 +21,14 @@ Route::get('groups', [GroupController::class, 'index']);
 Route::get('mentors', [MentorInfoController::class, 'getListMentor']);
 
 Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
-  Route::resource('user', UserInfoController::class)->only(['index']);
-  Route::put('user/edit', [UserInfoController::class, 'update']);
+  Route::resource('user', UserInfoController::class)->only(['index', 'update']);
   Route::put('user/password', [UserInfoController::class, 'updatePassword']);
   Route::get('user/groups', [UserInfoController::class, 'getListGroup']);
 
   Route::resource('rate', RatingController::class)->only(['store']);
 
   Route::post('group/{id}/join', [GroupController::class, 'joinGroup']);
-  Route::resource('groups', GroupController::class)->only(['store', 'show']);
+  Route::resource('groups', GroupController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
 
-  Route::put('mentor', [MentorInfoController::class, 'update']);
-  Route::resource('mentor', MentorInfoController::class)->only(['store', 'index']);
+  Route::resource('mentor', MentorInfoController::class)->only(['store', 'index', 'update']);
 });

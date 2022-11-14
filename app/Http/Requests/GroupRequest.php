@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Enums\GroupStudy;
-use App\Enums\MemberRole;
 use Illuminate\Validation\Rule;
 
 class GroupRequest extends BaseRequest
@@ -49,10 +48,6 @@ class GroupRequest extends BaseRequest
             'self_study' => [
                 'required',
                 Rule::in(GroupStudy::all())
-            ],
-            'is_mentor' => [
-                'required',
-                Rule::in(MemberRole::all())
             ]
         ];
     }

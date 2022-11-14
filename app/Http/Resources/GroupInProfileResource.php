@@ -15,10 +15,10 @@ class GroupInProfileResource extends JsonResource
   public function toArray($request)
   {
     return [
-      'id'        => $this->id,
-      'subject'   => $this->subject->name,
-      'is_creator' => $this->pivot->is_creator,
-      'is_mentor' => $this->pivot->is_mentor
+      'id'          => $this->id,
+      'subject'     => $this->subject->name,
+      'is_creator'  => $this->pivot->is_creator,
+      'is_mentor'   => $this->pivot->is_mentor
     ];
   }
 }
