@@ -11,4 +11,10 @@ interface FacultyRepository extends BaseRepository
    * @return array
    */
   public function getListFaculty(array $params);
+
+   /**
+   * get one faculty
+   * @param $id
+   */
+  public function getFaculty($id);
 }

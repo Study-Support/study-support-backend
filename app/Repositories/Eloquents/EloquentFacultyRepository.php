@@ -18,15 +18,27 @@ class EloquentFacultyRepository extends EloquentBaseRepository implements Facult
     }
 
     /**
-   * Get list faculty
-   *
-   * @return \App\Models\Faculty
-   */
-  public function getListFaculty(array $params)
-  {
-    return $this->_model
-      ->orderBy('id', 'asc')
-      ->get();
-  }
+     * Get list faculty
+     *
+     * @return \App\Models\Faculty
+     */
+    public function getListFaculty(array $params)
+    {
+        return $this->_model
+            ->orderBy('id', 'asc')
+            ->get();
+    }
 
+    /**
+     * get one faculty
+     * @param $id
+     *
+     * @return \App\Models\Faculty
+     */
+    public function getFaculty($id)
+    {
+        return $this->_model
+            ->with('subjects')
+            ->find($id);
+    }
 }

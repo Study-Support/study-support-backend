@@ -26,4 +26,19 @@ class FacultyController extends BaseController
         'data' => FacultyResource::collection($faculties)
     ]);
   }
+
+  /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $faculty = $this->facultyRepository->getFaculty($id);
+
+        return $this->sendResponse([
+            'data' => new FacultyResource($faculty)
+        ]);
+    }
 }
