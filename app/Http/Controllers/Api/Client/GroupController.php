@@ -27,7 +27,7 @@ class GroupController extends BaseController
      */
     public function index(Request $request)
     {
-        $groups = $this->groupRepository->getListGroup($request->all());
+        $groups = $this->groupRepository->getListGroupInDashBoard($request->all());
 
         return $this->sendResponse([
             'data' => GroupResource::collection($groups),

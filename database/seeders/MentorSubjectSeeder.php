@@ -47,7 +47,7 @@ class MentorSubjectSeeder extends Seeder
             [
                 'id' => 5,
                 'mentor_id' => MentorInfo::where('id', '3')->first()->id,
-                'subject_id' => '3',
+                'subject_id' => '2',
                 'cv_link'   => 'https://thao7420.backlog.com/dashboard',
                 'active'    => 0
             ],

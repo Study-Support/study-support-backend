@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\AnswerController;
 use App\Http\Controllers\Api\Admin\Auth\LoginController;
+use App\Http\Controllers\Api\Admin\GroupController;
 use App\Http\Controllers\Api\Admin\MentorInfoController;
 use App\Http\Controllers\Api\Admin\NotificationController;
 use App\Http\Controllers\Api\Admin\QuestionController;
@@ -18,4 +19,5 @@ Route::group(['middleware' => ['auth:api', 'auth.admin']], function () {
 
   Route::resource('users', UserController::class)->only('index', 'show', 'update');
   Route::resource('mentors', MentorInfoController::class)->only('index');
+  Route::resource('groups', GroupController::class)->only('index', 'update', 'show', 'destroy');
 });
