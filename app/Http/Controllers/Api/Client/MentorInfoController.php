@@ -88,7 +88,7 @@ class MentorInfoController extends BaseController
     public function update(MentorRequest $request)
     {
         try {
-            $mentor = $this->mentorInfoRepository->where('account_id', auth()->id())->first();
+            $mentor = $this->mentorInfoRepository->getMentor(auth()->id());
             $this->mentorInfoRepository->update($mentor->id, $request->only('smart_banking'));
 
             $data = $request->validated();
@@ -120,13 +120,12 @@ class MentorInfoController extends BaseController
      */
     public function destroy($id)
     {
-        //
     }
 
     public function getListMentor(Request $request)
     {
         $mentors = $this->mentorInfoRepository->getListMentor($request->all());
-        
+
         return $this->sendResponse([
             'data'    => MentorInfoResource::collection($mentors)
         ]);

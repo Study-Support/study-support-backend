@@ -17,10 +17,16 @@ class JoinGroupService extends BaseController implements JoinGroupServiceInterfa
     public function joinGroupAsMember($data)
     {
         try {
+            foreach (auth()->user()->accountInGroup as $group) {
+                if ($group->subject_id === $data->subject_id) {
+                    return $this->sendError(__('messages.error.group_of_subject_exist'));
+                };
+            }
+
             $data->accounts()->attach(auth()->id(), [
                 'is_creator'    => config('member.creator.false'),
                 'is_mentor'     => config('member.mentor.false'),
-                'status'        => config('member.status.accepted')
+                'status'        => config('member.status.waiting')
             ]);
 
             return $this->sendResponse([
