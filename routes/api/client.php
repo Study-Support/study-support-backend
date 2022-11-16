@@ -15,7 +15,7 @@ Route::post('logout', [LoginController::class, 'logout']);
 Route::post('register', [RegisterController::class, 'register']);
 
 Route::get('notification', [NotificationController::class, 'index']);
-Route::get('faculties', [FacultyController::class, 'index']);
+Route::resource('faculties', FacultyController::class)->only('index', 'show');
 
 Route::get('groups', [GroupController::class, 'index']);
 Route::get('mentors', [MentorInfoController::class, 'getListMentor']);
@@ -30,5 +30,5 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
   Route::post('group/{id}/join', [GroupController::class, 'joinGroup']);
   Route::resource('groups', GroupController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
 
-  Route::resource('mentor', MentorInfoController::class)->only(['store', 'index', 'update']);
+  Route::resource('mentor', MentorInfoController::class)->only(['store', 'update', 'index']);
 });

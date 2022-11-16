@@ -15,7 +15,7 @@ class Faculty extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'faculty_subject', 'subject_id', 'faculty_id');
+        return $this->belongsToMany(Subject::class, 'faculty_subject', 'faculty_id', 'subject_id');
     }
 
     public function users()
