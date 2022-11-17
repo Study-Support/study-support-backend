@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Client;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\AcceptMemberRequest;
 use App\Http\Requests\GroupRequest;
 use App\Http\Resources\GroupResource;
 use App\Repositories\Contracts\GroupRepository;
@@ -11,6 +12,7 @@ use App\Services\UtilService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\JoinGroup\JoinGroupServiceInterface;
+use Illuminate\Http\JsonResponse;
 
 class GroupController extends BaseController
 {
@@ -71,9 +73,13 @@ class GroupController extends BaseController
      */
     public function show($id)
     {
-        $group = $this->groupRepository->getGroup($id);
+        try {
+            $group = $this->groupRepository->getGroup($id);
 
-        return $this->sendResponse(new GroupResource($group));
+            return $this->sendResponse(new GroupResource($group));
+        } catch (\Throwable $th) {
+            return $this->sendError(__('messages.error.not_found'), JsonResponse::HTTP_NOT_FOUND);
+        }
     }
 
     /**
@@ -151,6 +157,39 @@ class GroupController extends BaseController
         } catch (\Exception $e) {
             Log::error($e);
             return $this->sendError(__('messages.error.can_not_join'));
+        }
+    }
+
+    public function acceptMember(AcceptMemberRequest $request, $id)
+    {
+        try {
+            $group = $this->groupRepository->getGroup($id);
+            $creatorId = $group->creator()->first()->id;
+            if (!($creatorId === auth()->id())) {
+                return $this->sendError(__('messages.error.not_is_creator'));
+            }
+
+            $data = $request->only('account_id', 'accept');
+            $check = 0;
+            foreach (($data['account_id']) as $id) {
+                foreach ($group->membersWaiting as $member) {
+                    if ($member->id === $id) {
+                        $check++;
+                        if ($data['accept']) {
+                            $member->pivot->status = 1;
+                            $member->pivot->save();
+                            break;
+                        } else {
+                            $group->accounts()->detach($id);
+                        }
+                    }
+                }
+            }
+            return  $check ? $this->sendResponse(['message' => __('messages.success.update')])
+                : $this->sendError(__('messages.error.update'));
+        } catch (\Exception $e) {
+            Log::error($e);
+            return $this->sendError(__('messages.error.update'));
         }
     }
 }

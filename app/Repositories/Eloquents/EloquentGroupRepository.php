@@ -54,7 +54,7 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     public function getGroup($id)
     {
         return $this->_model
-            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting')
+            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting', 'creator', 'members')
             ->withCount('membersAccepted')
             ->Where('id', $id)->first();
     }
