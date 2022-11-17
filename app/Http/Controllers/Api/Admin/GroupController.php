@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Resources\GroupResource;
+use App\Http\Resources\Admin\GroupResource;
 use App\Repositories\Contracts\GroupRepository;
 use App\Services\UtilService;
 use Illuminate\Http\Request;
@@ -62,7 +62,7 @@ class GroupController extends BaseController
     {
         $group = $this->groupRepository->getGroup($id);
 
-        // dd($group); 
+        // dd($group);
         return $this->sendResponse([
             'data' => new GroupResource($group),
         ]);

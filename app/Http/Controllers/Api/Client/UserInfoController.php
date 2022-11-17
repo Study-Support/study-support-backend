@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserInfoRequest;
 use App\Http\Resources\GroupInProfileResource;
 use App\Http\Resources\UserInfoResource;
 use App\Repositories\Contracts\AccountRepository;
+use App\Repositories\Contracts\GroupRepository;
 use App\Repositories\Contracts\UserInfoRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,80 +18,83 @@ use Illuminate\Support\Facades\Log;
 class UserInfoController extends BaseController
 {
 
-  public function __construct(
-    private UserInfoRepository $userInfoRepository,
-    private AccountRepository $accountRepository
-  ) {
-  }
-
-  /**
-   * Display the specified resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function index()
-  {
-
-    $user = $this->userInfoRepository->getCurrentUser();
-    $response = $user ? new UserInfoResource($user) : null;
-
-    return $this->sendResponse($response);
-  }
-
-  /**
-   * Update user profile info
-   * @param UpdateUserInfoRequest $request
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function update(UpdateUserInfoRequest $request)
-  {
-    try {
-      $data = $request->validated();
-
-      $this->userInfoRepository->update(auth()->user()->userInfo->id, $data);
-
-      return $this->sendResponse(['message' => __('messages.success.update')]);
-    } catch (\Exception $e) {
-      Log::error($e);
-      return $this->sendError(__('messages.error.update'));
-    }
-  }
-
-  /**
-   * update password
-   * @param UpdatePasswordRequest $request
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function updatePassword(UpdatePasswordRequest $request)
-  {
-
-    if (!Hash::check($request->current_password, auth()->user()->password)) {
-      return $this->sendError([
-        'current_password' => __('validation.current_password')
-      ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+    public function __construct(
+        private UserInfoRepository $userInfoRepository,
+        private AccountRepository $accountRepository,
+        private GroupRepository $groupRepository,
+    ) {
     }
 
-    $this->accountRepository->update(auth()->id(), $request->only('password'));
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
 
-    return $this->sendResponse(__('messages.success.update'));
-  }
+        $user = $this->userInfoRepository->getCurrentUser();
+        $response = $user ? new UserInfoResource($user) : null;
 
-  public function getListGroup(Request $request)
-  {
-    $data = $request->only(['is_mentor', 'status', 'is_active']);
-
-    if ($data['is_mentor'] && $data['status']) {
-        $groups = auth()->user()->mentorInGroupAccepted;
-    }elseif (!$data['is_mentor'] && $data['status']) {
-        $groups = auth()->user()->memberInGroupAccepted;
-    }elseif (!$data['status']) {
-        $groups = auth()->user()->creatorInGroup->where('status', '0');
-    }elseif ($data['is_mentor'] && !$data['is_active']) {
-        $groups = auth()->user()->mentorInGroupWaiting;
+        return $this->sendResponse($response);
     }
 
-    return $this->sendResponse([
-      'data'        => GroupInProfileResource::collection($groups)
-    ]);
-  }
+    /**
+     * Update user profile info
+     * @param UpdateUserInfoRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(UpdateUserInfoRequest $request)
+    {
+        try {
+            $data = $request->validated();
+
+            $this->userInfoRepository->update(auth()->user()->userInfo->id, $data);
+
+            return $this->sendResponse(['message' => __('messages.success.update')]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return $this->sendError(__('messages.error.update'));
+        }
+    }
+
+    /**
+     * update password
+     * @param UpdatePasswordRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
+
+        if (!Hash::check($request->current_password, auth()->user()->password)) {
+            return $this->sendError([
+                'current_password' => __('validation.current_password')
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $this->accountRepository->update(auth()->id(), $request->only('password'));
+
+        return $this->sendResponse(__('messages.success.update'));
+    }
+
+    public function getListGroup(Request $request)
+    {
+        $data = $request->only(['is_mentor', 'status', 'is_active']);
+
+        if ($data['is_mentor'] && $data['status']) {
+            $groups = auth()->user()->mentorInGroupAccepted;
+        } elseif (!$data['is_mentor'] && $data['status']) {
+            $groups = auth()->user()->memberInGroupAccepted;
+        } elseif (!$data['status']) {
+            $groups = auth()->user()->creatorInGroup->where('status', '0');
+        } elseif ($data['is_mentor'] && !$data['is_active']) {
+            $groups = auth()->user()->mentorInGroupWaiting;
+        }
+
+        return $this->sendResponse([
+            'data'        => GroupInProfileResource::collection($groups)
+        ]);
+    }
+
+
 }

@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
   Route::resource('user', UserInfoController::class)->only(['index', 'update']);
   Route::put('user/password', [UserInfoController::class, 'updatePassword']);
   Route::get('user/groups', [UserInfoController::class, 'getListGroup']);
+  Route::put('user/groups/{id}/acceptMember', [GroupController::class, 'acceptMember']);
 
   Route::resource('rate', RatingController::class)->only(['store']);
 
