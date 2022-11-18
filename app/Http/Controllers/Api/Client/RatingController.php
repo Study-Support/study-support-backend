@@ -53,21 +53,23 @@ class RatingController extends BaseController
             $data = $request->validated();
             $group = $this->groupRepository->getGroup($data['group_id']);
 
-            $mentor_id = $group->mentorAccepted->first()->id;
+            if ($group->status === config('group.status.studying')) {
+                $mentor_id = $group->mentorAccepted->first()->id;
 
-            foreach ($group->membersAccepted as $member) {
-                if ($member->id == auth()->id() && $mentor_id == $data['user_id']) {
+                foreach ($group->membersAccepted as $member) {
+                    if ($member->id == auth()->id() && $mentor_id == $data['user_id']) {
 
-                    $mentor = $this->mentorInfoRepository->getMentor($data['user_id']);
-                    $mentor->rateOnce($data['rate'], $data['comment'], $data['group_id']);
+                        $mentor = $this->mentorInfoRepository->getMentor($data['user_id']);
+                        $mentor->rateOnce($data['rate'], $data['comment'], $data['group_id']);
 
-                    return $this->sendResponse(['message' => __('messages.success.rate')]);
-                } elseif ($member->id == $data['user_id']  && $mentor_id == auth()->id()) {
+                        return $this->sendResponse(['message' => __('messages.success.rate')]);
+                    } elseif ($member->id == $data['user_id']  && $mentor_id == auth()->id()) {
 
-                    $user = $this->userInfoRepository->getUser($data['user_id']);
-                    $user->rateOnce($data['rate'], $data['comment'], $data['group_id']);
+                        $user = $this->userInfoRepository->getUser($data['user_id']);
+                        $user->rateOnce($data['rate'], $data['comment'], $data['group_id']);
 
-                    return $this->sendResponse(['message' => __('messages.success.rate')]);
+                        return $this->sendResponse(['message' => __('messages.success.rate')]);
+                    }
                 }
             }
 

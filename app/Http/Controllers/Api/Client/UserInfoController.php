@@ -7,7 +7,6 @@ use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserInfoRequest;
 use App\Http\Resources\UserInfoResource;
 use App\Repositories\Contracts\AccountRepository;
-use App\Repositories\Contracts\GroupRepository;
 use App\Repositories\Contracts\UserInfoRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
