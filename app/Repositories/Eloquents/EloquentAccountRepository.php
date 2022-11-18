@@ -12,8 +12,10 @@ use \App\Models\Account;
  */
 class EloquentAccountRepository extends EloquentBaseRepository implements AccountRepository
 {
-  public function getModel()
-  {
-    return Account::class;
-  }
+    public function getModel()
+    {
+        return Account::class;
+    }
+
+    
 }

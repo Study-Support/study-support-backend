@@ -6,4 +6,5 @@ use App\Repositories\Base\Contracts\BaseRepository;
 
 interface AccountRepository extends BaseRepository
 {
+    
 }

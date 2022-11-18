@@ -19,6 +19,7 @@ class MemberResource extends JsonResource
             'full_name' => $this->userInfo->full_name,
             'faculty'   => $this->userInfo->faculty->name,
             'faculty_id'=> $this->userInfo->faculty_id,
+            'rating'    => $this->userInfo->rating,
             'status'    => $this->pivot->status
         ];
     }

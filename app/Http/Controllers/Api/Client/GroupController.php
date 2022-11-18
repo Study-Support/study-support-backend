@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Client;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\AcceptMemberRequest;
 use App\Http\Requests\GroupRequest;
+use App\Http\Resources\GroupInProfileResource;
 use App\Http\Resources\GroupResource;
 use App\Repositories\Contracts\GroupRepository;
 use App\Services\CreateGroup\CreateGroupServiceInterface;
@@ -191,5 +192,15 @@ class GroupController extends BaseController
             Log::error($e);
             return $this->sendError(__('messages.error.update'));
         }
+    }
+
+    public function getMyListGroup(Request $request)
+    {
+        $groups = $this->groupRepository->getMyListGroup($request->all());
+
+        // dd($groups);
+        return $this->sendResponse([
+            'data'        => GroupResource::collection($groups)
+        ]);
     }
 }
