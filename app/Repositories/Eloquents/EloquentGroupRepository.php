@@ -71,4 +71,32 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
             ->orderBy('id', 'asc')
             ->paginate($this->MAX_PER_PAGE);
     }
+
+    /**
+     * Get my list group
+     *
+     * @return \App\Models\Group
+     */
+    public function getMyListGroup(array $params)
+    {
+        return $this->_model
+            ->with('accounts')
+            ->whereHas('accounts', function ($q1) use ($params) {
+                $q1->where('account_id', auth()->id())
+                    ->when(isset($params['is_mentor']), function ($q2) use ($params) {
+                        $q2->where('is_mentor', $params['is_mentor']);
+                    })
+                    ->when(isset($params['accepted']), function ($q2) use ($params) {
+                        $q2->where('status', $params['accepted']);
+                    })
+                    ->when(isset($params['is_creator']), function ($q2) use ($params) {
+                        $q2->where('is_creator', $params['is_creator']);
+                    });
+            })
+            ->when(isset($params['status']), function ($q) use ($params) {
+                $q->where('status', $params['status']);
+            })
+            ->orderBy('id', 'asc')
+            ->paginate($this->MAX_PER_PAGE);
+    }
 }
