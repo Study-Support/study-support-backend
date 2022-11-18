@@ -26,7 +26,7 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
   Route::get('user/groups', [GroupController::class, 'getMyListGroup']);
   Route::put('user/groups/{id}/acceptMember', [GroupController::class, 'acceptMember']);
 
-  Route::resource('rate', RatingController::class)->only(['store']);
+  Route::resource('rate', RatingController::class)->only(['store', 'index']);
 
   Route::post('group/{id}/join', [GroupController::class, 'joinGroup']);
   Route::resource('groups', GroupController::class)->only(['index', 'store', 'show', 'update', 'destroy']);

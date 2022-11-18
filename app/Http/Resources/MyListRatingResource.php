@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RatingResource extends JsonResource
+class MyListRatingResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +15,8 @@ class RatingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'rating'        => $this->rating,
-            'comment'       => $this->comment,
-            'account_id'    => $this->account_id,
-            'group'         => $this->group->topic
+            'userRatings'   => RatingResource::collection($this->userInfo->ratings),
+            'mentorRatings' => RatingResource::collection($this->mentorInfo->ratings)
         ];
     }
 }
