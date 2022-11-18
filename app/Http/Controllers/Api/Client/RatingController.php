@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Client;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\RatingRequest;
+use App\Http\Resources\MyListRatingResource;
 use App\Repositories\Contracts\GroupRepository;
 use App\Repositories\Contracts\MentorInfoRepository;
 use App\Repositories\Contracts\UserInfoRepository;
@@ -25,7 +26,9 @@ class RatingController extends BaseController
      */
     public function index(Request $request)
     {
-        //
+        return $this->sendResponse([
+            'data'  => new MyListRatingResource(auth()->user())
+        ]);
     }
 
     /**

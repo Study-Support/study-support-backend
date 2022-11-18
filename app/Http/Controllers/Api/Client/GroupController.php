@@ -196,11 +196,14 @@ class GroupController extends BaseController
 
     public function getMyListGroup(Request $request)
     {
-        $groups = $this->groupRepository->getMyListGroup($request->all());
+        try {
+            $groups = $this->groupRepository->getMyListGroup($request->all());
 
-        // dd($groups);
-        return $this->sendResponse([
-            'data'        => GroupResource::collection($groups)
-        ]);
+            return $this->sendResponse([
+                'data'        => GroupResource::collection($groups)
+            ]);
+        } catch (\Throwable $th) {
+            return $this->sendError(__('messages.error.not_found'), JsonResponse::HTTP_NOT_FOUND);
+        }
     }
 }
