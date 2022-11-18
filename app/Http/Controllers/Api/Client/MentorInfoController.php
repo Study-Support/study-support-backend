@@ -120,6 +120,24 @@ class MentorInfoController extends BaseController
      */
     public function destroy($id)
     {
+        try {
+            $mentorInfo = auth()->user()->mentorInfo;
+
+            foreach ($mentorInfo->subjects as $subject) {
+                if ($subject->pivot->subject_id == $id && $subject->pivot->status == config('mentor.active.false')) {
+                    $mentorInfo->subjects()->detach($id);
+
+                    return $this->sendResponse([
+                        'message' => __('messages.success.delete')
+                    ]);
+                }
+            }
+
+            return $this->sendError(__('messages.error.delete'));
+        } catch (\Exception $e) {
+            Log::error($e);
+            return $this->sendError(__('messages.error.delete'));
+        }
     }
 
     public function getListMentor(Request $request)

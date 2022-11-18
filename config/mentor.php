@@ -2,7 +2,7 @@
 
 return [
     'active' => [
-        'false'    => false,
+        'false'  => false,
         'true'   => true
     ]
 ];
