@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Client;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\AcceptMemberRequest;
 use App\Http\Requests\GroupRequest;
+use App\Http\Requests\SurveyAnswerRequest;
 use App\Http\Resources\GroupResource;
 use App\Repositories\Contracts\GroupRepository;
 use App\Services\CreateGroup\CreateGroupServiceInterface;
@@ -19,7 +20,7 @@ class GroupController extends BaseController
     public function __construct(
         public GroupRepository $groupRepository,
         public JoinGroupServiceInterface $joinGroupServiceInterface,
-        public CreateGroupServiceInterface $createGroupServiceInterface
+        public CreateGroupServiceInterface $createGroupServiceInterface,
     ) {
     }
     /**
@@ -57,6 +58,7 @@ class GroupController extends BaseController
     {
         try {
             $group = $request->validated();
+
             $group['status'] = config('group.status.waiting');
             return $this->createGroupServiceInterface->createGroup($group);
         } catch (\Exception $e) {
@@ -136,8 +138,9 @@ class GroupController extends BaseController
         }
     }
 
-    public function joinGroup($id)
+    public function joinGroup($id, SurveyAnswerRequest $request)
     {
+        $data = $request->validated();
         $group = $this->groupRepository->getGroup($id);
 
         try {
@@ -148,9 +151,9 @@ class GroupController extends BaseController
             }
 
             if ($group->status === config('group.status.find_member')) {
-                return $this->joinGroupServiceInterface->joinGroupAsMember($group);
+                return $this->joinGroupServiceInterface->joinGroupAsMember($group, $data);
             } elseif ($group->status === config('group.status.find_mentor') && !$group->self_study) {
-                return $this->joinGroupServiceInterface->joinGroupAsMentor($group);
+                return $this->joinGroupServiceInterface->joinGroupAsMentor($group, $data);
             }
 
             return $this->sendError(__('messages.error.can_not_join'));

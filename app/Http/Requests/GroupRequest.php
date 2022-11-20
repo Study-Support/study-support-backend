@@ -48,7 +48,8 @@ class GroupRequest extends BaseRequest
             'self_study' => [
                 'required',
                 Rule::in(GroupStudy::all())
-            ]
+            ],
+            'survey_questions' => 'required|array'
         ];
     }
 }

@@ -4,13 +4,15 @@ namespace App\Services\CreateGroup;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Repositories\Contracts\GroupRepository;
+use App\Repositories\Contracts\SurveyQuestionRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CreateGroupService extends BaseController implements CreateGroupServiceInterface
 {
     public function __construct(
-        public GroupRepository $groupRepository
+        public GroupRepository $groupRepository,
+        public SurveyQuestionRepository $surveyQuestionRepository
     ) {
     }
     /**
@@ -32,6 +34,13 @@ class CreateGroupService extends BaseController implements CreateGroupServiceInt
                     'is_mentor'     => config('member.mentor.false'),
                     'status'        => config('member.status.accepted')
                 ]);
+
+                foreach ($data['survey_questions'] as $question) {
+                    $this->surveyQuestionRepository->create([
+                        "group_id"  => $group->id,
+                        "content"   => $question['question']
+                    ]);
+                }
             }
 
             DB::commit();

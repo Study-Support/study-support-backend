@@ -10,7 +10,7 @@ interface JoinGroupServiceInterface
    * @param $data
    * @return \Illuminate\Http\Response
    */
-  public function joinGroupAsMember($data);
+  public function joinGroupAsMember($data, $answers);
 
   /**
    * Form action join group as mentor
@@ -18,6 +18,6 @@ interface JoinGroupServiceInterface
    * @param $data
    * @return \Illuminate\Http\Response
    */
-  public function joinGroupAsMentor($data);
+  public function joinGroupAsMentor($data,  $answers);
 
 }

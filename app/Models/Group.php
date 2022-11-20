@@ -71,4 +71,8 @@ class Group extends Model
     return $this->members()->wherePivot('status', '=', '0');
   }
 
+  public function surveyQuestions()
+  {
+    return $this->hasMany(SurveyQuestion::class, 'group_id', 'id');
+  }
 }
