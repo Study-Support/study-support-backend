@@ -3,18 +3,23 @@
 namespace App\Services\JoinGroup;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Repositories\Contracts\SurveyAnswerRepository;
 use App\Services\JoinGroup\JoinGroupServiceInterface;
 use Illuminate\Support\Facades\Log;
 
 class JoinGroupService extends BaseController implements JoinGroupServiceInterface
 {
+    public function __construct(
+        public SurveyAnswerRepository $surveyAnswerRepository
+    ) {
+    }
     /**
      * Form action join group
      *
      * @param $data
      * @return \Illuminate\Http\Response
      */
-    public function joinGroupAsMember($data)
+    public function joinGroupAsMember($data,  $answers)
     {
         try {
             foreach (auth()->user()->accountInGroup as $group) {
@@ -28,6 +33,14 @@ class JoinGroupService extends BaseController implements JoinGroupServiceInterfa
                 'is_mentor'     => config('member.mentor.false'),
                 'status'        => config('member.status.waiting')
             ]);
+
+            foreach ($answers['survey_answers'] as $answer) {
+                $this->surveyAnswerRepository->create([
+                    'question_id'   => $answer['id'],
+                    'account_id'    => auth()->id(),
+                    'content'       => $answer['answer']
+                ]);
+            }
 
             return $this->sendResponse([
                 'message' => __('messages.success.create')
@@ -44,7 +57,7 @@ class JoinGroupService extends BaseController implements JoinGroupServiceInterfa
      * @param $data
      * @return \Illuminate\Http\Response
      */
-    public function joinGroupAsMentor($data)
+    public function joinGroupAsMentor($data,  $answers)
     {
         try {
             $subjects = auth()->user()->mentorInfo->subjectsAccepted;

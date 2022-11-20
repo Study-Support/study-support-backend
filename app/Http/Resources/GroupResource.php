@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\SurveyQuestion;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GroupResource extends JsonResource
@@ -31,6 +32,7 @@ class GroupResource extends JsonResource
                                     ? MemberResource::collection($this->members)
                                     : MemberResource::collection($this->membersAccepted),
             'mentorAccepted'    => new MentorInGroupResource($this->mentorAccepted->first()),
+            'surveyQuestions'   => SurveyQuestionResource::collection($this->surveyQuestions)
         ];
     }
 }
