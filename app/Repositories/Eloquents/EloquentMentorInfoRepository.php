@@ -58,7 +58,7 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
                     $q2->where('subject_id', $params['subject_id']);
                 });
             })
-            ->withCount('subjects')
+            ->withCount('subjects', 'subjectsAccepted')
             ->orderBy('id', 'asc')
             ->paginate($this->MAX_PER_PAGE);
     }

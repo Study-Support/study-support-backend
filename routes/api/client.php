@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Client\MemberController;
 use App\Http\Controllers\Api\Client\MentorInfoController;
 use App\Http\Controllers\Api\Client\NotificationController;
 use App\Http\Controllers\Api\Client\RatingController;
+use App\Http\Controllers\Api\Client\SubjectController;
 use App\Http\Controllers\Api\Client\UserInfoController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ Route::post('register', [RegisterController::class, 'register']);
 
 Route::get('notifications', [NotificationController::class, 'index']);
 Route::resource('faculties', FacultyController::class)->only('index', 'show');
+Route::resource('subjects', SubjectController::class)->only('index');
 
 Route::get('groups', [GroupController::class, 'index']);
 Route::get('mentors', [MentorInfoController::class, 'getListMentor']);
