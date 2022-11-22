@@ -16,4 +16,21 @@ class EloquentSurveyAnswerRepository extends EloquentBaseRepository implements S
     {
         return SurveyAnswer::class;
     }
+
+    /**
+     * delete my answers in group
+     *
+     * @return \App\Models\SurveyAnswer
+     */
+    public function deleteMyAnswer(int $id)
+    {
+        return $this->_model
+            ->where('account_id', auth()->id())
+            ->whereHas('surveyQuestion', function ($q1) use ($id) {
+                $q1->whereHas('group', function ($q2) use ($id) {
+                    $q2->where('id', $id);
+                });
+            })
+            ->delete();
+    }
 }

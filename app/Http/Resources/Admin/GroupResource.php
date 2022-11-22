@@ -27,7 +27,7 @@ class GroupResource extends JsonResource
             'faculty'       => $this->faculty->name,
             'status'        => $this->status,
             'members'       => MemberResource::collection($this->membersAccepted),
-            'mentorAccepted'=> new MentorInGroupResource($this->mentorAccepted->first()),
+            'mentorAccepted'=> new MentorInGroupResource($this->mentorAccepted),
             'mentorWaiting' => MentorInGroupResource::collection($this->mentorWaiting)
         ];
     }

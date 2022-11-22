@@ -41,6 +41,11 @@ class Group extends Model
     return $this->accounts()->wherePivot('is_creator', '=', '1');
   }
 
+  public function getCreatorAttribute()
+  {
+    return $this->creator()->first();
+  }
+
   public function subject()
   {
     return $this->hasOne(Subject::class, 'id', 'subject_id');
@@ -54,6 +59,11 @@ class Group extends Model
   public function mentorAccepted()
   {
     return $this->mentor()->wherePivot('status', '=', '1');
+  }
+
+  public function getMentorAcceptedAttribute()
+  {
+    return $this->mentorAccepted()->first();
   }
 
   public function membersAccepted()
@@ -74,5 +84,17 @@ class Group extends Model
   public function surveyQuestions()
   {
     return $this->hasMany(SurveyQuestion::class, 'group_id', 'id');
+  }
+
+  public function surveyAnswers()
+  {
+    return $this->hasManyThrough(
+        SurveyAnswer::class,
+        SurveyQuestion::class,
+        'group_id',
+        'question_id',
+        'id',
+        'id'
+    );
   }
 }

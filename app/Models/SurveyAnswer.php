@@ -17,7 +17,7 @@ class SurveyAnswer extends Model
 
     public function surveyQuestion()
     {
-        return $this->belongsTo(SurveyQuestion::class, 'id', 'question_id');
+        return $this->belongsTo(SurveyQuestion::class, 'question_id', 'id');
     }
 
     public function account()

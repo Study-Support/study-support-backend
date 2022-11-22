@@ -16,11 +16,11 @@ class SurveyQuestion extends Model
 
     public function group()
     {
-        return $this->belongsTo(Group::class, 'group_id');
+        return $this->belongsTo(Group::class, 'group_id', 'id');
     }
 
     public function surveyAnswers()
     {
-        return $this->hasMany(SurveyAnswers::class, 'question_id', 'id');
+        return $this->hasMany(SurveyAnswer::class, 'question_id', 'id');
     }
 }

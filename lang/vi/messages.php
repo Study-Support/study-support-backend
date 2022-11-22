@@ -25,7 +25,8 @@ return [
         'rate'                  => 'Đánh giá không thành công',
         'group_of_subject_exist'=> 'Bạn đã tham gia nhóm của môn học này rồi',
         'not_is_creator'        => 'Bạn không phải là nhóm trưởng của nhóm này',
-        'not_found'             => 'Không tìm thấy trang'
+        'not_found'             => 'Không tìm thấy trang',
+        'incorrect_amount'      => 'Số lượng câu trả lời không khớp với số lượng câu hỏi'
     ]
 
 ];

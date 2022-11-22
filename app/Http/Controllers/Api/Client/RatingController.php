@@ -54,7 +54,7 @@ class RatingController extends BaseController
             $group = $this->groupRepository->getGroup($data['group_id']);
 
             if ($group->status === config('group.status.studying')) {
-                $mentor_id = $group->mentorAccepted->first()->id;
+                $mentor_id = $group->mentorAccepted->id;
 
                 foreach ($group->membersAccepted as $member) {
                     if ($member->id == auth()->id() && $mentor_id == $data['user_id']) {
