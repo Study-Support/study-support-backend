@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\UserRole;
 use App\Models\SurveyQuestion;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,10 +29,10 @@ class GroupResource extends JsonResource
             'subject'           => $this->subject->name,
             'faculty'           => $this->faculty->name,
             'status'            => $this->status,
-            'members'           => $this->creator->first()->id === auth()->id()
-                                    ? MemberResource::collection($this->members)
-                                    : MemberResource::collection($this->membersAccepted),
-            'mentorAccepted'    => new MentorInGroupResource($this->mentorAccepted->first()),
+            'members'           => ($this->creator->id === auth()->id() || auth()->user()->role_id === UserRole::ADMIN)
+                ? MemberResource::collection($this->members)
+                : MemberResource::collection($this->membersAccepted),
+            'mentorAccepted'    => new MentorInGroupResource($this->mentorAccepted),
             'surveyQuestions'   => SurveyQuestionResource::collection($this->surveyQuestions)
         ];
     }

@@ -5,15 +5,16 @@ namespace App\Http\Controllers\Api\Client;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\AcceptMemberRequest;
 use App\Http\Requests\GroupRequest;
-use App\Http\Requests\SurveyAnswerRequest;
 use App\Http\Resources\GroupResource;
 use App\Repositories\Contracts\GroupRepository;
+use App\Repositories\Contracts\SurveyQuestionRepository;
 use App\Services\CreateGroup\CreateGroupServiceInterface;
 use App\Services\UtilService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\JoinGroup\JoinGroupServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class GroupController extends BaseController
 {
@@ -21,6 +22,7 @@ class GroupController extends BaseController
         public GroupRepository $groupRepository,
         public JoinGroupServiceInterface $joinGroupServiceInterface,
         public CreateGroupServiceInterface $createGroupServiceInterface,
+        public SurveyQuestionRepository $surveyQuestionRepository
     ) {
     }
     /**
@@ -97,7 +99,25 @@ class GroupController extends BaseController
             $group = $this->groupRepository->find($id);
 
             if ($group->creator->first()->id === auth()->id() && $group->status === config('group.status.waiting')) {
-                $group->update($request->validated());
+                $data = $request->validated();
+                $group->update($data);
+
+                foreach ($data['survey_questions'] as $newQuestion) {
+                    if ($newQuestion['id']) {
+                        foreach ($group->surveyQuestions as $oldQuestion) {
+                            if ($oldQuestion->id === $newQuestion['id']) {
+                                $oldQuestion->content = $newQuestion['question'];
+                                $oldQuestion->save();
+                                break;
+                            }
+                        }
+                    } else {
+                        $this->surveyQuestionRepository->create([
+                            'content'   => $newQuestion['question'],
+                            'group_id'  => $group->id
+                        ]);
+                    }
+                }
 
                 return $this->sendResponse([
                     'message' => __('messages.success.update')
@@ -120,11 +140,15 @@ class GroupController extends BaseController
     public function destroy($id)
     {
         try {
-            $group = $this->groupRepository->find($id);
+            $group = $this->groupRepository->getGroup($id);
 
-            if ($group->creator->first()->id === auth()->id() && $group->status === config('group.status.waiting')) {
-                $group->accounts()->detach();
-                $group->delete();
+            if ($group->creator->id === auth()->id() && $group->status === config('group.status.waiting')) {
+                DB::transaction(function () use ($group) {
+                    $group->accounts()->detach();
+                    $group->surveyQuestions()->delete();
+                    $group->delete();
+                });
+
 
                 return $this->sendResponse([
                     'message' => __('messages.success.delete')
@@ -135,31 +159,6 @@ class GroupController extends BaseController
         } catch (\Exception $e) {
             Log::error($e);
             return $this->sendError(__('messages.error.delete'));
-        }
-    }
-
-    public function joinGroup($id, SurveyAnswerRequest $request)
-    {
-        $data = $request->validated();
-        $group = $this->groupRepository->getGroup($id);
-
-        try {
-            foreach ($group->accounts as $account) {
-                if ($account->pivot->account_id === auth()->id()) {
-                    return $this->sendError(__('messages.error.account_exist'));
-                }
-            }
-
-            if ($group->status === config('group.status.find_member')) {
-                return $this->joinGroupServiceInterface->joinGroupAsMember($group, $data);
-            } elseif ($group->status === config('group.status.find_mentor') && !$group->self_study) {
-                return $this->joinGroupServiceInterface->joinGroupAsMentor($group, $data);
-            }
-
-            return $this->sendError(__('messages.error.can_not_join'));
-        } catch (\Exception $e) {
-            Log::error($e);
-            return $this->sendError(__('messages.error.can_not_join'));
         }
     }
 

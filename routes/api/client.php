@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Client\Auth\LoginController;
 use App\Http\Controllers\Api\Client\Auth\RegisterController;
 use App\Http\Controllers\Api\Client\FacultyController;
 use App\Http\Controllers\Api\Client\GroupController;
+use App\Http\Controllers\Api\Client\MemberController;
 use App\Http\Controllers\Api\Client\MentorInfoController;
 use App\Http\Controllers\Api\Client\NotificationController;
 use App\Http\Controllers\Api\Client\RatingController;
@@ -28,7 +29,9 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
 
   Route::resource('rate', RatingController::class)->only(['store', 'index']);
 
-  Route::post('group/{id}/join', [GroupController::class, 'joinGroup']);
+  Route::post('group/{id}/join', [MemberController::class, 'store']);
+  Route::put('group/{id}/join', [MemberController::class, 'update']);
+  Route::delete('group/{id}/join', [MemberController::class, 'destroy']);
   Route::resource('groups', GroupController::class)->only(['store', 'show', 'update', 'destroy']);
 
   Route::resource('mentor', MentorInfoController::class)->only(['store', 'update', 'index', 'destroy']);

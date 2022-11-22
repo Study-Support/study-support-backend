@@ -21,6 +21,7 @@ class JoinGroupService extends BaseController implements JoinGroupServiceInterfa
      */
     public function joinGroupAsMember($data,  $answers)
     {
+
         try {
             foreach (auth()->user()->accountInGroup as $group) {
                 if ($group->subject_id === $data->subject_id) {
@@ -33,6 +34,8 @@ class JoinGroupService extends BaseController implements JoinGroupServiceInterfa
                 'is_mentor'     => config('member.mentor.false'),
                 'status'        => config('member.status.waiting')
             ]);
+
+
 
             foreach ($answers['survey_answers'] as $answer) {
                 $this->surveyAnswerRepository->create([
