@@ -3,8 +3,6 @@
 namespace App\Repositories\Eloquents;
 
 use App\Repositories\Base\Eloquents\EloquentBaseRepository;
-use App\Repositories\Contracts\AccountRepository;
-use \App\Models\Account;
 use App\Models\Notification;
 use App\Repositories\Contracts\NotificationRepository;
 

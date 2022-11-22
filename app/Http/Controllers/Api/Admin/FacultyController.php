@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Client;
+namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Resources\FacultyResource;
