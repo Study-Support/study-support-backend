@@ -24,7 +24,7 @@ class RatingController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         return $this->sendResponse([
             'data'  => new MyListRatingResource(auth()->user())

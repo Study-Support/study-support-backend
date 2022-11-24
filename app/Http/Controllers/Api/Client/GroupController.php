@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Api\Client;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\AcceptMemberRequest;
 use App\Http\Requests\GroupRequest;
+use App\Http\Resources\GroupDetailResource;
 use App\Http\Resources\GroupResource;
+use App\Http\Resources\SurveyAnswerResource;
 use App\Repositories\Contracts\GroupRepository;
+use App\Repositories\Contracts\SurveyAnswerRepository;
 use App\Repositories\Contracts\SurveyQuestionRepository;
 use App\Services\CreateGroup\CreateGroupServiceInterface;
 use App\Services\UtilService;
@@ -22,7 +25,8 @@ class GroupController extends BaseController
         public GroupRepository $groupRepository,
         public JoinGroupServiceInterface $joinGroupServiceInterface,
         public CreateGroupServiceInterface $createGroupServiceInterface,
-        public SurveyQuestionRepository $surveyQuestionRepository
+        public SurveyQuestionRepository $surveyQuestionRepository,
+        public SurveyAnswerRepository $surveyAnswerRepository
     ) {
     }
     /**
@@ -79,10 +83,15 @@ class GroupController extends BaseController
     {
         try {
             $group = $this->groupRepository->getGroup($id);
+            $myAnswers = $this->surveyAnswerRepository->getMyAnswer($group->id);
 
-            return $this->sendResponse(new GroupResource($group));
-        } catch (\Throwable $th) {
-            return $this->sendError(__('messages.error.not_found'), JsonResponse::HTTP_NOT_FOUND);
+            return $this->sendResponse([
+                'group'           => new GroupDetailResource($group),
+                'survey_answers'  => SurveyAnswerResource::collection($myAnswers)
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return $this->sendError(__('messages.error.not_found'));
         }
     }
 

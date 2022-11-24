@@ -3,6 +3,8 @@
 namespace willvincent\Rateable;
 
 use App\Models\Group;
+use App\Models\Account;
+use App\Models\UserInfo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 
@@ -28,5 +30,10 @@ class Rating extends Model
     public function group()
     {
         return $this->hasOne(Group::class, 'id', 'group_id');
+    }
+
+    public function account()
+    {
+        return $this->hasOne(UserInfo::class, 'account_id', 'account_id');
     }
 }

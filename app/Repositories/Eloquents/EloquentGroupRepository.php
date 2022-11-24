@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquents;
 use App\Repositories\Base\Eloquents\EloquentBaseRepository;
 use App\Models\Group;
 use App\Repositories\Contracts\GroupRepository;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class EloquentGroupRepository
@@ -54,9 +55,10 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     public function getGroup($id)
     {
         return $this->_model
-            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting', 'creator', 'members', 'surveyAnswers')
-            ->withCount('membersAccepted')
-            ->Where('id', $id)->first();
+            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting', 'creator', 'members', 'surveyAnswers', 'membersWaiting')
+            ->withCount('membersAccepted', 'membersWaiting')
+            ->Where('id', $id)
+            ->first();
     }
 
     /**

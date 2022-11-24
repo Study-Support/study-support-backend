@@ -20,7 +20,8 @@ class MemberResource extends JsonResource
             'faculty'   => $this->userInfo->faculty->name,
             'faculty_id'=> $this->userInfo->faculty_id,
             'rating'    => $this->userInfo->rating,
-            'status'    => $this->pivot->status
+            'status'    => $this->pivot->status,
+            // 'survey_answers' => 
         ];
     }
 }

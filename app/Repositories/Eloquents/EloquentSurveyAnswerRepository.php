@@ -33,4 +33,22 @@ class EloquentSurveyAnswerRepository extends EloquentBaseRepository implements S
             })
             ->delete();
     }
+
+    /**
+     * get my answers in group
+     *
+     * @return \App\Models\SurveyAnswer
+     */
+    public function getMyAnswer(int $id)
+    {
+        return $this->_model
+            ->where('account_id', auth()->id())
+            ->whereHas('surveyQuestion', function ($q1) use ($id) {
+                $q1->whereHas('group', function ($q2) use ($id) {
+                    $q2->where('id', $id);
+                });
+            })
+            ->orderBy('id', 'asc')
+            ->get();
+    }
 }
