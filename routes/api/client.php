@@ -24,17 +24,17 @@ Route::get('groups', [GroupController::class, 'index']);
 Route::get('mentors', [MentorInfoController::class, 'getListMentor']);
 
 Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
-  Route::resource('user', UserInfoController::class)->only(['index', 'update']);
-  Route::put('user/password', [UserInfoController::class, 'updatePassword']);
-  Route::get('user/groups', [GroupController::class, 'getMyListGroup']);
-  Route::put('user/groups/{id}/acceptMember', [GroupController::class, 'acceptMember']);
+    Route::put('user/password', [UserInfoController::class, 'updatePassword']);
+    Route::resource('user', UserInfoController::class)->only(['index', 'update']);
+    Route::get('user/groups', [GroupController::class, 'getMyListGroup']);
+    Route::put('user/groups/{id}/acceptMember', [GroupController::class, 'acceptMember']);
 
-  Route::resource('rate', RatingController::class)->only(['store', 'index']);
+    Route::resource('rate', RatingController::class)->only(['store', 'index']);
 
-  Route::post('group/{id}/join', [MemberController::class, 'store']);
-  Route::put('group/{id}/join', [MemberController::class, 'update']);
-  Route::delete('group/{id}/join', [MemberController::class, 'destroy']);
-  Route::resource('groups', GroupController::class)->only(['store', 'show', 'update', 'destroy']);
+    Route::post('group/{id}/join', [MemberController::class, 'store']);
+    Route::put('group/{id}/join', [MemberController::class, 'update']);
+    Route::delete('group/{id}/join', [MemberController::class, 'destroy']);
+    Route::resource('groups', GroupController::class)->only(['store', 'show', 'update', 'destroy']);
 
-  Route::resource('mentor', MentorInfoController::class)->only(['store', 'update', 'index', 'destroy']);
+    Route::resource('mentor', MentorInfoController::class)->only(['store', 'update', 'index', 'destroy']);
 });

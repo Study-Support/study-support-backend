@@ -81,6 +81,7 @@ class Account extends Authenticatable
 
     public function surveyAnswers()
     {
-        return $this->hasMany(SurveyAnswers::class, 'account_id', 'id');
+        return $this->hasMany(SurveyAnswer::class, 'account_id', 'id');
     }
+
 }

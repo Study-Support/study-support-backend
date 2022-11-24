@@ -8,8 +8,14 @@ interface SurveyAnswerRepository extends BaseRepository
 {
 
     /**
-   * delete my answers in group
-   * @return array
-   */
-  public function deleteMyAnswer(int $id);
+     * delete my answers in group
+     * @return array
+     */
+    public function deleteMyAnswer(int $id);
+
+    /**
+     * get my answers in group
+     * @return array
+     */
+    public function getMyAnswer(int $id);
 }

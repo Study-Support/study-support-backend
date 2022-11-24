@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\BaseController;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\MentorRequest;
 use App\Http\Resources\MentorInfoResource;
-use App\Http\Resources\MentorResource;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\MentorInfoRepository;
 use App\Services\RegisterMentor\RegisterMentorServiceInterface;
@@ -30,7 +29,7 @@ class MentorInfoController extends BaseController
         $mentor = $this->mentorInfoRepository->getMentor(auth()->id());
 
         return $this->sendResponse([
-            'data'    => new MentorResource($mentor)
+            'data'    => new MentorInfoResource($mentor)
         ]);
     }
 
