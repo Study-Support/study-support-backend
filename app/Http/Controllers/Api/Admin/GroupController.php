@@ -9,6 +9,7 @@ use App\Http\Resources\Admin\GroupResource;
 use App\Repositories\Contracts\GroupRepository;
 use App\Services\UtilService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class GroupController extends BaseController
@@ -101,7 +102,7 @@ class GroupController extends BaseController
                 ]);
             }
 
-            if ($group->status < 4) {
+            if ($group->status < 2) {
                 $group->status = $group->status + 1;
                 $group->save();
                 return $this->sendResponse([
@@ -151,8 +152,13 @@ class GroupController extends BaseController
 
             foreach ($group->mentorWaiting as $mentor) {
                 if ($mentor->id === $data['account_id']) {
-                    $mentor->pivot->status = 1;
-                    $mentor->pivot->save();
+                    DB::transaction(function () use ($mentor, $group) {
+                        $mentor->pivot->status = 1;
+                        $mentor->pivot->save();
+
+                        $group->status = config('group.status.studying');
+                        $group->save();
+                    });
                 } else {
                     $group->accounts()->detach($mentor->id);
                 }

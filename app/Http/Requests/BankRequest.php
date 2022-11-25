@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class UpdatePasswordRequest extends BaseRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class BankRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +24,7 @@ class UpdatePasswordRequest extends BaseRequest
     public function rules()
     {
         return [
-            'current_password' => [
-                'required'
-            ],
-            'password' => [
-                'required',
-                'different:current_password'
-            ],
-            'password_confirmation' => [
-                'required',
-                'same:password'
-            ],
+            'smart_banking' => 'required'
         ];
     }
 }

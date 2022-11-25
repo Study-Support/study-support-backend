@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Client;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\BankRequest;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\MentorRequest;
 use App\Http\Resources\MentorInfoResource;
@@ -84,11 +85,10 @@ class MentorInfoController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(MentorRequest $request)
+    public function updateSubject(MentorRequest $request)
     {
         try {
             $mentor = $this->mentorInfoRepository->getMentor(auth()->id());
-            $this->mentorInfoRepository->update($mentor->id, $request->only('smart_banking'));
 
             $data = $request->validated();
 
@@ -146,5 +146,21 @@ class MentorInfoController extends BaseController
         return $this->sendResponse([
             'data'    => MentorInfoResource::collection($mentors)
         ]);
+    }
+
+    public function updateBank(BankRequest $bankRequest)
+    {
+        try {
+            $mentor = $this->mentorInfoRepository->getMentor(auth()->id());
+
+            $this->mentorInfoRepository->update($mentor->id, $bankRequest->only('smart_banking'));
+
+            return $this->sendResponse([
+                'message' => __('messages.success.update')
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return $this->sendError(__('messages.error.update'));
+        }
     }
 }

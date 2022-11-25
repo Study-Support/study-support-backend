@@ -30,9 +30,6 @@ class MentorRequest extends BaseRequest
       'cv_link'  => [
         'required'
       ],
-      'smart_banking' => [
-        'required'
-      ],
       'subject_id' => [
         'required',
         Rule::exists('subjects', 'id')
