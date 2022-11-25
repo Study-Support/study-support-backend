@@ -41,7 +41,6 @@ class MentorInfoController extends BaseController
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -63,7 +62,11 @@ class MentorInfoController extends BaseController
      */
     public function show($id)
     {
-        //
+        $mentor = $this->mentorInfoRepository->getMentor($id);
+
+        return $this->sendResponse([
+            'data'      => new MentorResource($mentor)
+        ]);
     }
 
     /**

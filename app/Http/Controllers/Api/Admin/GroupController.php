@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Requests\Admin\AcceptMentorRequest;
+use App\Http\Resources\Admin\GroupDetailResource;
 use App\Http\Resources\Admin\GroupResource;
-use App\Http\Resources\GroupDetailResource;
 use App\Repositories\Contracts\GroupRepository;
 use App\Services\UtilService;
 use Illuminate\Http\Request;
@@ -139,6 +140,30 @@ class GroupController extends BaseController
         } catch (\Exception $e) {
             Log::error($e);
             return $this->sendError(__('messages.error.delete'));
+        }
+    }
+
+    public function acceptMentor(AcceptMentorRequest $request, $id)
+    {
+        try {
+            $group = $this->groupRepository->getGroup($id);
+            $data = $request->validated();
+
+            foreach ($group->mentorWaiting as $mentor) {
+                if ($mentor->id === $data['account_id']) {
+                    $mentor->pivot->status = 1;
+                    $mentor->pivot->save();
+                } else {
+                    $group->accounts()->detach($mentor->id);
+                }
+            }
+
+            return $this->sendResponse([
+                'message' => __('messages.success.delete')
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return $this->sendError(__('messages.error.update'));
         }
     }
 }

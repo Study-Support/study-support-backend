@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\UserRole;
 use App\Models\Account;
-use App\Models\Account_Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
