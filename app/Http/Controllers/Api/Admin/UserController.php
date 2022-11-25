@@ -66,11 +66,9 @@ class UserController extends BaseController
   public function show($id)
   {
     $user = $this->userInfoRepository->getUser($id);
-    $ratings = $user->ratings;
 
     return $this->sendResponse([
-      'user'      => new UserResource($user),
-      'ratings'   => RatingResource::collection($ratings)
+      'data'      => new UserResource($user)
     ]);
   }
 
