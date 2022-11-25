@@ -62,7 +62,7 @@ class MemberController extends BaseController
                 return $this->sendError(__('messages.error.must_enough_answers'));
             }
 
-            if ($group->status === config('group.status.find_member')) {
+            if ($group->status === config('group.status.find_member') || ($group->self_study && $group->status === config('group.status.studying'))) {
                 return $this->joinGroupServiceInterface->joinGroupAsMember($group, $data);
             } elseif ($group->status === config('group.status.find_mentor') && !$group->self_study) {
                 return $this->joinGroupServiceInterface->joinGroupAsMentor($group, $data);
