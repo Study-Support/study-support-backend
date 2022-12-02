@@ -13,7 +13,9 @@ interface UserInfoRepository extends BaseRepository
 
   /**
    * get list user
-   * @return array
+   *
+   * @param array $params
+   * @return Collection
    */
   public function getListUser(array $params);
 

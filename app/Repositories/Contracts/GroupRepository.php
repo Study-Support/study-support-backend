@@ -8,7 +8,9 @@ interface GroupRepository extends BaseRepository
 {
     /**
      * get list group in dashboard
-     * @return array
+     *
+     * @param array $params
+     * @return Collection
      */
     public function getListGroupInDashBoard(array $params);
 
@@ -20,13 +22,17 @@ interface GroupRepository extends BaseRepository
 
     /**
      * get all group
-     * @return array
+     *
+     * @param array $params
+     * @return Collection
      */
     public function getAllGroup(array $params);
 
     /**
      * get my list group
-     * @return array
+     *
+     * @param array $params
+     * @return Collection
      */
     public function getMyListGroup(array $params);
 }

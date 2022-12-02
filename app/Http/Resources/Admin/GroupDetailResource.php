@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\AnswerResource;
 use App\Http\Resources\MemberResource;
 use App\Http\Resources\MentorInGroupResource;
-use App\Http\Resources\SurveyAnswerResource;
-use App\Http\Resources\SurveyQuestionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GroupDetailResource extends JsonResource
@@ -37,11 +36,7 @@ class GroupDetailResource extends JsonResource
                 : null,
             'mentorAccepted'    => new MentorInGroupResource($this->mentorAccepted),
             'mentorWaiting'     => new MentorInGroupResource($this->mentorWaiting),
-            'survey_questions'  => SurveyQuestionResource::collection($this->surveyQuestions),
-            'survey_answers'    => $this->creator->id === auth()->id()
-                ? SurveyAnswerResource::collection($this->surveyAnswers)
-                : null,
-            'is_creator'        => $this->creator->id === auth()->id() ?? false
+            'answers'           => AnswerResource::collection($this->mentorAnswers)
         ];
     }
 }

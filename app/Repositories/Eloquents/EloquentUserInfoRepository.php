@@ -24,7 +24,7 @@ class EloquentUserInfoRepository extends EloquentBaseRepository implements UserI
   /**
    * get current user
    *
-   * @return \App\Models\UserInfo
+   * @return Collection
    */
   public function getCurrentUser()
   {
@@ -36,7 +36,8 @@ class EloquentUserInfoRepository extends EloquentBaseRepository implements UserI
   /**
    * Get list user
    *
-   * @return \App\Models\User
+   * @param array $params
+   * @return Collection
    */
   public function getListUser(array $params)
   {
@@ -55,7 +56,7 @@ class EloquentUserInfoRepository extends EloquentBaseRepository implements UserI
    * get one user
    * @param $id
    *
-   * @return \App\Models\UserInfo
+   * @return Collection
    */
   public function getUser($id)
   {

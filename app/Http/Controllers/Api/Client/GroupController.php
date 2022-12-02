@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api\Client;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\AcceptMemberRequest;
 use App\Http\Requests\GroupRequest;
+use App\Http\Resources\AnswerResource;
 use App\Http\Resources\GroupDetailResource;
 use App\Http\Resources\GroupResource;
-use App\Http\Resources\SurveyAnswerResource;
+use App\Repositories\Contracts\AnswerRepository;
 use App\Repositories\Contracts\GroupRepository;
-use App\Repositories\Contracts\SurveyAnswerRepository;
 use App\Repositories\Contracts\SurveyQuestionRepository;
 use App\Services\CreateGroup\CreateGroupServiceInterface;
 use App\Services\UtilService;
@@ -26,7 +26,7 @@ class GroupController extends BaseController
         public JoinGroupServiceInterface $joinGroupServiceInterface,
         public CreateGroupServiceInterface $createGroupServiceInterface,
         public SurveyQuestionRepository $surveyQuestionRepository,
-        public SurveyAnswerRepository $surveyAnswerRepository
+        public AnswerRepository $answerRepository
     ) {
     }
     /**
@@ -83,11 +83,11 @@ class GroupController extends BaseController
     {
         try {
             $group = $this->groupRepository->getGroup($id);
-            $myAnswers = $this->surveyAnswerRepository->getMyAnswer($group->id);
+            $myAnswers = $this->answerRepository->getMyAnswer($group->id);
 
             return $this->sendResponse([
-                'group'           => new GroupDetailResource($group),
-                'survey_answers'  => SurveyAnswerResource::collection($myAnswers)
+                'group'     => new GroupDetailResource($group),
+                'myAnswers' => AnswerResource::collection($myAnswers)
             ]);
         } catch (\Exception $e) {
             Log::error($e);

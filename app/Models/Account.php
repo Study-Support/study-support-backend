@@ -79,9 +79,8 @@ class Account extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public function surveyAnswers()
+    public function answers()
     {
-        return $this->hasMany(SurveyAnswer::class, 'account_id', 'id');
+        return $this->hasMany(Answer::class, 'account_id', 'id');
     }
-
 }

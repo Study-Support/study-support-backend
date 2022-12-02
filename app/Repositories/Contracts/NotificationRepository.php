@@ -8,7 +8,9 @@ interface NotificationRepository extends BaseRepository
 {
     /**
    * get list notification
-   * @return array
+   *
+   * @param array $params
+   * @return Collection
    */
   public function getListNotification(array $params);
 }

@@ -8,7 +8,8 @@ return [
         'create'        => 'Thêm mới thành công',
         'update'        => 'Cập nhật thành công',
         'delete'        => 'Xóa thành công',
-        'rate'          => 'Đánh giá thành công'
+        'rate'          => 'Đánh giá thành công',
+        'leave_group'   => 'Rời nhóm thành công'
     ],
     'error'     => [
         'register'              => 'Đăng ký không thành công',
@@ -26,7 +27,8 @@ return [
         'group_of_subject_exist'=> 'Bạn đã tham gia nhóm của môn học này rồi',
         'not_is_creator'        => 'Bạn không phải là nhóm trưởng của nhóm này',
         'not_found'             => 'Không tìm thấy trang',
-        'incorrect_amount'      => 'Số lượng câu trả lời không khớp với số lượng câu hỏi'
+        'incorrect_amount'      => 'Số lượng câu trả lời không khớp với số lượng câu hỏi',
+        'leave_group'           => 'Rời nhóm không thành công'
     ]
 
 ];
