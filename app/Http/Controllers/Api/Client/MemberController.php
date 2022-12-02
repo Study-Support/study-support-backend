@@ -20,25 +20,6 @@ class MemberController extends BaseController
         public AnswerRepository $answerRepository
     ) {
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -76,28 +57,6 @@ class MemberController extends BaseController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\AnswerRequest  $request
@@ -107,12 +66,11 @@ class MemberController extends BaseController
     public function update(AnswerRequest $request, $id)
     {
         try {
-
             DB::transaction(function () use ($request) {
                 foreach ($request->answers as $answer) {
                     $this->answerRepository
                         ->findOrFail($answer['id'])
-                        ->update(['sort_order' => $answer['content']]);
+                        ->update(['content' => $answer['content']]);
                 }
             });
 

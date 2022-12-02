@@ -200,7 +200,8 @@ return [
     App\Providers\RegisterMentor\RegisterMentorServiceProvider::class,
     App\Providers\RepositoryServiceProvider::class,
     App\Providers\JoinGroup\JoinGroupServiceProvider::class,
-    App\Providers\CreateGroup\CreateGroupServiceProvider::class
+    App\Providers\CreateGroup\CreateGroupServiceProvider::class,
+    App\Providers\CreateAnswer\CreateAnswerServiceProvider::class
   ],
 
   /*

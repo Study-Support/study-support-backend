@@ -20,11 +20,13 @@ class CreateAnswerService extends BaseController implements CreateAnswerServiceI
      * @param $type
      * @return \Illuminate\Http\Response
      */
-    public function createAnswer($answers, $type)
+    public function createAnswer($answers, $type, $group_id)
     {
         try {
-            array_walk($answers, function (&$answer)  use ($type) {
+            array_walk($answers, function (&$answer)  use ($type, $group_id) {
                 $answer['type'] =  $type;
+                $answer['group_id'] = $group_id;
+                $answer['account_id'] = auth()->id();
             });
 
             $this->answerRepository->insert($answers);
