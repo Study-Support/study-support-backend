@@ -32,9 +32,9 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
 
     Route::resource('rate', RatingController::class)->only(['store', 'index']);
 
-    Route::post('group/{id}/join', [MemberController::class, 'store']);
-    Route::put('group/{id}/join', [MemberController::class, 'update']);
-    Route::delete('group/{id}/join', [MemberController::class, 'destroy']);
+    Route::post('groups/{id}/join', [MemberController::class, 'store']);
+    Route::put('groups/{id}/join', [MemberController::class, 'update']);
+    Route::delete('groups/{id}/join', [MemberController::class, 'destroy']);
     Route::resource('groups', GroupController::class)->only(['store', 'show', 'update', 'destroy']);
 
     Route::put('mentor/bank', [MentorInfoController::class, 'updateBank']);

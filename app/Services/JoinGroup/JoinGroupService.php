@@ -3,7 +3,6 @@
 namespace App\Services\JoinGroup;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Repositories\Contracts\AnswerRepository;
 use App\Services\CreateAnswer\CreateAnswerServiceInterface;
 use App\Services\JoinGroup\JoinGroupServiceInterface;
 use Illuminate\Support\Facades\Log;
@@ -37,7 +36,7 @@ class JoinGroupService extends BaseController implements JoinGroupServiceInterfa
                 'status'        => config('member.status.waiting')
             ]);
 
-            $this->createAnswerServiceInterface->createAnswer($answers, config('answer.type.member'));
+            $this->createAnswerServiceInterface->createAnswer($answers, config('answer.type.member'), $data->id);
 
             return $this->sendResponse([
                 'message' => __('messages.success.create')
@@ -61,14 +60,15 @@ class JoinGroupService extends BaseController implements JoinGroupServiceInterfa
             $subjects = auth()->user()->mentorInfo->subjectsAccepted;
 
             foreach ($subjects as $subject) {
-                if ($subject->pivot->id === $data->subject_id) {
+                if ($subject->id === $data->subject_id) {
+
                     $data->accounts()->attach(auth()->id(), [
                         'is_creator'    => config('member.creator.false'),
                         'is_mentor'     => config('member.mentor.true'),
                         'status'        => config('member.status.waiting')
                     ]);
 
-                    $this->createAnswerServiceInterface->createAnswer($answers, config('answer.type.mentor'));
+                    $this->createAnswerServiceInterface->createAnswer($answers, config('answer.type.mentor'), $data->id);
 
                     return $this->sendResponse([
                         'message' => __('messages.success.create')

@@ -5,7 +5,6 @@ namespace App\Repositories\Eloquents;
 use App\Repositories\Base\Eloquents\EloquentBaseRepository;
 use App\Models\Group;
 use App\Repositories\Contracts\GroupRepository;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class EloquentGroupRepository

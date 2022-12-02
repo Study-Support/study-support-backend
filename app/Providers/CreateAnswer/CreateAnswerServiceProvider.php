@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\CreateGroup;
+namespace App\Providers\CreateAnswer;
 
 use App\Services\CreateAnswer\CreateAnswerService;
 use App\Services\CreateAnswer\CreateAnswerServiceInterface;

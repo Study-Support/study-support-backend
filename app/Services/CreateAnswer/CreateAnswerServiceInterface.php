@@ -11,5 +11,5 @@ interface CreateAnswerServiceInterface
      * @param $type
      * @return \Illuminate\Http\Response
      */
-    public function createAnswer($answers, $type);
+    public function createAnswer($answers, $type, $group_id);
 }

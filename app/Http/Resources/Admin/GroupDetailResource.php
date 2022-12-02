@@ -31,11 +31,8 @@ class GroupDetailResource extends JsonResource
             'faculty'           => $this->faculty->name,
             'status'            => $this->status,
             'membersAccepted'   => MemberResource::collection($this->membersAccepted),
-            'membersWaiting'    => $this->creator->id === auth()->id()
-                ? MemberResource::collection($this->membersWaiting)
-                : null,
             'mentorAccepted'    => new MentorInGroupResource($this->mentorAccepted),
-            'mentorWaiting'     => new MentorInGroupResource($this->mentorWaiting),
+            'mentorWaiting'     => MentorInGroupResource::collection($this->mentorWaiting),
             'answers'           => AnswerResource::collection($this->mentorAnswers)
         ];
     }
