@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('survey_answers', function (Blueprint $table) {
+        Schema::create('mentor_questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('question_id');
-            $table->unsignedBigInteger('account_id');
-            $table->string('content');
+            $table->text('content');
             $table->timestamps();
-
-            $table->foreign('question_id')->references('id')->on('survey_questions');
-            $table->foreign('account_id')->references('id')->on('accounts');
         });
     }
 
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('survey_answers');
+        Schema::dropIfExists('mentor_questions');
     }
 };

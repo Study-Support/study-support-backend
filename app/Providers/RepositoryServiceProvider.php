@@ -16,14 +16,13 @@ class RepositoryServiceProvider extends ServiceProvider
         'Account',
         'UserInfo',
         'Notification',
-        'Question',
         'Answer',
         'Group',
         'Faculty',
         'MentorInfo',
         'SurveyQuestion',
-        'SurveyAnswer',
-        'Subject'
+        'Subject',
+        'MentorQuestion'
     ];
 
     /**

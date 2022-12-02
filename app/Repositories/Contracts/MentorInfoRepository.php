@@ -8,13 +8,15 @@ interface MentorInfoRepository extends BaseRepository
 {
   /**
    * get one mentor
-   * @param $id
+   * @param int $id
    */
-  public function getMentor($id);
+  public function getMentor(int $id);
 
   /**
    * get list mentor
-   * @return array
+   *
+   * @param arary $params
+   * @return Collection
    */
   public function getListMentor(array $params);
 }

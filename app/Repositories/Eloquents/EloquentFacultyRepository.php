@@ -20,7 +20,8 @@ class EloquentFacultyRepository extends EloquentBaseRepository implements Facult
     /**
      * Get list faculty
      *
-     * @return \App\Models\Faculty
+     * @param array $params
+     * @return Collection
      */
     public function getListFaculty(array $params)
     {
@@ -33,7 +34,7 @@ class EloquentFacultyRepository extends EloquentBaseRepository implements Facult
      * get one faculty
      * @param $id
      *
-     * @return \App\Models\Faculty
+     * @return Collection
      */
     public function getFaculty($id)
     {

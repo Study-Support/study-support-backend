@@ -21,7 +21,8 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     /**
      * Get list group
      *
-     * @return \App\Models\Group
+     * @param array $params
+     * @return Collection
      */
     public function getListGroupInDashBoard(array $params)
     {
@@ -50,12 +51,12 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
      * get one group
      * @param $id
      *
-     * @return \App\Models\Group
+     * @return Collection
      */
     public function getGroup($id)
     {
         return $this->_model
-            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting', 'creator', 'members', 'surveyAnswers', 'membersWaiting')
+            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting', 'creator', 'members', 'memberAnswers', 'mentorAnswers', 'membersWaiting')
             ->withCount('membersAccepted', 'membersWaiting')
             ->Where('id', $id)
             ->first();
@@ -64,7 +65,8 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     /**
      * Get all group
      *
-     * @return \App\Models\Group
+     * @param array $params)
+     * @return Collection
      */
     public function getAllGroup(array $params)
     {
@@ -77,7 +79,8 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     /**
      * Get my list group
      *
-     * @return \App\Models\Group
+     * @param array $params
+     * @return Collection
      */
     public function getMyListGroup(array $params)
     {

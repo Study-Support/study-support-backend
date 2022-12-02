@@ -8,7 +8,9 @@ interface SubjectRepository extends BaseRepository
 {
     /**
    * get list subject
-   * @return array
+   *
+   * @param array $params
+   * @return Collection
    */
   public function getListSubject(array $params);
 }

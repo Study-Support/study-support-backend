@@ -18,15 +18,31 @@ class EloquentAnswerRepository extends EloquentBaseRepository implements AnswerR
     }
 
     /**
-   * Get list answer
-   *
-   * @return \App\Models\Answer
-   */
-  public function getListAnswer(array $params)
-  {
-    return $this->_model
-      ->orderBy('id', 'asc')
-      ->get();
-  }
+     * Get list answer
+     *
+     * @param int $group_id
+     * @return Collection
+     */
+    public function getMyAnswer(int $group_id)
+    {
+        return $this->_model
+            ->where('account_id', auth()->id())
+            ->where('group_id', $group_id)
+            ->orderBy('id', 'asc')
+            ->get();
+    }
 
+    /**
+     * Get list answer
+     *
+     * @param int $group_id
+     * @return Collection
+     */
+    public function deleteMyAnswer(int $group_id)
+    {
+        return $this->_model
+            ->where('account_id', auth()->id())
+            ->where('group_id', $group_id)
+            ->delete();
+    }
 }

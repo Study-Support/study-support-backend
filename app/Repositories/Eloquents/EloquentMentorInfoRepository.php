@@ -25,7 +25,7 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
      * get one mentor
      * @param $id
      *
-     * @return \App\Models\MentorInfo
+     * @return Collection
      */
     public function getMentor($id)
     {
@@ -38,7 +38,8 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
     /**
      * Get list mentor
      *
-     * @return \App\Models\MentorInfo
+     * @param array $params
+     * @return Collection
      */
     public function getListMentor(array $params)
     {

@@ -8,7 +8,9 @@ interface FacultyRepository extends BaseRepository
 {
     /**
    * get list faculty
-   * @return array
+   *
+   * @param array $params
+   * @return Collection
    */
   public function getListFaculty(array $params);
 
