@@ -93,8 +93,8 @@ class GroupController extends BaseController
         try {
             $group = $this->groupRepository->find($id);
 
-            if ($group->self_study && $group->status === 0) {
-                $group->status = 3;
+            if ($group->self_study && $group->status < 2) {
+                $group->status = $group->status + 1;
                 $group->save();
 
                 return $this->sendResponse([

@@ -107,25 +107,26 @@ class GroupController extends BaseController
         try {
             $group = $this->groupRepository->find($id);
 
-            if ($group->creator->first()->id === auth()->id() && $group->status === config('group.status.waiting')) {
+            if ($group->creator->id === auth()->id() && $group->status === config('group.status.waiting')) {
                 $data = $request->validated();
                 $group->update($data);
 
-                foreach ($data['survey_questions'] as $newQuestion) {
-                    if ($newQuestion['id']) {
-                        foreach ($group->surveyQuestions as $oldQuestion) {
-                            if ($oldQuestion->id === $newQuestion['id']) {
-                                $oldQuestion->content = $newQuestion['question'];
-                                $oldQuestion->save();
-                                break;
-                            }
-                        }
-                    } else {
-                        $this->surveyQuestionRepository->create([
-                            'content'   => $newQuestion['question'],
-                            'group_id'  => $group->id
-                        ]);
+                $oldKeys = array_column($group->surveyQuestions->toArray(), 'id');
+                $newKeys = array_column($data['survey_questions'], 'id');
+
+                foreach (array_diff($oldKeys, $newKeys) as $deleteKey) {
+                    if ($deleteKey) {
+                        $this->surveyQuestionRepository->delete($deleteKey);
                     }
+                }
+
+                foreach ($data['survey_questions'] as $newQuestion) {
+                    $newQuestion['id']
+                    ? $this->surveyQuestionRepository->update($newQuestion['id'], $newQuestion)
+                    : $this->surveyQuestionRepository->create([
+                        'content'   => $newQuestion['content'],
+                        'group_id'  => $id
+                    ]);
                 }
 
                 return $this->sendResponse([
@@ -175,7 +176,7 @@ class GroupController extends BaseController
     {
         try {
             $group = $this->groupRepository->getGroup($id);
-            $creatorId = $group->creator()->first()->id;
+            $creatorId = $group->creator->id;
             if (!($creatorId === auth()->id())) {
                 return $this->sendError(__('messages.error.not_is_creator'));
             }
