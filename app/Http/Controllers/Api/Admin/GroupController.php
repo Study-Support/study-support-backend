@@ -127,7 +127,7 @@ class GroupController extends BaseController
             foreach ($group->mentorWaiting as $mentor) {
                 if ($mentor->id === $data['account_id']) {
                     DB::transaction(function () use ($mentor, $group) {
-                        $mentor->pivot->status = 1;
+                        $mentor->pivot->status = config('member.status.accepted');
                         $mentor->pivot->save();
 
                         $group->status = config('group.status.studying');

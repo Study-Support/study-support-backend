@@ -33,7 +33,6 @@ class CreateAnswerService extends BaseController implements CreateAnswerServiceI
                 ]);
             }
 
-            $this->answerRepository->insert($answers);
         } catch (\Exception $e) {
             Log::error($e);
 
