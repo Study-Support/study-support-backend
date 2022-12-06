@@ -71,6 +71,9 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     {
         return $this->_model
             ->withCount(['membersAccepted'])
+            ->when(isset($params['status']), function ($q) use ($params) {
+                $q->where('status', $params['status']);
+            })
             ->orderBy('id', 'asc')
             ->paginate($this->MAX_PER_PAGE);
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\MentorInProfile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MentorInfoResource extends JsonResource
+class MentorInProfileResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +19,8 @@ class MentorInfoResource extends JsonResource
             'faculty'             => $this->account->userInfo->faculty->name,
             'rating'              => $this->averageRating,
             'number_of_subjects'  => $this->subjects_accepted_count,
-            'subjects'            => SubjectResource::collection($this->subjectsAccepted)
-        ];
+            'bank'                => $this->smart_banking,
+            'subjects'            => MentorSubjectResource::collection($this->subjectsAccepted)
+          ];
     }
 }

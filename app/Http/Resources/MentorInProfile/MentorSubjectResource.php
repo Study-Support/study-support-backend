@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\MentorInProfile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SubjectResource extends JsonResource
+class MentorSubjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,8 @@ class SubjectResource extends JsonResource
     {
         return [
             'id'        => $this->id,
-            'name'      => $this->name
+            'name'      => $this->name,
+            'active'    => $this->pivot->active
         ];
     }
 }
