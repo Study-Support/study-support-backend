@@ -70,7 +70,7 @@ class MemberController extends BaseController
                 foreach ($request->answers as $answer) {
                     $this->answerRepository
                         ->findOrFail($answer['id'])
-                        ->update(['content' => $answer['content']]);
+                        ->update(['content' => $answer['answer']]);
                 }
             });
 
