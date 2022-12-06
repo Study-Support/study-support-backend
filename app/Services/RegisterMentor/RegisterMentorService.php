@@ -4,10 +4,15 @@ namespace App\Services\RegisterMentor;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Resources\SubjectResource;
+use App\Repositories\Contracts\MentorInfoRepository;
 use Illuminate\Support\Facades\Log;
 
 class RegisterMentorService extends BaseController implements RegisterMentorServiceInterface
 {
+    public function __construct(
+        public MentorInfoRepository $mentorInfoRepository
+    ) {
+    }
     /**
      * Form action register mentor
      *
@@ -17,9 +22,7 @@ class RegisterMentorService extends BaseController implements RegisterMentorServ
     public function registerMentor($data)
     {
         try {
-            $mentorInfo = $this->mentorInfoRepository->getMentor(auth()->id())
-                ? $this->mentorInfoRepository->getMentor(auth()->id())
-                : $this->mentorInfoRepository->create($data);
+            $mentorInfo = $this->mentorInfoRepository->getMentor(auth()->id()) ?? $this->mentorInfoRepository->create($data['smart_banking']);
 
             foreach ($mentorInfo->subjects as $subject) {
                 if ($subject->id == $data['subject_id']) {
