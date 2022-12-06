@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\Admin\MentorInfoController as AdminMentorInfoController;
+use App\Http\Controllers\Api\Client\MentorQuestionController;
 use App\Http\Controllers\Api\Client\Auth\LoginController;
 use App\Http\Controllers\Api\Client\Auth\RegisterController;
 use App\Http\Controllers\Api\Client\FacultyController;
@@ -40,4 +40,6 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
     Route::put('mentor/bank', [MentorInfoController::class, 'updateBank']);
     Route::put('mentor/subjects', [MentorInfoController::class, 'updateSubject']);
     Route::resource('mentor', MentorInfoController::class)->only(['store', 'index', 'destroy']);
+
+    Route::get('mentor-questions', [MentorQuestionController::class, 'index']);
 });

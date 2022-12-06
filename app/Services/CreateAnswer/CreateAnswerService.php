@@ -23,11 +23,15 @@ class CreateAnswerService extends BaseController implements CreateAnswerServiceI
     public function createAnswer($answers, $type, $group_id)
     {
         try {
-            array_walk($answers, function (&$answer)  use ($type, $group_id) {
-                $answer['type'] =  $type;
-                $answer['group_id'] = $group_id;
-                $answer['account_id'] = auth()->id();
-            });
+            foreach ($answers as $answer) {
+                $this->answerRepository->create([
+                    'question'  => $answer['content'],
+                    'content'   => $answer['answer'],
+                    'type'      => $type,
+                    'group_id'  => $group_id,
+                    'account_id'=> auth()->id()
+                ]);
+            }
 
             $this->answerRepository->insert($answers);
         } catch (\Exception $e) {

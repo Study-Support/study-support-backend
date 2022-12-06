@@ -3,10 +3,10 @@
 namespace willvincent\Rateable;
 
 use App\Models\Group;
-use App\Models\Account;
 use App\Models\UserInfo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class Rating extends Model
 {
