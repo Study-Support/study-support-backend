@@ -15,9 +15,11 @@ class MentorSubjectResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        => $this->id,
-            'name'      => $this->name,
-            'active'    => $this->pivot->active
+            'id'            => $this->pivot->id,
+            'subject_id'    => $this->id,
+            'name'          => $this->name,
+            'cv_link'       => $this->pivot->cv_link,
+            'active'        => $this->pivot->active
         ];
     }
 }
