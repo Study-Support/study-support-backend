@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integerIncrements('id');
             $table->string('title');
             $table->string('content');
-            $table->boolean('status')->comment('0: waiting | 1: accepted');
             $table->timestamps();
         });
     }

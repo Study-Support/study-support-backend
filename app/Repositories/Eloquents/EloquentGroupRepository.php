@@ -5,7 +5,6 @@ namespace App\Repositories\Eloquents;
 use App\Repositories\Base\Eloquents\EloquentBaseRepository;
 use App\Models\Group;
 use App\Repositories\Contracts\GroupRepository;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class EloquentGroupRepository
@@ -21,7 +20,8 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     /**
      * Get list group
      *
-     * @return \App\Models\Group
+     * @param array $params
+     * @return Collection
      */
     public function getListGroupInDashBoard(array $params)
     {
@@ -50,12 +50,12 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
      * get one group
      * @param $id
      *
-     * @return \App\Models\Group
+     * @return Collection
      */
     public function getGroup($id)
     {
         return $this->_model
-            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting', 'creator', 'members', 'surveyAnswers', 'membersWaiting')
+            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting', 'creator', 'members', 'memberAnswers', 'mentorAnswers', 'membersWaiting')
             ->withCount('membersAccepted', 'membersWaiting')
             ->Where('id', $id)
             ->first();
@@ -64,12 +64,16 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     /**
      * Get all group
      *
-     * @return \App\Models\Group
+     * @param array $params)
+     * @return Collection
      */
     public function getAllGroup(array $params)
     {
         return $this->_model
             ->withCount(['membersAccepted'])
+            ->when(isset($params['status']), function ($q) use ($params) {
+                $q->where('status', $params['status']);
+            })
             ->orderBy('id', 'asc')
             ->paginate($this->MAX_PER_PAGE);
     }
@@ -77,7 +81,8 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     /**
      * Get my list group
      *
-     * @return \App\Models\Group
+     * @param array $params
+     * @return Collection
      */
     public function getMyListGroup(array $params)
     {

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\Client;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Requests\SurveyAnswerRequest;
+use App\Http\Requests\AnswerRequest;
+use App\Repositories\Contracts\AnswerRepository;
 use App\Repositories\Contracts\GroupRepository;
-use App\Repositories\Contracts\SurveyAnswerRepository;
 use App\Services\JoinGroup\JoinGroupServiceInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -17,36 +17,17 @@ class MemberController extends BaseController
     public function __construct(
         public GroupRepository $groupRepository,
         public JoinGroupServiceInterface $joinGroupServiceInterface,
-        public SurveyAnswerRepository $surveyAnswerRepository
+        public AnswerRepository $answerRepository
     ) {
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\SurveyAnswerRequest  $request
+     * @param  \Illuminate\Http\AnswerRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id, SurveyAnswerRequest $request)
+    public function store($id, AnswerRequest $request)
     {
         $data = $request->validated();
         $group = $this->groupRepository->getGroup($id);
@@ -58,14 +39,14 @@ class MemberController extends BaseController
                 }
             }
 
-            if ($group->surveyQuestions->count() != count($data['survey_answers'])) {
+            if ($group->surveyQuestions->count() != count($data['answers'])) {
                 return $this->sendError(__('messages.error.must_enough_answers'));
             }
 
             if ($group->status === config('group.status.find_member') || ($group->self_study && $group->status === config('group.status.studying'))) {
-                return $this->joinGroupServiceInterface->joinGroupAsMember($group, $data);
+                return $this->joinGroupServiceInterface->joinGroupAsMember($group, $data['answers']);
             } elseif ($group->status === config('group.status.find_mentor') && !$group->self_study) {
-                return $this->joinGroupServiceInterface->joinGroupAsMentor($group, $data);
+                return $this->joinGroupServiceInterface->joinGroupAsMentor($group, $data['answers']);
             }
 
             return $this->sendError(__('messages.error.can_not_join'));
@@ -76,47 +57,22 @@ class MemberController extends BaseController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\SurveyAnswerRequest  $request
+     * @param  \Illuminate\Http\AnswerRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SurveyAnswerRequest $request, $id)
+    public function update(AnswerRequest $request, $id)
     {
         try {
-            $group = $this->groupRepository->getGroup($id);
-            $data = $request->validated();
-            foreach ($group->surveyAnswers as $groupAnswer) {
-                foreach ($data['survey_answers'] as $answer) {
-                    if ($groupAnswer->account_id === auth()->id() && $groupAnswer->question_id === $answer['id']) {
-                        $groupAnswer->content = $answer['answer'];
-                        $groupAnswer->save();
-                    }
+            DB::transaction(function () use ($request) {
+                foreach ($request->answers as $answer) {
+                    $this->answerRepository
+                        ->findOrFail($answer['id'])
+                        ->update(['content' => $answer['answer']]);
                 }
-            }
+            });
 
             return $this->sendResponse([
                 'message' => __('messages.success.update')
@@ -137,17 +93,17 @@ class MemberController extends BaseController
     {
         try {
             DB::transaction(function () use ($id) {
-                $this->surveyAnswerRepository->deleteMyAnswer($id);
+                $this->answerRepository->deleteMyAnswer($id);
                 $group = $this->groupRepository->getGroup($id);
                 $group->accounts()->detach(auth()->id());
             });
 
             return $this->sendResponse([
-                'message' => __('messages.success.delete')
+                'message' => __('messages.success.leave_group')
             ]);
         } catch (\Exception $e) {
             Log::error($e);
-            return $this->sendError(__('messages.error.delete'));
+            return $this->sendError(__('messages.error.leave_group'));
         }
     }
 }

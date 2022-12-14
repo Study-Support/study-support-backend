@@ -8,11 +8,13 @@
         "php": "^8.0.2",
         "bensampo/laravel-enum": "^6.0",
         "fruitcake/laravel-cors": "^3.0",
+        "graylog2/gelf-php": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/passport": "^11.2",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "sentry/sentry-laravel": "^3.1",
         "willvincent/laravel-rateable": "^3.0"
     },
     "require-dev": {

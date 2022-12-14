@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\Admin\MentorInfoController as AdminMentorInfoController;
+use App\Http\Controllers\Api\Client\MentorQuestionController;
 use App\Http\Controllers\Api\Client\Auth\LoginController;
 use App\Http\Controllers\Api\Client\Auth\RegisterController;
 use App\Http\Controllers\Api\Client\FacultyController;
@@ -32,12 +32,14 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
 
     Route::resource('rate', RatingController::class)->only(['store', 'index']);
 
-    Route::post('group/{id}/join', [MemberController::class, 'store']);
-    Route::put('group/{id}/join', [MemberController::class, 'update']);
-    Route::delete('group/{id}/join', [MemberController::class, 'destroy']);
+    Route::post('groups/{id}/join', [MemberController::class, 'store']);
+    Route::put('groups/{id}/join', [MemberController::class, 'update']);
+    Route::delete('groups/{id}/join', [MemberController::class, 'destroy']);
     Route::resource('groups', GroupController::class)->only(['store', 'show', 'update', 'destroy']);
 
     Route::put('mentor/bank', [MentorInfoController::class, 'updateBank']);
     Route::put('mentor/subjects', [MentorInfoController::class, 'updateSubject']);
     Route::resource('mentor', MentorInfoController::class)->only(['store', 'index', 'destroy']);
+
+    Route::get('mentor-questions', [MentorQuestionController::class, 'index']);
 });

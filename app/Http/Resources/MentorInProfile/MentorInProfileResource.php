@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\MentorInProfile;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuestionResource extends JsonResource
+class MentorInProfileResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,9 @@ class QuestionResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'            => $this->id,
-            'title'         => $this->title,
-            'description'   => $this->description,
-            'account_id'    => $this->account_id,
-            'group_id'      => $this->group_id
+            'number_of_subjects'  => $this->subjects_accepted_count,
+            'bank'                => $this->smart_banking,
+            'subjects'            => MentorSubjectResource::collection($this->subjects)
         ];
     }
 }

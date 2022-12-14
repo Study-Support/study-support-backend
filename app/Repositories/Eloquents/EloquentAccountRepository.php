@@ -16,6 +16,4 @@ class EloquentAccountRepository extends EloquentBaseRepository implements Accoun
     {
         return Account::class;
     }
-
-    
 }

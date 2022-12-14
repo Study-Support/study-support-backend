@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class SurveyAnswerRequest extends BaseRequest
+class MentorQuestionRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class SurveyAnswerRequest extends BaseRequest
     public function rules()
     {
         return [
-            'survey_answers'    => 'required|array'
+            'content'   => 'required'
         ];
     }
 }

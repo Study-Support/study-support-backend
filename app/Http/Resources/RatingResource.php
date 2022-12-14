@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\UserInfo;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 
 class RatingResource extends JsonResource
 {

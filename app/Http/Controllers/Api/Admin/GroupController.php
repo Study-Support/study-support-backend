@@ -35,27 +35,6 @@ class GroupController extends BaseController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -71,17 +50,6 @@ class GroupController extends BaseController
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -93,24 +61,30 @@ class GroupController extends BaseController
         try {
             $group = $this->groupRepository->find($id);
 
-            if ($group->self_study && $group->status === 0) {
-                $group->status = 3;
-                $group->save();
-
-                return $this->sendResponse([
-                    'message' => __('messages.success.update')
-                ]);
+            switch ($group->status) {
+                case (config('group.status.waiting')):
+                    $group->status = config('group.status.find_member');
+                    $group->save();
+                    break;
+                case (config('group.status.find_member')):
+                    if ($group->self_study) {
+                        $group->status = config('group.status.studying');
+                    } else {
+                        $group->status = config('group.status.find_mentor');
+                    }
+                    $group->save();
+                    break;
+                case (config('group.status.studying')):
+                    $group->status = config('group.status.close');
+                    $group->save();
+                    break;
+                default:
+                    return $this->sendError(__('messages.error.update'));
             }
 
-            if ($group->status < 2) {
-                $group->status = $group->status + 1;
-                $group->save();
-                return $this->sendResponse([
-                    'message' => __('messages.success.update')
-                ]);
-            }
-
-            return $this->sendError(__('messages.error.update'));
+            return $this->sendResponse([
+                'message' => __('messages.success.update')
+            ]);
         } catch (\Exception $e) {
             Log::error($e);
             return $this->sendError(__('messages.error.update'));
@@ -153,7 +127,7 @@ class GroupController extends BaseController
             foreach ($group->mentorWaiting as $mentor) {
                 if ($mentor->id === $data['account_id']) {
                     DB::transaction(function () use ($mentor, $group) {
-                        $mentor->pivot->status = 1;
+                        $mentor->pivot->status = config('member.status.accepted');
                         $mentor->pivot->save();
 
                         $group->status = config('group.status.studying');

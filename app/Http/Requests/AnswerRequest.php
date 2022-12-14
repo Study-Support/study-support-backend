@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
-
-class MentorRequest extends BaseRequest
+class AnswerRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +22,9 @@ class MentorRequest extends BaseRequest
     public function rules()
     {
         return [
-            'cv_link'  => 'required',
-            'smart_banking' => 'required',
-            'subject_id' => [
-                'required',
-                Rule::exists('subjects', 'id')
-            ],
+            'answers'           => 'required|array',
+            'answers.*.content'  => 'required',
+            'answers.answer' => 'required'
         ];
     }
 }

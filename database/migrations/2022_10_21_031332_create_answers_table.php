@@ -15,13 +15,15 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->integerIncrements('id');
-            $table->text('description');
+            $table->text('content');
+            $table->text('question');
+            $table->unsignedInteger('group_id');
             $table->unsignedBigInteger('account_id');
-            $table->unsignedInteger('question_id');
+            $table->boolean('type')->comment('0: member | 1: mentor');
             $table->timestamps();
 
             $table->foreign('account_id')->references('id')->on('accounts');
-            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('group_id')->references('id')->on('groups');
         });
     }
 

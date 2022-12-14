@@ -20,7 +20,8 @@ class EloquentNotificationRepository extends EloquentBaseRepository implements N
     /**
    * Get list notification
    *
-   * @return \App\Models\Notification
+   * @param array $params
+   * @return Collection
    */
   public function getListNotification(array $params)
   {

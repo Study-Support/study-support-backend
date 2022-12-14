@@ -16,9 +16,9 @@ class AnswerResource extends JsonResource
     {
         return [
             'id'            => $this->id,
-            'description'   => $this->description,
-            'account_id'    => $this->account_id,
-            'question_id'   => $this->group_id
+            'content'       => $this->question,
+            'answer'        => $this->content,
+            'account_id'    => $this->account_id
         ];
     }
 }

@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\BankRequest;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\MentorRequest;
+use App\Http\Requests\MentorSubjectRequest;
 use App\Http\Resources\MentorInfoResource;
+use App\Http\Resources\MentorInProfile\MentorInProfileResource;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\MentorInfoRepository;
 use App\Services\RegisterMentor\RegisterMentorServiceInterface;
@@ -30,7 +32,7 @@ class MentorInfoController extends BaseController
         $mentor = $this->mentorInfoRepository->getMentor(auth()->id());
 
         return $this->sendResponse([
-            'data'    => new MentorInfoResource($mentor)
+            'data'    => new MentorInProfileResource($mentor)
         ]);
     }
 
@@ -58,34 +60,13 @@ class MentorInfoController extends BaseController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\MentorRequest  $request
+     * @param  \Illuminate\Http\MentorSubjectRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateSubject(MentorRequest $request)
+    public function updateSubject(MentorSubjectRequest $request)
     {
         try {
             $mentor = $this->mentorInfoRepository->getMentor(auth()->id());

@@ -33,8 +33,8 @@ class GroupDetailResource extends JsonResource
                 : null,
             'mentorAccepted'    => new MentorInGroupResource($this->mentorAccepted),
             'survey_questions'  => SurveyQuestionResource::collection($this->surveyQuestions),
-            'survey_answers'    => $this->creator->id === auth()->id()
-                ? SurveyAnswerResource::collection($this->surveyAnswers)
+            'answers'           => $this->creator->id === auth()->id()
+                ? AnswerResource::collection($this->memberAnswers)
                 : null,
             'is_creator'        => $this->creator->id === auth()->id() ?? false
         ];
