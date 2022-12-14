@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin\User;
 
+use App\Http\Resources\Admin\GroupResource;
 use App\Http\Resources\RatingResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,7 +17,7 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'            => $this->id,
+            'id'            => $this->account->id,
             'email'         => $this->account->email,
             'full_name'     => $this->full_name,
             'address'       => $this->address,
@@ -28,7 +29,8 @@ class UserResource extends JsonResource
             'group'         => $this->account->account_in_group_count,
             'rating_score'  => $this->averageRating,
             'ratings'       => RatingResource::collection($this->ratings),
-            'is_active'     => $this->account->is_active
+            'is_active'     => $this->account->is_active,
+            'groups'        => GroupResource::collection($this->accountInGroup)
         ];
     }
 }
