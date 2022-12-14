@@ -16,7 +16,7 @@ class MentorResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'                => $this->id,
+            'id'                => $this->account->id,
             'full_name'         => $this->account->userInfo->full_name,
             'faculty'           => $this->account->userInfo->faculty->name,
             'rating_score'      => $this->averageRating,
