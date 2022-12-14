@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\AnswerRequest;
 use App\Repositories\Contracts\AnswerRepository;
 use App\Repositories\Contracts\GroupRepository;
+use App\Repositories\Contracts\MentorQuestionRepository;
 use App\Services\JoinGroup\JoinGroupServiceInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -17,7 +18,8 @@ class MemberController extends BaseController
     public function __construct(
         public GroupRepository $groupRepository,
         public JoinGroupServiceInterface $joinGroupServiceInterface,
-        public AnswerRepository $answerRepository
+        public AnswerRepository $answerRepository,
+        public MentorQuestionRepository $mentorQuestionRepository,
     ) {
     }
 
@@ -39,13 +41,16 @@ class MemberController extends BaseController
                 }
             }
 
-            if ($group->surveyQuestions->count() != count($data['answers'])) {
-                return $this->sendError(__('messages.error.must_enough_answers'));
-            }
-
             if ($group->status === config('group.status.find_member') || ($group->self_study && $group->status === config('group.status.studying'))) {
+                if ($group->surveyQuestions->count() != count($data['answers'])) {
+                    return $this->sendError(__('messages.error.must_enough_answers'));
+                }
                 return $this->joinGroupServiceInterface->joinGroupAsMember($group, $data['answers']);
             } elseif ($group->status === config('group.status.find_mentor') && !$group->self_study) {
+                $questions = $this->mentorQuestionRepository->getListMentorQuestion()->count();
+                if ($questions != count($data['answers'])) {
+                    return $this->sendError(__('messages.error.must_enough_answers'));
+                }
                 return $this->joinGroupServiceInterface->joinGroupAsMentor($group, $data['answers']);
             }
 

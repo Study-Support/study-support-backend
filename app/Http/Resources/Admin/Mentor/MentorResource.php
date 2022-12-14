@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin\Mentor;
 
+use App\Http\Resources\Admin\GroupResource;
 use App\Http\Resources\RatingResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,7 +24,8 @@ class MentorResource extends JsonResource
             'smart_banking'     => $this->smart_banking,
             'number_of_subjects'=> $this->subjects_accepted_count,
             'subject_list'      => MentorDetailResource::collection($this->subjects),
-            'ratings'           => RatingResource::collection($this->ratings)
+            'ratings'           => RatingResource::collection($this->ratings),
+            'groups'            => GroupResource::collection($this->account->accountInGroup)
         ];
     }
 }
