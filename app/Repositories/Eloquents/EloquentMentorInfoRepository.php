@@ -30,7 +30,7 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
     public function getMentor($id)
     {
         return $this->_model
-            ->with('account', 'subjects', 'subjectsAccepted')
+            ->with('account.accountInGroup', 'subjects', 'subjectsAccepted')
             ->withCount('subjectsAccepted')
             ->firstWhere('account_id', $id);
     }
@@ -44,7 +44,7 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
     public function getListMentor(array $params)
     {
         return $this->_model
-            ->with('account.userInfo', 'subjectsAccepted')
+            ->with(['account' => ['userInfo', 'accountInGroup']], 'subjectsAccepted')
             ->when(isset($params['full_name']), function ($q1) use ($params) {
                 $q1->whereHas('account.userInfo', function ($q2) use ($params) {
                     $q2->where('full_name', 'LIKE', '%' . $params['full_name'] . '%');

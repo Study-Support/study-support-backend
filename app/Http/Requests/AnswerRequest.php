@@ -24,7 +24,7 @@ class AnswerRequest extends BaseRequest
         return [
             'answers'           => 'required|array',
             'answers.*.content'  => 'required',
-            'answers.answer' => 'required'
+            'answers.*.answer' => 'required'
         ];
     }
 }
