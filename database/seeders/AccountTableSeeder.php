@@ -40,6 +40,12 @@ class AccountTableSeeder extends Seeder
                 'password' => 'Admin123',
                 'role_id' => UserRole::USER,
                 'remember_token' => Str::random(10)
+            ],
+            [
+                'email' =>  'nhuht@test.com',
+                'password' => 'Admin123',
+                'role_id' => UserRole::USER,
+                'remember_token' => Str::random(10)
             ]
         ];
 

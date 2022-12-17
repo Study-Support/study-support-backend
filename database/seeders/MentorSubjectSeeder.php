@@ -33,23 +33,30 @@ class MentorSubjectSeeder extends Seeder
             [
                 'id' => 3,
                 'mentor_id' => MentorInfo::where('id', '2')->first()->id,
-                'subject_id' => '2',
+                'subject_id' => '4',
                 'cv_link'   => 'https://thao7420.backlog.com/dashboard',
                 'active'    => 1
             ],
             [
                 'id' => 4,
                 'mentor_id' => MentorInfo::where('id', '3')->first()->id,
-                'subject_id' => '1',
+                'subject_id' => '3',
                 'cv_link'   => 'https://thao7420.backlog.com/dashboard',
                 'active'    => 1
             ],
             [
                 'id' => 5,
                 'mentor_id' => MentorInfo::where('id', '3')->first()->id,
-                'subject_id' => '2',
+                'subject_id' => '6',
                 'cv_link'   => 'https://thao7420.backlog.com/dashboard',
                 'active'    => 0
+            ],
+            [
+                'id' => 6,
+                'mentor_id' => MentorInfo::where('id', '3')->first()->id,
+                'subject_id' => '5',
+                'cv_link'   => 'https://thao7420.backlog.com/dashboard',
+                'active'    => 1
             ],
 
         ];
@@ -57,13 +64,13 @@ class MentorSubjectSeeder extends Seeder
     }
 
     /**
-   * Insert table MentorSubject
-   * @param array $data
-   */
-  public function create($data)
-  {
-    foreach ($data as $row) {
-      Mentor_Subject::updateOrCreate($row);
+     * Insert table MentorSubject
+     * @param array $data
+     */
+    public function create($data)
+    {
+        foreach ($data as $row) {
+            Mentor_Subject::updateOrCreate($row);
+        }
     }
-  }
 }

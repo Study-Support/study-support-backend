@@ -36,13 +36,13 @@ class MentorInfoSeeder extends Seeder
     }
 
     /**
-   * Insert table MentorInfo
-   * @param array $data
-   */
-  public function create($data)
-  {
-    foreach ($data as $row) {
-      MentorInfo::updateOrCreate($row);
+     * Insert table MentorInfo
+     * @param array $data
+     */
+    public function create($data)
+    {
+        foreach ($data as $row) {
+            MentorInfo::updateOrCreate($row);
+        }
     }
-  }
 }

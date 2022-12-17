@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Faculty;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FacultyTableSeeder extends Seeder
@@ -17,16 +16,19 @@ class FacultyTableSeeder extends Seeder
     {
         $params = [
             [
-                'id' => 1,
-                'name' => 'CNTT',
+                'name' => 'Công nghệ thông tin',
             ],
             [
-                'id' => 2,
-                'name' => 'CKGT',
+                'name' => 'Cơ khí giao thông',
             ],
             [
-                'id' => 3,
-                'name' => 'QLDA',
+                'name' => 'Quản lý dự án',
+            ],
+            [
+                'name' => 'Điện tử viễn thông',
+            ],
+            [
+                'name' => 'Môi trường',
             ]
         ];
         $this->create($params);
