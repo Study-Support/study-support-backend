@@ -37,13 +37,18 @@ class MentorInfoController extends BaseController
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the specified resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function show($id)
     {
-        //
+        $mentor = $this->mentorInfoRepository->getMentor($id);
+
+        return $this->sendResponse([
+            'data'      => new MentorInfoResource($mentor)
+        ]);
     }
 
     /**

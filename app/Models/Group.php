@@ -17,7 +17,8 @@ class Group extends Model
         'faculty_id',
         'location_study',
         'status',
-        'self_study'
+        'self_study',
+        'image_url'
     ];
 
     public function accounts()

@@ -49,7 +49,8 @@ class GroupRequest extends BaseRequest
                 'required',
                 Rule::in(GroupStudy::all())
             ],
-            'survey_questions' => 'required|array'
+            'survey_questions' => 'required|array',
+            'image_url'        => 'required'
         ];
     }
 }

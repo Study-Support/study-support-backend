@@ -23,5 +23,5 @@ Route::group(['middleware' => ['auth:api', 'auth.admin']], function () {
     Route::put('groups/{id}/acceptMentor', [GroupController::class, 'acceptMentor']);
     Route::resource('groups', GroupController::class)->only('index', 'update', 'show', 'destroy');
 
-    Route::get('mentor-questions', [MentorQuestionController::class, 'index']);
+    Route::resource('mentor-questions', MentorQuestionController::class)->except('edit', 'create');
 });

@@ -8,7 +8,6 @@ use App\Http\Resources\MyListRatingResource;
 use App\Repositories\Contracts\GroupRepository;
 use App\Repositories\Contracts\MentorInfoRepository;
 use App\Repositories\Contracts\UserInfoRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class RatingController extends BaseController
@@ -29,16 +28,6 @@ class RatingController extends BaseController
         return $this->sendResponse([
             'data'  => new MyListRatingResource(auth()->user())
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -78,50 +67,5 @@ class RatingController extends BaseController
             Log::error($e);
             return $this->sendError(__('messages.error.rate'));
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
