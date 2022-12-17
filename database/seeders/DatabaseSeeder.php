@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
       MentorInfoSeeder::class,
       UserInfoSeeder::class,
       MemberSeeder::class,
-      MentorSubjectSeeder::class
+      MentorSubjectSeeder::class,
+      FacultySubjectSeeder::class,
+      MentorQuestionTableSeeder::class
     ]);
   }
 }

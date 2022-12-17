@@ -103,6 +103,9 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
             ->when(isset($params['status']), function ($q) use ($params) {
                 $q->where('status', $params['status']);
             })
+            ->when(!isset($params['status']), function ($q) {
+                $q->where('status','!=', config('group.status.waiting'));
+            })
             ->orderBy('id', 'asc')
             ->paginate($this->MAX_PER_PAGE);
     }

@@ -45,6 +45,16 @@ class UserInfoSeeder extends Seeder
                 'birthday'  => '02/02/2002',
                 'faculty_id'=> '3',
                 'gender'    => '1',
+            ],
+            [
+                'id' => 4,
+                'account_id' => Account::where('email', 'nhuht@test.com')->first()->id,
+                'full_name' => 'Hoàng Thị Thu Như',
+                'address'   => 'Hải Châu, Đà Nẵng',
+                'phone_number'  => '0986543212',
+                'birthday'  => '02/02/2002',
+                'faculty_id'=> '3',
+                'gender'    => '1',
             ]
         ];
         $this->create($params);
