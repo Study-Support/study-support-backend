@@ -19,16 +19,65 @@ class MemberSeeder extends Seeder
         $params = [
             [
                 'account_id' => Account::where('email', 'thaott@test.com')->first()->id,
+                'group_id'   => Group::where('id', '4')->first()->id,
+                'is_creator' => '0',
+                'is_mentor' => '1',
+                'status'    => '0'
+            ],
+            [
+                'account_id' => Account::where('email', 'thaott@test.com')->first()->id,
                 'group_id'   => Group::where('id', '1')->first()->id,
                 'is_creator' => '1',
                 'is_mentor' => '0',
                 'status'    => '1'
             ],
             [
-                'account_id' => Account::where('email', 'thaott@test.com')->first()->id,
+                'account_id' => Account::where('email', 'tiennv@test.com')->first()->id,
                 'group_id'   => Group::where('id', '2')->first()->id,
+                'is_creator' => '1',
+                'is_mentor' => '0',
+                'status'    => '1'
+            ],
+            [
+                'account_id' => Account::where('email', 'nhuht@test.com')->first()->id,
+                'group_id'   => Group::where('id', '3')->first()->id,
+                'is_creator' => '1',
+                'is_mentor' => '0',
+                'status'    => '1'
+            ],
+            [
+                'account_id' => Account::where('email', 'tiennv@test.com')->first()->id,
+                'group_id'   => Group::where('id', '4')->first()->id,
+                'is_creator' => '1',
+                'is_mentor' => '0',
+                'status'    => '1'
+            ],
+            [
+                'account_id' => Account::where('email', 'quangdt@test.com')->first()->id,
+                'group_id'   => Group::where('id', '5')->first()->id,
                 'is_creator' => '0',
                 'is_mentor' => '1',
+                'status'    => '1'
+            ],
+            [
+                'account_id' => Account::where('email', 'quangdt@test.com')->first()->id,
+                'group_id'   => Group::where('id', '6')->first()->id,
+                'is_creator' => '1',
+                'is_mentor' => '0',
+                'status'    => '1'
+            ],
+            [
+                'account_id' => Account::where('email', 'quangdt@test.com')->first()->id,
+                'group_id'   => Group::where('id', '4')->first()->id,
+                'is_creator' => '0',
+                'is_mentor' => '1',
+                'status'    => '0'
+            ],
+            [
+                'account_id' => Account::where('email', 'nhuht@test.com')->first()->id,
+                'group_id'   => Group::where('id', '4')->first()->id,
+                'is_creator' => '0',
+                'is_mentor' => '0',
                 'status'    => '1'
             ],
             [
@@ -40,36 +89,29 @@ class MemberSeeder extends Seeder
             ],
             [
                 'account_id' => Account::where('email', 'tiennv@test.com')->first()->id,
-                'group_id'   => Group::where('id', '1')->first()->id,
+                'group_id'   => Group::where('id', '3')->first()->id,
                 'is_creator' => '0',
-                'is_mentor' => '1',
+                'is_mentor' => '0',
+                'status'    => '0'
+            ],
+            [
+                'account_id' => Account::where('email', 'nhuht@test.com')->first()->id,
+                'group_id'   => Group::where('id', '6')->first()->id,
+                'is_creator' => '0',
+                'is_mentor' => '0',
                 'status'    => '1'
             ],
             [
                 'account_id' => Account::where('email', 'tiennv@test.com')->first()->id,
-                'group_id'   => Group::where('id', '2')->first()->id,
+                'group_id'   => Group::where('id', '6')->first()->id,
+                'is_creator' => '0',
+                'is_mentor' => '0',
+                'status'    => '0'
+            ],
+            [
+                'account_id' => Account::where('email', 'tiennv@test.com')->first()->id,
+                'group_id'   => Group::where('id', '5')->first()->id,
                 'is_creator' => '1',
-                'is_mentor' => '0',
-                'status'    => '1'
-            ],
-            [
-                'account_id' => Account::where('email', 'quangdt@test.com')->first()->id,
-                'group_id'   => Group::where('id', '3')->first()->id,
-                'is_creator' => '0',
-                'is_mentor' => '1',
-                'status'    => '1'
-            ],
-            [
-                'account_id' => Account::where('email', 'quangdt@test.com')->first()->id,
-                'group_id'   => Group::where('subject_id', '2')->first()->id,
-                'is_creator' => '0',
-                'is_mentor' => '0',
-                'status'    => '1'
-            ],
-            [
-                'account_id' => Account::where('email', 'quangdt@test.com')->first()->id,
-                'group_id'   => Group::where('subject_id', '1')->first()->id,
-                'is_creator' => '0',
                 'is_mentor' => '0',
                 'status'    => '1'
             ],
