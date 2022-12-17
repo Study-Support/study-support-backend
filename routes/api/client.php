@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
     Route::get('user/groups', [GroupController::class, 'getMyListGroup']);
     Route::put('user/groups/{id}/acceptMember', [GroupController::class, 'acceptMember']);
 
+    Route::get('mentors/{id}', [MentorInfoController::class, 'show']);
+
     Route::resource('rate', RatingController::class)->only(['store', 'index']);
 
     Route::post('groups/{id}/join', [MemberController::class, 'store']);
