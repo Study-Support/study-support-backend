@@ -16,6 +16,7 @@ class MentorInProfileResource extends JsonResource
     {
         return [
             'number_of_subjects'  => $this->subjects_accepted_count,
+            'avatar_url'          => $this->account->userInfo->avatar_url,
             'bank'                => $this->smart_banking,
             'subjects'            => MentorSubjectResource::collection($this->subjects)
         ];

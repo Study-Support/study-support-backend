@@ -25,9 +25,10 @@ class GroupResource extends JsonResource
             'self_study'    => $this->self_study,
             'subject'       => $this->subject->name,
             'faculty'       => $this->faculty->name,
+            'image_url'     => $this->image_url,
             'status'        => $this->status,
             'members'       => MemberResource::collection($this->membersAccepted),
-            'mentorAccepted'=> new MentorInGroupResource($this->mentorAccepted),
+            'mentorAccepted' => new MentorInGroupResource($this->mentorAccepted),
             'mentorWaiting' => MentorInGroupResource::collection($this->mentorWaiting)
         ];
     }
