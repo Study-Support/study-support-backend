@@ -19,6 +19,7 @@ class MentorInfoResource extends JsonResource
             'faculty'             => $this->account->userInfo->faculty->name,
             'rating'              => $this->averageRating,
             'number_of_subjects'  => $this->subjects_accepted_count,
+            'avatar_url'          => $this->account->userInfo->avatar_url,
             'subjects'            => SubjectResource::collection($this->subjectsAccepted)
         ];
     }
