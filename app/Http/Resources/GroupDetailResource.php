@@ -27,6 +27,7 @@ class GroupDetailResource extends JsonResource
             'subject'           => $this->subject->name,
             'faculty'           => $this->faculty->name,
             'status'            => $this->status,
+            'image_url'         => $this->image_url,
             'membersAccepted'   => MemberResource::collection($this->membersAccepted),
             'membersWaiting'    => $this->creator->id === auth()->id()
                 ? MemberResource::collection($this->membersWaiting)

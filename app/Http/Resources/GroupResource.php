@@ -24,6 +24,7 @@ class GroupResource extends JsonResource
             'subject'           => $this->subject->name,
             'faculty'           => $this->faculty->name,
             'status'            => $this->status,
+            'image_url'         => $this->image_url
         ];
     }
 }

@@ -22,6 +22,7 @@ class MentorResource extends JsonResource
             'faculty'           => $this->account->userInfo->faculty->name,
             'rating_score'      => $this->averageRating,
             'smart_banking'     => $this->smart_banking,
+            'avatar_url'        => $this->account->userInfo->avatar_url,
             'number_of_subjects'=> $this->subjects_accepted_count,
             'subject_list'      => MentorDetailResource::collection($this->subjects),
             'ratings'           => RatingResource::collection($this->ratings),
