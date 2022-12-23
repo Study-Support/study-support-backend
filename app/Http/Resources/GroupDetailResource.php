@@ -37,7 +37,8 @@ class GroupDetailResource extends JsonResource
             'answers'           => $this->creator->id === auth()->id()
                 ? AnswerResource::collection($this->memberAnswers)
                 : null,
-            'is_creator'        => $this->creator->id === auth()->id() ?? false
+            'is_creator'        => $this->creator->id === auth()->id() ?? false,
+            'ratings'           => RatingResource::collection($this->ratings)
         ];
     }
 }

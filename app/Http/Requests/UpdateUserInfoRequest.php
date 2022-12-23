@@ -47,6 +47,7 @@ class UpdateUserInfoRequest extends BaseRequest
                 'required',
                 Rule::exists('faculties', 'id')
             ],
+            'avatar_url' => 'required'
         ];
     }
 }
