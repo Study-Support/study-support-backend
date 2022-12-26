@@ -34,6 +34,6 @@ class Rating extends Model
 
     public function account()
     {
-        return $this->hasOne(UserInfo::class, 'account_id', 'account_id');
+        return $this->belongsTo(UserInfo::class, 'account_id', 'account_id');
     }
 }

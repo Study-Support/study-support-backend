@@ -30,10 +30,12 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
     public function getMentor($id)
     {
         return $this->_model
-            ->with('account.accountInGroup', 'subjects', 'subjectsAccepted')
+            ->with(['account' => ['accountInGroup', 'userInfo.ratingFromMentor']], 'subjects', 'subjectsAccepted')
             ->withCount('subjectsAccepted')
             ->firstWhere('account_id', $id);
     }
+
+    // accountInGroup
 
     /**
      * Get list mentor
@@ -62,6 +64,6 @@ class EloquentMentorInfoRepository  extends EloquentBaseRepository implements Me
             })
             ->withCount('subjects', 'subjectsAccepted')
             ->orderBy('id', 'asc')
-            ->paginate($this->MAX_PER_PAGE);
+            ->paginate($this->MENTOR_PAGE);
     }
 }

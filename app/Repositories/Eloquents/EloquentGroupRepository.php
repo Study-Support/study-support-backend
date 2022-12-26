@@ -75,7 +75,7 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
                 $q->where('status', $params['status']);
             })
             ->orderBy('id', 'asc')
-            ->paginate($this->MAX_PER_PAGE);
+            ->paginate(9);
     }
 
     /**
@@ -107,6 +107,6 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
                 $q->where('status','!=', config('group.status.waiting'));
             })
             ->orderBy('id', 'asc')
-            ->paginate($this->MAX_PER_PAGE);
+            ->paginate($this->GROUP_PAGE);
     }
 }
