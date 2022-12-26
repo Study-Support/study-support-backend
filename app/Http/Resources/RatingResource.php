@@ -2,9 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\UserInfo;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\DB;
 
 class RatingResource extends JsonResource
 {
@@ -17,13 +15,12 @@ class RatingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'rating'          => $this->rating,
-            'comment'         => $this->comment,
-            'account_id'      => $this->account_id,
-            'account_name'    => $this->account->full_name,
-            'group'           => $this->group->topic,
-            'account_id_from' => $this->rateable->account_id,
-            'account_from'    => $this->rateable->account->userInfo->full_name
+            'rating'        => $this->rating,
+            'comment'       => $this->comment,
+            'account_id'    => $this->account_id,
+            'account_from'  => $this->account->full_name,
+            'group'         => $this->group->topic,
+            'account_to'    => $this->rateable->account->userInfo->full_name
         ];
     }
 }

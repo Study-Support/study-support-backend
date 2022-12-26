@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Client\Auth\LoginController;
 use App\Http\Controllers\Api\Client\Auth\RegisterController;
 use App\Http\Controllers\Api\Client\FacultyController;
 use App\Http\Controllers\Api\Client\GroupController;
+use App\Http\Controllers\Api\Client\MailController;
 use App\Http\Controllers\Api\Client\MemberController;
 use App\Http\Controllers\Api\Client\MentorInfoController;
 use App\Http\Controllers\Api\Client\NotificationController;
@@ -44,4 +45,6 @@ Route::group(['middleware' => ['auth:api', 'auth.client']], function () {
     Route::resource('mentor', MentorInfoController::class)->only(['store', 'index', 'destroy']);
 
     Route::get('mentor-questions', [MentorQuestionController::class, 'index']);
+
+    Route::post('invite-mentor', [MailController::class, 'sendEmail']);
 });
