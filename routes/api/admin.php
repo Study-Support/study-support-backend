@@ -19,7 +19,7 @@ Route::group(['middleware' => ['auth:api', 'auth.admin']], function () {
     Route::resource('subjects', SubjectController::class)->only('index');
 
     Route::resource('users', UserController::class)->only('index', 'show', 'update');
-    Route::resource('mentors', MentorInfoController::class)->only('index', 'show');
+    Route::resource('mentors', MentorInfoController::class)->only('index', 'show', 'update', 'destroy');
     Route::put('groups/{id}/acceptMentor', [GroupController::class, 'acceptMentor']);
     Route::resource('groups', GroupController::class)->only('index', 'update', 'show', 'destroy');
 

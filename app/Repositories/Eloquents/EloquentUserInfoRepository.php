@@ -45,7 +45,14 @@ class EloquentUserInfoRepository extends EloquentBaseRepository implements UserI
             ->whereHas('account', function ($q1) use ($params) {
                 $q1->when(isset($params['is_active']), function ($q2) use ($params) {
                     $q2->where('is_active', $params['is_active']);
-                })->where('role_id', UserRole::USER);
+                })
+                ->when(isset($params['faculty_id']), function ($q2) use ($params) {
+                    $q2->where('faculty_id', $params['faculty_id']);
+                })
+                ->where('role_id', UserRole::USER);
+            })
+            ->when(isset($params['full_name']), function ($q) use ($params) {
+                $q->where('full_name', 'LIKE', '%' . $params['full_name'] . '%');
             })
             ->with(['account' => function ($q) {
                 return $q->with('accountInGroup')->withCount('accountInGroup');
@@ -66,6 +73,7 @@ class EloquentUserInfoRepository extends EloquentBaseRepository implements UserI
             ->with(['account' => function ($q) {
                 return $q->withCount('accountInGroup');
             }])
+            ->with('ratingFromUser')
             ->firstWhere('account_id', $id);
     }
 }

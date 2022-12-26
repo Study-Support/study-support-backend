@@ -146,4 +146,28 @@ class GroupController extends BaseController
             return $this->sendError(__('messages.error.update'));
         }
     }
+
+    /**
+     * close Group
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function closeGroup($id)
+    {
+        try {
+            $group = $this->groupRepository->find($id);
+
+            $group->status = config('group.status.close');
+            $group->save();
+
+            return $this->sendResponse([
+                'message' => __('messages.success.update')
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return $this->sendError(__('messages.error.update'));
+        }
+    }
 }

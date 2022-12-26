@@ -11,6 +11,9 @@ use App\Repositories\Base\Contracts\BaseRepository;
 abstract class EloquentBaseRepository implements BaseRepository
 {
     protected $MAX_PER_PAGE = 10;
+    protected $GROUP_PAGE = 9;
+    protected $MENTOR_PAGE = 8;
+
 
     /**
      * @var \Illuminate\Database\Eloquent\Model
