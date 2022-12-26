@@ -9,7 +9,8 @@ return [
         'update'        => 'Cập nhật thành công',
         'delete'        => 'Xóa thành công',
         'rate'          => 'Đánh giá thành công',
-        'leave_group'   => 'Rời nhóm thành công'
+        'leave_group'   => 'Rời nhóm thành công',
+        'invite_mentor' => 'Mời mentor thành công'
     ],
     'error'     => [
         'register'              => 'Đăng ký không thành công',
@@ -28,7 +29,9 @@ return [
         'not_is_creator'        => 'Bạn không phải là nhóm trưởng của nhóm này',
         'not_found'             => 'Không tìm thấy trang',
         'incorrect_amount'      => 'Số lượng câu trả lời không khớp với số lượng câu hỏi',
-        'leave_group'           => 'Rời nhóm không thành công'
+        'leave_group'           => 'Rời nhóm không thành công',
+        'invite_mentor'         => 'Mời mentor không thành công'
+
     ]
 
 ];
