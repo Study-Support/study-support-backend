@@ -55,7 +55,7 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     public function getGroup($id)
     {
         return $this->_model
-            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting', 'creator', 'members', 'memberAnswers', 'mentorAnswers', 'membersWaiting')
+            ->with('membersAccepted', 'mentorAccepted', 'mentorWaiting', 'creator', 'members', 'memberAnswers', 'mentorAnswers', 'membersWaiting', 'ratings')
             ->withCount('membersAccepted', 'membersWaiting')
             ->Where('id', $id)
             ->first();
@@ -75,7 +75,7 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
                 $q->where('status', $params['status']);
             })
             ->orderBy('id', 'asc')
-            ->paginate($this->MAX_PER_PAGE);
+            ->paginate(9);
     }
 
     /**
@@ -107,6 +107,6 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
                 $q->where('status','!=', config('group.status.waiting'));
             })
             ->orderBy('id', 'asc')
-            ->paginate($this->MAX_PER_PAGE);
+            ->paginate($this->GROUP_PAGE);
     }
 }

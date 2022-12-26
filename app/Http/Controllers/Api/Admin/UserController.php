@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Admin\UserInfo\UpdateUserInfoRequest;
 use App\Http\Resources\Admin\User\UserResource;
-use App\Http\Resources\RatingResource;
 use App\Repositories\Contracts\AccountRepository;
 use App\Repositories\Contracts\UserInfoRepository;
 use App\Services\UtilService;

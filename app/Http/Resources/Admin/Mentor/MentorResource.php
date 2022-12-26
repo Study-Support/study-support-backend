@@ -26,7 +26,8 @@ class MentorResource extends JsonResource
             'number_of_subjects'=> $this->subjects_accepted_count,
             'subject_list'      => MentorDetailResource::collection($this->subjects),
             'ratings'           => RatingResource::collection($this->ratings),
-            'groups'            => GroupResource::collection($this->account->accountInGroup)
+            'groups'            => GroupResource::collection($this->account->accountInGroup),
+            'ratings_from'      => RatingResource::collection($this->account->userInfo->ratingFromMentor)
         ];
     }
 }

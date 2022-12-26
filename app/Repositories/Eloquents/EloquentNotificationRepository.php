@@ -18,19 +18,21 @@ class EloquentNotificationRepository extends EloquentBaseRepository implements N
     }
 
     /**
-   * Get list notification
-   *
-   * @param array $params
-   * @return Collection
-   */
-  public function getListNotification(array $params)
-  {
-    return $this->_model
-      ->when(isset($params['search']), function($q) use ($params) {
-        $q->where('content', 'LIKE', '%' . $params['search'] . '%');
-      })
-      ->orderBy('id', 'asc')
-      ->paginate($this->MAX_PER_PAGE);
-  }
-
+     * Get list notification
+     *
+     * @param array $params
+     * @return Collection
+     */
+    public function getListNotification(array $params)
+    {
+        return $this->_model
+            ->when(isset($params['content']), function ($q) use ($params) {
+                $q->where('content', 'LIKE', '%' . $params['content'] . '%');
+            })
+            ->when(isset($params['title']), function ($q) use ($params) {
+                $q->where('title', 'LIKE', '%' . $params['title'] . '%');
+            })
+            ->orderBy('id', 'asc')
+            ->paginate($this->MAX_PER_PAGE);
+    }
 }

@@ -30,7 +30,8 @@ class UserResource extends JsonResource
             'rating_score'  => $this->averageRating,
             'ratings'       => RatingResource::collection($this->ratings),
             'is_active'     => $this->account->is_active,
-            'groups'        => GroupResource::collection($this->account->accountInGroup)
+            'groups'        => GroupResource::collection($this->account->accountInGroup),
+            'ratings_from'  => RatingResource::collection($this->ratingFromUser)
         ];
     }
 }
