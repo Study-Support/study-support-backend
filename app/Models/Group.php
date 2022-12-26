@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use willvincent\Rateable\Rating;
 
 class Group extends Model
 {
     use HasFactory;
 
     public $fillable = [
+        'id',
         'topic',
         'information',
         'time_study',
@@ -100,5 +102,10 @@ class Group extends Model
     public function memberAnswers()
     {
         return $this->answers()->where('type', config('answer.type.member'));
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'group_id', 'id');
     }
 }

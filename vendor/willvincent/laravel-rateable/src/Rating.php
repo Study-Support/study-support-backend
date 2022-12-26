@@ -29,7 +29,7 @@ class Rating extends Model
 
     public function group()
     {
-        return $this->hasOne(Group::class, 'id', 'group_id');
+        return $this->belongsTo(Group::class, 'group_id', 'id');
     }
 
     public function account()
