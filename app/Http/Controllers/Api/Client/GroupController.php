@@ -8,6 +8,7 @@ use App\Http\Requests\GroupRequest;
 use App\Http\Resources\AnswerResource;
 use App\Http\Resources\GroupDetailResource;
 use App\Http\Resources\GroupResource;
+use App\Models\Member;
 use App\Repositories\Contracts\AnswerRepository;
 use App\Repositories\Contracts\GroupRepository;
 use App\Repositories\Contracts\SurveyQuestionRepository;
@@ -122,11 +123,11 @@ class GroupController extends BaseController
 
                 foreach ($data['survey_questions'] as $newQuestion) {
                     $newQuestion['id']
-                    ? $this->surveyQuestionRepository->update($newQuestion['id'], $newQuestion)
-                    : $this->surveyQuestionRepository->create([
-                        'content'   => $newQuestion['content'],
-                        'group_id'  => $id
-                    ]);
+                        ? $this->surveyQuestionRepository->update($newQuestion['id'], $newQuestion)
+                        : $this->surveyQuestionRepository->create([
+                            'content'   => $newQuestion['content'],
+                            'group_id'  => $id
+                        ]);
                 }
 
                 return $this->sendResponse([
@@ -181,24 +182,24 @@ class GroupController extends BaseController
                 return $this->sendError(__('messages.error.not_is_creator'));
             }
 
+            $member_id = array_column($group->membersWaiting->toArray(), 'id');
             $data = $request->only('account_id', 'accept');
-            $check = 0;
-            foreach (($data['account_id']) as $id) {
-                foreach ($group->membersWaiting as $member) {
-                    if ($member->id === $id) {
-                        $check++;
-                        if ($data['accept']) {
-                            $member->pivot->status = 1;
-                            $member->pivot->save();
-                            break;
-                        } else {
-                            $group->accounts()->detach($id);
-                        }
-                    }
+
+            $member_accept = array_intersect($member_id, $data['account_id']);
+
+            DB::transaction(function () use ($data, $member_accept, $group) {
+                if ($data['accept']) {
+                    Member::whereIn('account_id', $member_accept)
+                        ->where('group_id', $group->id)->update([
+                            'status'    => 1
+                        ]);
+                } else {
+                    $this->answerRepository->deleteAnswers($group->id, $member_accept);
+                    $group->accounts()->detach($member_accept);
                 }
-            }
-            return  $check ? $this->sendResponse(['message' => __('messages.success.update')])
-                : $this->sendError(__('messages.error.update'));
+            });
+
+            return  $this->sendResponse(['message' => __('messages.success.update')]);
         } catch (\Exception $e) {
             Log::error($e);
             return $this->sendError(__('messages.error.update'));
