@@ -18,7 +18,15 @@ interface AnswerRepository extends BaseRepository
      * delete my answer in group
      *
      * @param int $group_id
-     * @return Collection
      */
     public function deleteMyAnswer(int $group_id);
+
+    /**
+     * delete many answer in group
+     *
+     * @param int $group_id
+     * @param array $account_id
+     * 
+     */
+    public function deleteAnswers(int $group_id, array $account_id);
 }
