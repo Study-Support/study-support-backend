@@ -36,12 +36,26 @@ class EloquentAnswerRepository extends EloquentBaseRepository implements AnswerR
      * Get list answer
      *
      * @param int $group_id
-     * @return Collection
      */
     public function deleteMyAnswer(int $group_id)
     {
         return $this->_model
             ->where('account_id', auth()->id())
+            ->where('group_id', $group_id)
+            ->delete();
+    }
+
+    /**
+     * delete many answer in group
+     *
+     * @param int $group_id
+     * @param array $account_id
+     *
+     */
+    public function deleteAnswers(int $group_id, array $account_id)
+    {
+        return $this->_model
+            ->whereIn('account_id', $account_id)
             ->where('group_id', $group_id)
             ->delete();
     }
