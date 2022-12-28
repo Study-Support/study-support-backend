@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\Admin\AcceptMentorRequest;
 use App\Http\Resources\Admin\GroupDetailResource;
 use App\Http\Resources\Admin\GroupResource;
+use App\Http\Resources\AnswerResource;
+use App\Repositories\Contracts\AnswerRepository;
 use App\Repositories\Contracts\GroupRepository;
 use App\Services\UtilService;
 use Illuminate\Http\Request;
@@ -16,7 +18,8 @@ class GroupController extends BaseController
 {
 
     public function __construct(
-        public GroupRepository $groupRepository
+        public GroupRepository $groupRepository,
+        public AnswerRepository $answerRepository
     ) {
     }
     /**
@@ -44,8 +47,11 @@ class GroupController extends BaseController
     {
         $group = $this->groupRepository->getGroup($id);
 
+        $mentor_answers = $this->answerRepository->getMentorAnswersOfGroup($id);
+
         return $this->sendResponse([
             'data' => new GroupDetailResource($group),
+            'mentor_answers' => AnswerResource::collection($mentor_answers)
         ]);
     }
 

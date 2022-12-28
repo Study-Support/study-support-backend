@@ -59,4 +59,18 @@ class EloquentAnswerRepository extends EloquentBaseRepository implements AnswerR
             ->where('group_id', $group_id)
             ->delete();
     }
+
+    /**
+     * get mentor answers of group
+     *
+     * @param int $group_id
+     *
+     */
+    public function getMentorAnswersOfGroup(int $group_id)
+    {
+        return $this->_model
+            ->where('group_id', $group_id)
+            ->where('type', 1)
+            ->get();
+    }
 }
