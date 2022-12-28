@@ -26,7 +26,15 @@ interface AnswerRepository extends BaseRepository
      *
      * @param int $group_id
      * @param array $account_id
-     * 
+     *
      */
     public function deleteAnswers(int $group_id, array $account_id);
+
+    /**
+     * get mentor answers of group
+     *
+     * @param int $group_id
+     *
+     */
+    public function getMentorAnswersOfGroup(int $group_id);
 }

@@ -74,6 +74,14 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
             ->when(isset($params['status']), function ($q) use ($params) {
                 $q->where('status', $params['status']);
             })
+            ->when(isset($params['subject']), function ($q) use ($params) {
+                $q->whereHas('subject', function ($q1) use ($params) {
+                    return $q1->where('name', 'LIKE', '%' . $params['subject'] . '%');
+                });
+            })
+            ->when(isset($params['faculty']), function ($q) use ($params) {
+                $q->where('faculty_id', $params['faculty']);
+            })
             ->orderBy('id', 'asc')
             ->paginate(9);
     }
@@ -88,6 +96,7 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
     {
         return $this->_model
             ->with('accounts')
+            ->withCount(['membersAccepted'])
             ->whereHas('accounts', function ($q1) use ($params) {
                 $q1->where('account_id', auth()->id())
                     ->when(isset($params['is_mentor']), function ($q2) use ($params) {
@@ -104,7 +113,7 @@ class EloquentGroupRepository extends EloquentBaseRepository implements GroupRep
                 $q->where('status', $params['status']);
             })
             ->when(!isset($params['status']), function ($q) {
-                $q->where('status','!=', config('group.status.waiting'));
+                $q->where('status', '!=', config('group.status.waiting'));
             })
             ->orderBy('id', 'asc')
             ->paginate($this->GROUP_PAGE);

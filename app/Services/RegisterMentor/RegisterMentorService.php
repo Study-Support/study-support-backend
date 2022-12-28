@@ -22,7 +22,10 @@ class RegisterMentorService extends BaseController implements RegisterMentorServ
     public function registerMentor($data)
     {
         try {
-            $mentorInfo = $this->mentorInfoRepository->getMentor(auth()->id()) ?? $this->mentorInfoRepository->create($data['smart_banking']);
+            $mentorInfo = $this->mentorInfoRepository->getMentor(auth()->id()) ??
+                $this->mentorInfoRepository->create([
+                    'smart_banking' => $data['smart_banking']
+                ]);
 
             foreach ($mentorInfo->subjects as $subject) {
                 if ($subject->id == $data['subject_id']) {
